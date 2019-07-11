@@ -27,8 +27,8 @@ app.use(verifyMiddleware(), bodyParser.json(), addSDKMiddleware());
 app.get('/foo', async (req, res) => {
   const { envoy } = req; // envoy is the SDK
   const {
-    meta, // the request_meta object
-    payload, // the request_body object
+    meta, // the platform event request_meta object
+    payload, // the platform event request_body object
     userAPI, // user-scoped API calls, used in routes 
     pluginAPI, // plugin-scoped API calls, for plugin services
     installStorage, // install-scoped storage
@@ -67,14 +67,12 @@ app.get('/foo', async (req, res) => {
   await job.attach([{ type: 'text', label: 'foo', value: 'bar' }]);
   
   /**
-  * API usage
-  */
-  
-  /**
   * JWT usage 
   */
   const token = await jwt.encode('userId', '30m');
   const { sub: userId } = await jwt.decode(token);
+  
+  res.send({ hello: 'world' }); // will get set as the response_body in the platform event.
   
 });
 ```
