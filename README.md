@@ -24,7 +24,8 @@ const app = express();
  */
 app.use(verifyMiddleware(), bodyParser.json(), sdkMiddleware());
 
-app.get('/foo', async (req, res) => {
+app.get('/url-to-a-route-or-worker', async (req, res) => {
+  
   const { envoy } = req; // envoy is the SDK
   const {
     meta, // the platform event request_meta object
@@ -47,7 +48,7 @@ app.get('/foo', async (req, res) => {
   * The below can be used both at the install level or global level
   */
   await installStorage.set('foo', 'bar'); // sets foo=bar in storage for this install
-  const { value } = await installStorage.setUnique('foo'); // creates a unique value for foo and returns it
+  const { value } = await installStorage.setUnique('foo'); // creates and returns a unique value for foo
   const { value } = await installStorage.get('foo'); // also gets the current value of foo
   await installStorage.unset('foo'); // deletes foo
   
@@ -56,11 +57,8 @@ app.get('/foo', async (req, res) => {
   * All of the below can take optional attachments as the last parameter.
   */
   await job.complete('Credentials provisioned.', [{ type: 'password', label: 'password', value: 'password' }]);
-  
   await job.ignore('No credentials provisioned.', 'Email was not supplied.');
- 
   await job.fail('Could not provision credentials.', 'Server could not be reached.');
-  
   /**
   * You can also just attach things without updating the status. 
   */
@@ -69,8 +67,8 @@ app.get('/foo', async (req, res) => {
   /**
   * JWT usage 
   */
-  const token = await jwt.encode('userId', '30m');
-  const { sub: userId } = await jwt.decode(token);
+  const token = await jwt.encode(visitorId, '30m');
+  const { sub: visitorId } = await jwt.decode(token);
   
   res.send({ hello: 'world' }); // will get set as the response_body in the platform event.
   
