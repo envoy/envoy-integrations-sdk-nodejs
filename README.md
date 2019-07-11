@@ -29,11 +29,18 @@ app.get('/foo', async (req, res) => {
   const {
     meta, // the request_meta object
     payload, // the request_body object
+    userAPI, // user-scoped API calls, used in routes 
+    pluginAPI, // plugin-scoped API calls, for plugin services
     installStorage, // install-scoped storage
     globalStorage, // global-scoped storage
     job, // update the job (if in a worker)
     jwt, // helper to encode/decode jwts
   } = envoy;
+  
+  /**
+  * User API usage
+  */
+  const visitorTypes = await userAPI.flows(locationId);
   
   /**
   * Storage usage
@@ -58,6 +65,10 @@ app.get('/foo', async (req, res) => {
   * You can also just attach things without updating the status. 
   */
   await job.attach([{ type: 'text', label: 'foo', value: 'bar' }]);
+  
+  /**
+  * API usage
+  */
   
   /**
   * JWT usage 
