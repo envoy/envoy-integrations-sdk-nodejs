@@ -14,15 +14,15 @@ You need to have the following environment variables set:
 ```js
 const express = require('express');
 const bodyParser = require('body-parser');
-const { verifyMiddleware, addSDKMiddleware } = require('envoy-plugin-sdk-nodejs');
+const { verifyMiddleware, sdkMiddleware } = require('envoy-plugin-sdk-nodejs');
 
 const app = express();
 /**
  * verifyMiddleware - Verifies the request came from Envoy.
  * bodyParser.json - Parses the request body as JSON.
- * addSDKMiddleware - attaches the SDK to the req object.
+ * sdkMiddleware - attaches the SDK to the req object.
  */
-app.use(verifyMiddleware(), bodyParser.json(), addSDKMiddleware());
+app.use(verifyMiddleware(), bodyParser.json(), sdkMiddleware());
 
 app.get('/foo', async (req, res) => {
   const { envoy } = req; // envoy is the SDK
