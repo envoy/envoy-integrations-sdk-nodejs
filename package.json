@@ -1,0 +1,33 @@
+{
+  "name": "envoy-plugin-sdk-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/envoy/envoy-plugin-sdk-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/envoy/envoy-plugin-sdk-nodejs/issues"
+  },
+  "homepage": "https://github.com/envoy/envoy-plugin-sdk-nodejs#readme",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "mocha": "^6.1.4",
+    "proxyquire": "^2.1.0",
+    "sinon": "^7.3.2"
+  }
+}
