@@ -6,6 +6,7 @@ const EnvoyPluginStorage = require('./lib/EnvoyPluginStorage');
 const EnvoyResponseError = require('./lib/EnvoyResponseError');
 const verifyMiddleware = require('./lib/middleware/verify');
 const sdkMiddleware = require('./lib/middleware/sdk');
+const asyncHandler = require('./lib/asyncHandler');
 
 module.exports = {
   EnvoyAPI,
@@ -16,4 +17,5 @@ module.exports = {
   EnvoyResponseError,
   verifyMiddleware,
   sdkMiddleware,
+  asyncHandler,
 };

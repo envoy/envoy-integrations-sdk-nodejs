@@ -22,7 +22,8 @@ module.exports = {
     'consistent-return': 'off',
     'no-shadow': 'off',
     'no-plusplus': 'off',
-    'no-case-declarations': 'off'
+    'no-case-declarations': 'off',
+    'class-methods-use-this': 'off'
   },
   overrides: [
     {

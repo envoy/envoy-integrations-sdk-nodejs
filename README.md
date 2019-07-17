@@ -24,7 +24,7 @@ const app = express();
  */
 app.use(verifyMiddleware(), bodyParser.json(), sdkMiddleware());
 
-app.get('/url-to-a-route-or-worker', async (req, res) => {
+app.post('/url-to-a-route-or-worker', async (req, res) => {
   
   const { envoy } = req; // envoy is the SDK
   const {
@@ -55,6 +55,7 @@ app.get('/url-to-a-route-or-worker', async (req, res) => {
   /**
   * Job updates
   * All of the below can take optional attachments as the last parameter.
+  * Only job.complete is attaching data in the below examples.
   */
   await job.complete('Credentials provisioned.', [{ type: 'password', label: 'password', value: 'password' }]);
   await job.ignore('No credentials provisioned.', 'Email was not supplied.');
