@@ -3,10 +3,10 @@ const EnvoyJWT = require('./lib/EnvoyJWT');
 const EnvoyPluginJob = require('./lib/EnvoyPluginJob');
 const EnvoyPluginSDK = require('./lib/EnvoyPluginSDK');
 const EnvoyPluginStorage = require('./lib/EnvoyPluginStorage');
+const EnvoyPluginStoragePipeline = require('./lib/EnvoyPluginStoragePipeline');
 const EnvoyResponseError = require('./lib/EnvoyResponseError');
-const verifyMiddleware = require('./lib/middleware/verify');
-const sdkMiddleware = require('./lib/middleware/sdk');
-const asyncHandler = require('./lib/asyncHandler');
+const EnvoySignatureVerifier = require('./lib/EnvoySignatureVerifier');
+const middleware = require('./lib/middleware');
 
 module.exports = {
   EnvoyAPI,
@@ -14,8 +14,8 @@ module.exports = {
   EnvoyPluginJob,
   EnvoyPluginSDK,
   EnvoyPluginStorage,
+  EnvoyPluginStoragePipeline,
   EnvoyResponseError,
-  verifyMiddleware,
-  sdkMiddleware,
-  asyncHandler,
+  EnvoySignatureVerifier,
+  middleware,
 };

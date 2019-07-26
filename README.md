@@ -13,20 +13,19 @@ You need to have the following environment variables set:
 ### Example
 ```js
 const express = require('express');
-const bodyParser = require('body-parser');
-const { verifyMiddleware, sdkMiddleware } = require('envoy-plugin-sdk-nodejs');
+const { middleware } = require('envoy-plugin-sdk-nodejs');
 
 const app = express();
 /**
- * verifyMiddleware - Verifies the request came from Envoy.
- * bodyParser.json - Parses the request body as JSON.
- * sdkMiddleware - attaches the SDK to the req object.
+* "middleware" returns an array of:
+ * bodyParser.json - Parses the request body as JSON and verifies the Envoy signature.
+ * sdk - attaches the SDK to the req object.
  */
-app.use(verifyMiddleware(), bodyParser.json(), sdkMiddleware());
+app.use(...middleware());
 
 app.post('/url-to-a-route-or-worker', async (req, res) => {
   
-  const { envoy } = req; // envoy is the SDK
+  const { envoy } = req;  // "envoy" is the SDK
   const {
     meta, // the platform event request_meta object
     payload, // the platform event request_body object
@@ -51,19 +50,25 @@ app.post('/url-to-a-route-or-worker', async (req, res) => {
   const { value } = await installStorage.setUnique('foo'); // creates and returns a unique value for foo
   const { value } = await installStorage.get('foo'); // also gets the current value of foo
   await installStorage.unset('foo'); // deletes foo
+  /**
+  * You can also send multiple commands at once,
+  * to be executed in the same transaction.
+  * The response will be an array of the results of each command, in order.
+  */
+  const results = await installStorage.pipeline().set('foo1', 'bar').unset('foo2').get('foo3').execute();
   
   /**
   * Job updates
-  * All of the below can take optional attachments as the last parameter.
-  * Only job.complete is attaching data in the below examples.
+  * Note that job.complete can take any number of attachments after the first argument.
   */
-  await job.complete('Credentials provisioned.', [{ type: 'password', label: 'password', value: 'password' }]);
+  await job.complete('Credentials provisioned.', { type: 'password', label: 'password', value: 'password' });
   await job.ignore('No credentials provisioned.', 'Email was not supplied.');
   await job.fail('Could not provision credentials.', 'Server could not be reached.');
   /**
-  * You can also just attach things without updating the status. 
+  * You can also just attach things without completing the job.
+  * Attach more things by providing more arguments.
   */
-  await job.attach([{ type: 'text', label: 'foo', value: 'bar' }]);
+  await job.attach({ type: 'text', label: 'foo', value: 'bar' });
   
   /**
   * JWT usage 
