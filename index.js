@@ -8,6 +8,22 @@ const EnvoyResponseError = require('./lib/EnvoyResponseError');
 const EnvoySignatureVerifier = require('./lib/EnvoySignatureVerifier');
 const middleware = require('./lib/middleware');
 
+/**
+ * @typedef {Object} Envoy
+ * @property {EnvoyAPI} EnvoyAPI
+ * @property {EnvoyJWT} EnvoyJWT
+ * @property {EnvoyPluginJob} EnvoyPluginJob
+ * @property {EnvoyPluginSDK} EnvoyPluginSDK
+ * @property {EnvoyPluginStorage} EnvoyPluginStorage
+ * @property {EnvoyPluginStoragePipeline} EnvoyPluginStoragePipeline
+ * @property {EnvoyResponseError} EnvoyResponseError
+ * @property {EnvoySignatureVerifier} EnvoySignatureVerifier
+ * @property {Function} middleware
+ */
+
+/**
+ * @type {Envoy}
+ */
 module.exports = {
   EnvoyAPI,
   EnvoyJWT,

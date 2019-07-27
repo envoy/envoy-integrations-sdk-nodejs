@@ -17,7 +17,7 @@ const { middleware } = require('envoy-plugin-sdk-nodejs');
 
 const app = express();
 /**
-* "middleware" returns an array of:
+* "middleware()" returns an array of:
  * bodyParser.json - Parses the request body as JSON and verifies the Envoy signature.
  * sdk - attaches the SDK to the req object.
  */
@@ -25,6 +25,9 @@ app.use(...middleware());
 
 app.post('/url-to-a-route-or-worker', async (req, res) => {
   
+ /**
+  * @type EnvoyPluginSDK 
+  */
   const { envoy } = req;  // "envoy" is the SDK
   const {
     meta, // the platform event request_meta object
@@ -69,6 +72,12 @@ app.post('/url-to-a-route-or-worker', async (req, res) => {
   * Attach more things by providing more arguments.
   */
   await job.attach({ type: 'text', label: 'foo', value: 'bar' });
+  /**
+  * If the job is some multi-step process,
+  * you can update it's message without changing the status.
+  * You can also optionally attach things by providing more arguments.
+  */
+  await job.update('Still working...');
   
   /**
   * JWT usage 
