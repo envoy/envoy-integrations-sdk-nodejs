@@ -17,11 +17,11 @@ const { middleware } = require('envoy-plugin-sdk-nodejs');
 
 const app = express();
 /**
-* "middleware()" returns an array of:
- * bodyParser.json - Parses the request body as JSON and verifies the Envoy signature.
- * sdk - attaches the SDK to the req object.
+ * "middleware()" returns an instance of bodyParser.json,
+ * that also verifies the Envoy signature in addition to
+ * parsing the request body as JSON.
  */
-app.use(...middleware());
+app.use(middleware());
 
 app.post('/url-to-a-route-or-worker', async (req, res) => {
   
