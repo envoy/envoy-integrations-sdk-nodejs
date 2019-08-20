@@ -1,3 +1,4 @@
+require('dotenv').config();
 const EnvoyAPI = require('./lib/EnvoyAPI');
 const EnvoyJWT = require('./lib/EnvoyJWT');
 const EnvoyPluginJob = require('./lib/EnvoyPluginJob');
