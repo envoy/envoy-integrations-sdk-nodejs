@@ -5,7 +5,7 @@ The SDK can be used either standalone, or as a middleware that attaches itself t
 
 ### Setup
 You need to have the following environment variables set:
-- `ENVOY_API_TOKEN`: the plugin's API token
+- `ENVOY_CLIENT_ID`: the plugin's client id
 - `ENVOY_CLIENT_SECRET`: the plugin's client secret
 - `ENVOY_BASE_URL` (optional in production): the base URL to envoy-web
 - `JWT_SECRET` (optional if no JWTs are minted): a random long string to encode/decode JWTs 
