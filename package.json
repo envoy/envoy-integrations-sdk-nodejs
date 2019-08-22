@@ -28,6 +28,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
+    "jsdoc-to-markdown": "^5.0.0",
     "mocha": "^6.1.4",
     "proxyquire": "^2.1.0",
     "sinon": "^7.3.2"
