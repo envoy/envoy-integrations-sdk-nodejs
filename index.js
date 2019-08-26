@@ -7,7 +7,9 @@ const EnvoyPluginStorage = require('./lib/EnvoyPluginStorage');
 const EnvoyPluginStoragePipeline = require('./lib/EnvoyPluginStoragePipeline');
 const EnvoyResponseError = require('./lib/EnvoyResponseError');
 const EnvoySignatureVerifier = require('./lib/EnvoySignatureVerifier');
+const HttpStatus = require('./lib/HttpStatus');
 const middleware = require('./lib/middleware');
+const errorMiddleware = require('./lib/errorMiddleware');
 
 /**
  * @typedef {Object} Envoy
@@ -19,7 +21,9 @@ const middleware = require('./lib/middleware');
  * @property {EnvoyPluginStoragePipeline} EnvoyPluginStoragePipeline
  * @property {EnvoyResponseError} EnvoyResponseError
  * @property {EnvoySignatureVerifier} EnvoySignatureVerifier
+ * @property {HttpStatus} HttpStatus
  * @property {Function} middleware
+ * @property {Function} errorMiddleware
  */
 
 /**
@@ -34,5 +38,7 @@ module.exports = {
   EnvoyPluginStoragePipeline,
   EnvoyResponseError,
   EnvoySignatureVerifier,
+  HttpStatus,
   middleware,
+  errorMiddleware,
 };

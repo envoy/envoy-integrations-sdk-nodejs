@@ -64,7 +64,7 @@ app.post('/url-to-a-route-or-worker', async (req, res) => {
   * Job updates
   * Note that job.complete can take any number of attachments after the first argument.
   */
-  await job.complete('Credentials provisioned.', { type: 'password', label: 'password', value: 'password' });
+  await job.complete('Credentials provisioned.', { label: 'password', value: 'password' });
   await job.ignore('No credentials provisioned.', 'Email was not supplied.');
   await job.fail('Could not provision credentials.', 'Server could not be reached.');
   /**
@@ -85,7 +85,28 @@ app.post('/url-to-a-route-or-worker', async (req, res) => {
   const token = await jwt.encode(visitorId, '30m');
   const { sub: visitorId } = await jwt.decode(token);
   
-  res.send({ hello: 'world' }); // will get set as the response_body in the platform event.
+  /**
+  * If in a validation URL:
+  */
+  res.send({ foo: 'bar' }); // will save foo in the installation config.
+  // or
+  res.sendFailed('This step has failed validation.'); // prevent the installer from progressing.
+  
+  /**
+  * If in an options URL:
+  */
+  res.send([ { label: 'Foo', value: 1 }, { label: 'Bar', value: 2 } ]); // display these options in the dropdown.
+  
+  /**
+  * If in a worker:
+  */
+  res.send({ hello: 'world' }); // the job was a success, and here's some data about it.
+  // or
+  res.sendOngoing({ hello: 'world' }); // the job is still ongoing, but here's some data about it.
+  // or
+  res.sendIgnored("We're not gonna do this one, sorry.", { hello: 'world' }); // doesnt meet the requirements to continue.
+  // or
+  res.sendFailed('We tried, but failed.', { hello: 'world' }); // we cant continue with this job.
   
 });
 ```
