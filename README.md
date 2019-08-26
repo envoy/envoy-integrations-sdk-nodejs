@@ -13,7 +13,7 @@ You need to have the following environment variables set:
 ### Example
 ```js
 const express = require('express');
-const { middleware } = require('envoy-plugin-sdk-nodejs');
+const { middleware, errorMiddleware, asyncHandler } = require('envoy-plugin-sdk-nodejs');
 
 const app = express();
 /**
@@ -23,7 +23,7 @@ const app = express();
  */
 app.use(middleware());
 
-app.post('/url-to-a-route-or-worker', async (req, res) => {
+app.post('/url-to-a-route-or-worker', asyncHandler(async (req, res) => {
   
  /**
   * @type EnvoyPluginSDK 
@@ -108,5 +108,7 @@ app.post('/url-to-a-route-or-worker', async (req, res) => {
   // or
   res.sendFailed('We tried, but failed.', { hello: 'world' }); // we cant continue with this job.
   
-});
+}));
+
+app.use(errorMiddleware());
 ```

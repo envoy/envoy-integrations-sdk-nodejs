@@ -10,6 +10,7 @@ const EnvoySignatureVerifier = require('./lib/EnvoySignatureVerifier');
 const HttpStatus = require('./lib/HttpStatus');
 const middleware = require('./lib/middleware');
 const errorMiddleware = require('./lib/errorMiddleware');
+const asyncHandler = require('./lib/asyncHandler');
 
 /**
  * @typedef {Object} Envoy
@@ -24,6 +25,7 @@ const errorMiddleware = require('./lib/errorMiddleware');
  * @property {HttpStatus} HttpStatus
  * @property {Function} middleware
  * @property {Function} errorMiddleware
+ * @property {Function} asyncHandler
  */
 
 /**
@@ -41,4 +43,5 @@ module.exports = {
   HttpStatus,
   middleware,
   errorMiddleware,
+  asyncHandler,
 };
