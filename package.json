@@ -1,5 +1,5 @@
 {
-  "name": "envoy-integrations-sdk-nodejs",
+  "name": "@envoy/envoy-integrations-sdk",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
