@@ -1,19 +1,35 @@
-# SDK for webhook-based plugins
+# Envoy Node.js SDK
 
-## Usage
-The SDK can be used either standalone, or as a middleware that attaches itself to the `req` object. For convenience, use the middleware.
+The SDK exports several classes and functions, however the most typical way to integrate the SDK is as middleware. The `middleware()` function call returns a middleware that attaches an instance of `EnvoyPluginSDK` to the `req` object and verifies that the request came from Envoy. It is available as `req.envoy`.
 
-### Setup
-You need to have the following environment variables set:
-- `ENVOY_CLIENT_ID`: the plugin's client id
-- `ENVOY_CLIENT_SECRET`: the plugin's client secret
-- `ENVOY_BASE_URL` (optional in production): the base URL to envoy-web
-- `JWT_SECRET` (optional if no JWTs are minted): a random long string to encode/decode JWTs 
+## Installation
 
-### Example
-```js
+```bash
+npm install --save @envoy/envoy-integrations-sdk
+```
+
+### Environment Variables
+
+The SDK relies on a few environment variables:
+
+* `ENVOY_CLIENT_ID` - can be found in the Integration Builder
+* `ENVOY_CLIENT_SECRET` - can be found in the Integration Builder
+* `ENVOY_BASE_URL` - \(optional in production\) the URL to Envoy's API
+* `JWT_SECRET` - \(optional\) used if encoding/decoding JWTs
+
+Locally, these environment variables can be set using a `.env` file.
+
+### Getting Started
+
+View our node.js [quickstart guide](https://developer.envoy.com/dev-hub/docs/nodejs).  
+
+### Usage
+
+Here's the typical SDK usage at a glance.
+
+```javascript
 const express = require('express');
-const { middleware, errorMiddleware, asyncHandler } = require('envoy-plugin-sdk-nodejs');
+const { middleware, errorMiddleware, asyncHandler } = require('@envoy/envoy-integrations-sdk');
 
 const app = express();
 /**
@@ -24,27 +40,27 @@ const app = express();
 app.use(middleware());
 
 app.post('/url-to-a-route-or-worker', asyncHandler(async (req, res) => {
-  
+
  /**
-  * @type EnvoyPluginSDK 
+  * @type EnvoyPluginSDK
   */
   const { envoy } = req;  // "envoy" is the SDK
   const {
     meta, // the platform event request_meta object
     payload, // the platform event request_body object
-    userAPI, // user-scoped API calls, used in routes 
+    userAPI, // user-scoped API calls, used in routes
     pluginAPI, // plugin-scoped API calls, for plugin services
     installStorage, // install-scoped storage
     globalStorage, // global-scoped storage
     job, // update the job (if in a worker)
     jwt, // helper to encode/decode jwts
   } = envoy;
-  
+
   /**
   * User API usage
   */
   const visitorTypes = await userAPI.flows(locationId);
-  
+
   /**
   * Storage usage
   * The below can be used both at the install level or global level
@@ -59,7 +75,7 @@ app.post('/url-to-a-route-or-worker', asyncHandler(async (req, res) => {
   * The response will be an array of the results of each command, in order.
   */
   const results = await installStorage.pipeline().set('foo1', 'bar').unset('foo2').get('foo3').execute();
-  
+
   /**
   * Job updates
   * Note that job.complete can take any number of attachments after the first argument.
@@ -78,25 +94,25 @@ app.post('/url-to-a-route-or-worker', asyncHandler(async (req, res) => {
   * You can also optionally attach things by providing more arguments.
   */
   await job.update('Still working...');
-  
+
   /**
-  * JWT usage 
+  * JWT usage
   */
   const token = await jwt.encode(visitorId, '30m');
   const { sub: visitorId } = await jwt.decode(token);
-  
+
   /**
   * If in a validation URL:
   */
   res.send({ foo: 'bar' }); // will save foo in the installation config.
   // or
   res.sendFailed('This step has failed validation.'); // prevent the installer from progressing.
-  
+
   /**
   * If in an options URL:
   */
   res.send([ { label: 'Foo', value: 1 }, { label: 'Bar', value: 2 } ]); // display these options in the dropdown.
-  
+
   /**
   * If in a worker:
   */
@@ -107,8 +123,29 @@ app.post('/url-to-a-route-or-worker', asyncHandler(async (req, res) => {
   res.sendIgnored("We're not gonna do this one, sorry.", { hello: 'world' }); // doesnt meet the requirements to continue.
   // or
   res.sendFailed('We tried, but failed.', { hello: 'world' }); // we cant continue with this job.
-  
+
 }));
 
 app.use(errorMiddleware());
 ```
+
+## SDK Reference
+
+For completeness, here is a list of each module exported by the SDK package.
+
+| Name | Type |
+| :--- | :--- |
+| EnvoyAPI | [EnvoyAPI](envoyapi.md) |
+| EnvoyJWT | [EnvoyJWT](envoyjwt.md) |
+| EnvoyPluginJob | [EnvoyPluginJob](envoypluginjob.md) |
+| EnvoyPluginSDK | [EnvoyPluginSDK](envoypluginsdk.md) |
+| EnvoyPluginStorage | [EnvoyPluginStorage](envoypluginstorage.md) |
+| EnvoyPluginStoragePipeline | [EnvoyPluginStoragePipeline](envoypluginstoragepipeline.md) |
+| EnvoySignatureVerifier | [EnvoySignatureVerifier](envoysignatureverifier.md) |
+| middleware | [middleware](middleware.md) |
+| errorMiddleware | [errorMiddleware](errormiddleware.md) |
+| asyncHandler | [asyncHandler](asynchandler.md) |
+
+### Contributing
+
+We're happy to accept contributions. [Submit a PR](https://github.com/envoy/envoy-integrations-sdk-nodejs/pulls).
