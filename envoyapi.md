@@ -4,9 +4,7 @@ description: Makes calls to the Envoy API.
 
 # EnvoyAPI
 
-{% hint style="info" %}
 Note that there are many API calls not covered by this class. Please add to this class as necessary!
-{% endhint %}
 
 ## Constructor
 
@@ -150,4 +148,3 @@ Gets an access token using client\_credentials as the grant type.
 | :--- | :--- | :--- |
 | action | `string` | the type of command to run |
 | key | `string` | the key to operate on |
-
