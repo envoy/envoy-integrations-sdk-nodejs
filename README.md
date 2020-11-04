@@ -129,22 +129,22 @@ app.post('/url-to-a-route-or-worker', asyncHandler(async (req, res) => {
 app.use(errorMiddleware());
 ```
 
-## Full List of Exports
+## SDK Reference
 
 For completeness, here is a list of each module exported by the SDK package.
 
 | Name | Type |
 | :--- | :--- |
-| EnvoyAPI | \`\`[`EnvoyAPI`]()\`\` |
-| EnvoyJWT | \`\`[`EnvoyJWT`]()\`\` |
-| EnvoyPluginJob | \`\`[`EnvoyPluginJob`]()\`\` |
-| EnvoyPluginSDK | \`\`[`EnvoyPluginSDK`]()\`\` |
-| EnvoyPluginStorage | \`\`[`EnvoyPluginStorage`]()\`\` |
-| EnvoyPluginStoragePipeline | \`\`[`EnvoyPluginStoragePipeline`]()\`\` |
-| EnvoySignatureVerifier | \`\`[`EnvoySignatureVerifier`]()\`\` |
-| middleware | \`\`[`function`]()\`\` |
-| errorMiddleware | \`\`[`errorMiddleware`]()\`\` |
-| asyncHandler | \`\`[`asyncHandler`]()\`\` |
+| EnvoyAPI | [EnvoyAPI](envoyapi.md) |
+| EnvoyJWT | [EnvoyJWT](envoyjwt.md) |
+| EnvoyPluginJob | [EnvoyPluginJob](envoypluginjob.md) |
+| EnvoyPluginSDK | [EnvoyPluginSDK](envoypluginsdk.md) |
+| EnvoyPluginStorage | [EnvoyPluginStorage](envoypluginstorage.md) |
+| EnvoyPluginStoragePipeline | [EnvoyPluginStoragePipeline](envoypluginstoragepipeline.md) |
+| EnvoySignatureVerifier | [EnvoySignatureVerifier](envoysignatureverifier.md) |
+| middleware | [middleware](middleware.md) |
+| errorMiddleware | [errorMiddleware](errormiddleware.md) |
+| asyncHandler | [asyncHandler](asynchandler.md) |
 
 ### Contributing
 
