@@ -21,7 +21,7 @@ Locally, these environment variables can be set using a `.env` file.
 
 ### Getting Started
 
-View our node.js [quickstart guide](https://developer.envoy.com/dev-hub/docs/nodejs).  
+View our Node.js [quickstart guide](https://developers.envoy.com/hub/docs/nodejs).  
 
 ### Usage
 
