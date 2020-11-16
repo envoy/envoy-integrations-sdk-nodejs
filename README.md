@@ -66,7 +66,8 @@ app.post('/url-to-a-route-or-worker', asyncHandler(async (req, res) => {
   * The below can be used both at the install level or global level
   */
   await installStorage.set('foo', 'bar'); // sets foo=bar in storage for this install
-  const { value } = await installStorage.setUnique('foo'); // creates and returns a unique value for foo
+  const { value } = await installStorage.setUnique('foo'); // creates and returns a unique text value for foo
+  const { value } = await installStorage.setUniqueNum('foo'); // creates and returns a unique number for foo
   const { value } = await installStorage.get('foo'); // also gets the current value of foo
   await installStorage.unset('foo'); // deletes foo
   /**
