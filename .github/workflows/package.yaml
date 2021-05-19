@@ -1,0 +1,43 @@
+name: Node.js Package
+on:
+  release:
+    types: [created]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Get Node.js version
+        id: node-version
+        run: |
+          echo "::set-output name=version::$(node --version)"
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        id: cache-node-modules
+        with:
+          path: node_modules
+          key: v1-node-${{ steps.node-version.outputs.version }}-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ENVOYBOT_PERSONAL_ACCESS_TOKEN }}
+
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ENVOY_NPM_AUTOMATION_TOKEN }}
+
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v2
+        with:
+          registry-url: "https://npm.pkg.github.com"
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
