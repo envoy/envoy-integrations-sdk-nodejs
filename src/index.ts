@@ -14,6 +14,8 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
 import HttpStatus from './HttpStatus';
 import middleware, { EnvoyMiddleware } from './middleware';
 
+export * from './EnvoyMeta';
+export * from './EnvoyRequest';
 export {
   asyncHandler,
   errorMiddleware,
