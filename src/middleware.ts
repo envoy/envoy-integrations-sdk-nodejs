@@ -8,7 +8,9 @@ import HttpStatus from './HttpStatus';
 import EnvoyRequest, { VERIFIED, VerifiedRequest } from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
 
-export default function middleware(options: EnvoySignatureVerifierOptions) {
+export type EnvoyMiddleware = (req: EnvoyRequest, res: EnvoyResponse, next: NextFunction) => void;
+
+export default function middleware(options: EnvoySignatureVerifierOptions): EnvoyMiddleware {
   const signatureVerifier = new EnvoySignatureVerifier(options);
   const verify = (req: VerifiedRequest, res: Response, rawBody: Buffer) => {
     req[VERIFIED] = signatureVerifier.verify(req, rawBody);
