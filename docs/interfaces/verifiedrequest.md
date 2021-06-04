@@ -24,4 +24,4 @@
 
 #### Defined in
 
-[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/981d571/src/EnvoyRequest.ts#L10)
+[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d2a4136/src/EnvoyRequest.ts#L10)

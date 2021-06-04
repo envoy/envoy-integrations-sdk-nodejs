@@ -2,6 +2,11 @@
 
 # Interface: EnvoyBaseRequest<Meta, Payload\>
 
+Base type for Envoy requests.
+You probably won't need to use this type directly.
+For routes, use `EnvoyRouteRequest`,
+and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
+
 ## Type parameters
 
 | Name | Type |
@@ -34,7 +39,7 @@
 
 #### Defined in
 
-[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/981d571/src/EnvoyRequest.ts#L10)
+[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d2a4136/src/EnvoyRequest.ts#L10)
 
 ___
 
@@ -44,4 +49,4 @@ ___
 
 #### Defined in
 
-[EnvoyRequest.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/981d571/src/EnvoyRequest.ts#L14)
+[EnvoyRequest.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d2a4136/src/EnvoyRequest.ts#L20)
