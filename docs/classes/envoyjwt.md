@@ -30,7 +30,7 @@ Helper to encode and decode JWTs.
 
 #### Defined in
 
-[src/EnvoyJWT.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyJWT.ts#L12)
+[EnvoyJWT.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyJWT.ts#L12)
 
 ## Methods
 
@@ -51,7 +51,7 @@ Helper to encode and decode JWTs.
 
 #### Defined in
 
-[src/EnvoyJWT.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyJWT.ts#L39)
+[EnvoyJWT.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyJWT.ts#L39)
 
 ___
 
@@ -73,4 +73,4 @@ ___
 
 #### Defined in
 
-[src/EnvoyJWT.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyJWT.ts#L22)
+[EnvoyJWT.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyJWT.ts#L22)

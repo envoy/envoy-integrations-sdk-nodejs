@@ -41,7 +41,7 @@ Builds up a request pipeline for submitting storage commands.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L16)
+[EnvoyPluginStoragePipeline.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L16)
 
 ## Properties
 
@@ -51,7 +51,7 @@ Builds up a request pipeline for submitting storage commands.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L12)
+[EnvoyPluginStoragePipeline.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L12)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L14)
+[EnvoyPluginStoragePipeline.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L14)
 
 ## Methods
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L39)
+[EnvoyPluginStoragePipeline.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L39)
 
 ___
 
@@ -97,7 +97,7 @@ Executes all the commands in the pipeline.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L27)
+[EnvoyPluginStoragePipeline.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L27)
 
 ___
 
@@ -113,7 +113,7 @@ Executes the pipeline and returns the first result.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:34](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L34)
+[EnvoyPluginStoragePipeline.ts:34](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L34)
 
 ___
 
@@ -135,7 +135,7 @@ Gets a storage item.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L47)
+[EnvoyPluginStoragePipeline.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L47)
 
 ___
 
@@ -159,7 +159,7 @@ and returns that item.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:55](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L55)
+[EnvoyPluginStoragePipeline.ts:55](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L55)
 
 ___
 
@@ -183,7 +183,7 @@ and returns that item.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:63](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L63)
+[EnvoyPluginStoragePipeline.ts:63](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L63)
 
 ___
 
@@ -207,7 +207,7 @@ and returns that item.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:71](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L71)
+[EnvoyPluginStoragePipeline.ts:71](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L71)
 
 ___
 
@@ -229,4 +229,4 @@ Unsets a storage item.
 
 #### Defined in
 
-[src/EnvoyPluginStoragePipeline.ts:78](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginStoragePipeline.ts#L78)
+[EnvoyPluginStoragePipeline.ts:78](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyPluginStoragePipeline.ts#L78)
