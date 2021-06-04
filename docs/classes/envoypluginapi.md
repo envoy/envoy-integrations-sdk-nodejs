@@ -1,3 +1,7 @@
+[@envoy/envoy-integrations-sdk](../README.md) / EnvoyPluginAPI
+
+# Class: EnvoyPluginAPI
+
 API endpoints for *plugin-scoped* tokens.
 
 ## Hierarchy
@@ -10,20 +14,20 @@ API endpoints for *plugin-scoped* tokens.
 
 ### Constructors
 
-- [constructor](../wiki/Class:%20EnvoyPluginAPI#constructor)
+- [constructor](envoypluginapi.md#constructor)
 
 ### Properties
 
-- [axios](../wiki/Class:%20EnvoyPluginAPI#axios)
+- [axios](envoypluginapi.md#axios)
 
 ### Methods
 
-- [createNotification](../wiki/Class:%20EnvoyPluginAPI#createnotification)
-- [getPluginInstallConfig](../wiki/Class:%20EnvoyPluginAPI#getplugininstallconfig)
-- [setPluginInstallConfig](../wiki/Class:%20EnvoyPluginAPI#setplugininstallconfig)
-- [storagePipeline](../wiki/Class:%20EnvoyPluginAPI#storagepipeline)
-- [updateJob](../wiki/Class:%20EnvoyPluginAPI#updatejob)
-- [login](../wiki/Class:%20EnvoyPluginAPI#login)
+- [createNotification](envoypluginapi.md#createnotification)
+- [getPluginInstallConfig](envoypluginapi.md#getplugininstallconfig)
+- [setPluginInstallConfig](envoypluginapi.md#setplugininstallconfig)
+- [storagePipeline](envoypluginapi.md#storagepipeline)
+- [updateJob](envoypluginapi.md#updatejob)
+- [login](envoypluginapi.md#login)
 
 ## Constructors
 
@@ -43,7 +47,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[EnvoyAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyAPI.ts#L58)
+[EnvoyAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyAPI.ts#L58)
 
 ## Properties
 
@@ -59,7 +63,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[EnvoyAPI.ts:31](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyAPI.ts#L31)
+[EnvoyAPI.ts:31](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyAPI.ts#L31)
 
 ## Methods
 
@@ -80,7 +84,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:50](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginAPI.ts#L50)
+[EnvoyPluginAPI.ts:50](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyPluginAPI.ts#L50)
 
 ___
 
@@ -100,7 +104,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginAPI.ts#L21)
+[EnvoyPluginAPI.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyPluginAPI.ts#L21)
 
 ___
 
@@ -121,13 +125,13 @@ ___
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginAPI.ts#L26)
+[EnvoyPluginAPI.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyPluginAPI.ts#L26)
 
 ___
 
 ### storagePipeline
 
-▸ **storagePipeline**(`commands`, `installId?`): `Promise`<(``null`` \| [EnvoyStorageItem](../wiki/Home#envoystorageitem))[]\>
+▸ **storagePipeline**(`commands`, `installId?`): `Promise`<(``null`` \| [EnvoyStorageItem](../README.md#envoystorageitem))[]\>
 
 #### Parameters
 
@@ -138,11 +142,11 @@ ___
 
 #### Returns
 
-`Promise`<(``null`` \| [EnvoyStorageItem](../wiki/Home#envoystorageitem))[]\>
+`Promise`<(``null`` \| [EnvoyStorageItem](../README.md#envoystorageitem))[]\>
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:34](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginAPI.ts#L34)
+[EnvoyPluginAPI.ts:34](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyPluginAPI.ts#L34)
 
 ___
 
@@ -163,13 +167,13 @@ ___
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginAPI.ts#L13)
+[EnvoyPluginAPI.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyPluginAPI.ts#L13)
 
 ___
 
 ### login
 
-▸ `Static` **login**(`id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../wiki/Home#envoymetaauth)\>
+▸ `Static` **login**(`id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
 
 Gets a plugin access token using `client_credentials` as the grant type.
 
@@ -182,8 +186,8 @@ Gets a plugin access token using `client_credentials` as the grant type.
 
 #### Returns
 
-`Promise`<[EnvoyMetaAuth](../wiki/Home#envoymetaauth)\>
+`Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginAPI.ts#L61)
+[EnvoyPluginAPI.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyPluginAPI.ts#L61)

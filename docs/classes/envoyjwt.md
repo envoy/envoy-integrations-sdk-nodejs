@@ -1,15 +1,19 @@
+[@envoy/envoy-integrations-sdk](../README.md) / EnvoyJWT
+
+# Class: EnvoyJWT
+
 Helper to encode and decode JWTs.
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](../wiki/Class:%20EnvoyJWT#constructor)
+- [constructor](envoyjwt.md#constructor)
 
 ### Methods
 
-- [decode](../wiki/Class:%20EnvoyJWT#decode)
-- [encode](../wiki/Class:%20EnvoyJWT#encode)
+- [decode](envoyjwt.md#decode)
+- [encode](envoyjwt.md#encode)
 
 ## Constructors
 
@@ -26,7 +30,7 @@ Helper to encode and decode JWTs.
 
 #### Defined in
 
-[EnvoyJWT.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyJWT.ts#L12)
+[EnvoyJWT.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyJWT.ts#L12)
 
 ## Methods
 
@@ -47,7 +51,7 @@ Helper to encode and decode JWTs.
 
 #### Defined in
 
-[EnvoyJWT.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyJWT.ts#L39)
+[EnvoyJWT.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyJWT.ts#L39)
 
 ___
 
@@ -69,4 +73,4 @@ ___
 
 #### Defined in
 
-[EnvoyJWT.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyJWT.ts#L22)
+[EnvoyJWT.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyJWT.ts#L22)
