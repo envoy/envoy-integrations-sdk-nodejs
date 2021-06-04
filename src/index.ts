@@ -15,6 +15,7 @@ import HttpStatus from './HttpStatus';
 import middleware, { EnvoyMiddleware } from './middleware';
 import EntryPayload from './payloads/EntryPayload';
 import InvitePayload from './payloads/InvitePayload';
+import JSONAPIData from './util/json-api/JSONAPIData';
 
 export * from './EnvoyMeta';
 export * from './EnvoyRequest';
@@ -37,5 +38,6 @@ export {
   EnvoyPluginAPI,
   EnvoyUserAPI,
   HttpStatus,
+  JSONAPIData,
   middleware,
 };

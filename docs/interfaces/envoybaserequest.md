@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/fbf2ead/src/EnvoyRequest.ts#L10)
+[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/981d571/src/EnvoyRequest.ts#L10)
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 #### Defined in
 
-[EnvoyRequest.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/fbf2ead/src/EnvoyRequest.ts#L14)
+[EnvoyRequest.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/981d571/src/EnvoyRequest.ts#L14)
