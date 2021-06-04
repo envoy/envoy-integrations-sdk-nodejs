@@ -11,11 +11,6 @@ or to the plugin itself.
 
 - [constructor](envoypluginstorage.md#constructor)
 
-### Properties
-
-- [api](envoypluginstorage.md#api)
-- [installId](envoypluginstorage.md#installid)
-
 ### Methods
 
 - [get](envoypluginstorage.md#get)
@@ -40,33 +35,13 @@ or to the plugin itself.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L13)
-
-## Properties
-
-### api
-
-• `Readonly` **api**: [EnvoyPluginAPI](envoypluginapi.md)
-
-#### Defined in
-
-[EnvoyPluginStorage.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L11)
-
-___
-
-### installId
-
-• `Readonly` **installId**: `undefined` \| `string`
-
-#### Defined in
-
-[EnvoyPluginStorage.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L13)
+[EnvoyPluginStorage.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginStorage.ts#L13)
 
 ## Methods
 
 ### get
 
-▸ **get**(`key`): `Promise`<``null`` \| default\>
+▸ **get**(`key`): `Promise`<``null`` \| EnvoyStorageItem\>
 
 Wrapper for single pipeline get.
 
@@ -78,11 +53,11 @@ Wrapper for single pipeline get.
 
 #### Returns
 
-`Promise`<``null`` \| default\>
+`Promise`<``null`` \| EnvoyStorageItem\>
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:30](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L30)
+[EnvoyPluginStorage.ts:30](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginStorage.ts#L30)
 
 ___
 
@@ -98,13 +73,13 @@ Creates a new pipeline instance.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L23)
+[EnvoyPluginStorage.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginStorage.ts#L23)
 
 ___
 
 ### set
 
-▸ **set**(`key`, `value`): `Promise`<``null`` \| default\>
+▸ **set**(`key`, `value`): `Promise`<``null`` \| EnvoyStorageItem\>
 
 Wrapper for single pipeline set.
 
@@ -117,17 +92,17 @@ Wrapper for single pipeline set.
 
 #### Returns
 
-`Promise`<``null`` \| default\>
+`Promise`<``null`` \| EnvoyStorageItem\>
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L37)
+[EnvoyPluginStorage.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginStorage.ts#L37)
 
 ___
 
 ### setUnique
 
-▸ **setUnique**(`key`, `options?`): `Promise`<``null`` \| default\>
+▸ **setUnique**(`key`, `options?`): `Promise`<``null`` \| EnvoyStorageItem\>
 
 Wrapper for single pipeline setUnique.
 
@@ -140,17 +115,17 @@ Wrapper for single pipeline setUnique.
 
 #### Returns
 
-`Promise`<``null`` \| default\>
+`Promise`<``null`` \| EnvoyStorageItem\>
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:44](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L44)
+[EnvoyPluginStorage.ts:44](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginStorage.ts#L44)
 
 ___
 
 ### setUniqueNum
 
-▸ **setUniqueNum**(`key`, `options?`): `Promise`<``null`` \| default\>
+▸ **setUniqueNum**(`key`, `options?`): `Promise`<``null`` \| EnvoyStorageItem\>
 
 Wrapper for single pipeline setUnique.
 
@@ -163,17 +138,17 @@ Wrapper for single pipeline setUnique.
 
 #### Returns
 
-`Promise`<``null`` \| default\>
+`Promise`<``null`` \| EnvoyStorageItem\>
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:51](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L51)
+[EnvoyPluginStorage.ts:51](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginStorage.ts#L51)
 
 ___
 
 ### unset
 
-▸ **unset**(`key`): `Promise`<``null`` \| default\>
+▸ **unset**(`key`): `Promise`<``null`` \| EnvoyStorageItem\>
 
 Wrapper for single pipeline unset.
 Returns null if the item did not previously exist.
@@ -186,8 +161,8 @@ Returns null if the item did not previously exist.
 
 #### Returns
 
-`Promise`<``null`` \| default\>
+`Promise`<``null`` \| EnvoyStorageItem\>
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/EnvoyPluginStorage.ts#L59)
+[EnvoyPluginStorage.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginStorage.ts#L59)

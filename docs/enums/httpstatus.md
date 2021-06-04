@@ -21,7 +21,7 @@ Use these status codes to inform Envoy of a job's or route's status.
 
 #### Defined in
 
-[HttpStatus.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/HttpStatus.ts#L7)
+[HttpStatus.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/HttpStatus.ts#L7)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[HttpStatus.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/HttpStatus.ts#L6)
+[HttpStatus.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/HttpStatus.ts#L6)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[HttpStatus.ts:5](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/HttpStatus.ts#L5)
+[HttpStatus.ts:5](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/HttpStatus.ts#L5)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[HttpStatus.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c08fadc/src/HttpStatus.ts#L8)
+[HttpStatus.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/HttpStatus.ts#L8)

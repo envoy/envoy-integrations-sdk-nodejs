@@ -3,7 +3,10 @@ import EnvoyJWT from './EnvoyJWT';
 import EnvoyPluginJob from './EnvoyPluginJob';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginStorage from './EnvoyPluginStorage';
+import EnvoyStorageItem from './EnvoyStorageItem';
 import EnvoyPluginStoragePipeline from './EnvoyPluginStoragePipeline';
+import EnvoyRequest from './EnvoyRequest';
+import EnvoyResponse from './EnvoyResponse';
 import EnvoySignatureVerifier from './EnvoySignatureVerifier';
 import EnvoyUserAPI from './EnvoyUserAPI';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
@@ -17,8 +20,11 @@ export {
   EnvoyPluginJob,
   EnvoyPluginSDK,
   EnvoyPluginStorage,
+  EnvoyStorageItem,
   EnvoyPluginStoragePipeline,
   EnvoySignatureVerifier,
+  EnvoyRequest,
+  EnvoyResponse,
   EnvoyUserAPI,
   EnvoyPluginAPI,
   HttpStatus,

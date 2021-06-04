@@ -1,4 +1,6 @@
-export default interface EnvoyStorageItem {
+type EnvoyStorageItem = {
   key: string,
   value: unknown,
-}
+};
+
+export default EnvoyStorageItem;

@@ -10,7 +10,7 @@ export interface VerifiedRequest extends Request {
   [VERIFIED]: boolean
 }
 
-export default interface EnvoyRequest <Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
+export interface EnvoyBaseRequest<Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
   envoy: EnvoyPluginSDK<Meta, Payload>
 }
 
@@ -18,16 +18,25 @@ export default interface EnvoyRequest <Meta extends EnvoyMeta = EnvoyMeta, Paylo
  * Use to type your `req` object in route handlers,
  * such as validation URLS or options URLs.
  */
-export type EnvoyRouteRequest<Payload = unknown> = EnvoyRequest<EnvoyRouteMeta, Payload>;
+export type EnvoyRouteRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMeta, Payload>;
+
+/**
+ * Use to type your `req` object in route handlers,
+ * such as validation URLS or options URLs.
+ */
+export type EnvoyEventRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyEventMeta, Payload>;
 
 /**
  * Use to type your `req` object in entry event handlers,
  * such as handlers for `entry_sign_in`.
  */
-export type EnvoyEntryEventRequest = EnvoyRequest<EnvoyEventMeta, EntryPayload>;
+export type EnvoyEntryEventRequest = EnvoyEventRequest<EntryPayload>;
 
 /**
  * Use to type your `req` object in invite event handlers,
  * such as handlers for `invite_created` or `upcoming_visit`.
  */
-export type EnvoyInviteEventRequest = EnvoyRequest<EnvoyEventMeta, InvitePayload>;
+export type EnvoyInviteEventRequest = EnvoyEventRequest<InvitePayload>;
+
+type EnvoyRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMeta | EnvoyEventMeta, Payload>;
+export default EnvoyRequest;
