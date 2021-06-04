@@ -13,16 +13,16 @@ import EnvoyUserAPI from './EnvoyUserAPI';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 import HttpStatus from './HttpStatus';
 import middleware, { EnvoyMiddleware } from './middleware';
-import EntryPayload from './payloads/EntryPayload';
-import InvitePayload from './payloads/InvitePayload';
+// import EntryPayload from './payloads/EntryPayload';
+// import InvitePayload from './payloads/InvitePayload';
 
 export * from './EnvoyMeta';
 export * from './EnvoyRequest';
 export {
   asyncHandler,
   errorMiddleware,
-  EntryPayload,
-  InvitePayload,
+  // EntryPayload,
+  // InvitePayload,
   EnvoyJWT,
   EnvoyMiddleware,
   EnvoyPluginJob,
