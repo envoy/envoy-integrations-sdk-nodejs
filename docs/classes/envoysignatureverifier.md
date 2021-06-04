@@ -24,11 +24,11 @@ Verifies that a request is coming from Envoy.
 
 | Name | Type |
 | :------ | :------ |
-| `options` | [EnvoySignatureVerifierOptions](../interfaces/envoysignatureverifieroptions.md) |
+| `options` | [EnvoySignatureVerifierOptions](../README.md#envoysignatureverifieroptions) |
 
 #### Defined in
 
-[EnvoySignatureVerifier.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7d8339/src/EnvoySignatureVerifier.ts#L23)
+[EnvoySignatureVerifier.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/af53dd2/src/EnvoySignatureVerifier.ts#L23)
 
 ## Methods
 
@@ -51,4 +51,4 @@ Verifies that the signature provided matches the request body.
 
 #### Defined in
 
-[EnvoySignatureVerifier.ts:36](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7d8339/src/EnvoySignatureVerifier.ts#L36)
+[EnvoySignatureVerifier.ts:36](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/af53dd2/src/EnvoySignatureVerifier.ts#L36)

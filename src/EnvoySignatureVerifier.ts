@@ -2,12 +2,12 @@ import crypto, { BinaryToTextEncoding } from 'crypto';
 import { Request } from 'express';
 import { envoyClientSecret } from './constants';
 
-export interface EnvoySignatureVerifierOptions {
+export type EnvoySignatureVerifierOptions = {
   algorithm: 'sha256' | string,
   encoding: BinaryToTextEncoding,
   secret: string,
   header: 'x-envoy-signature' | string,
-}
+};
 
 const defaultOptions: EnvoySignatureVerifierOptions = {
   algorithm: 'sha256',

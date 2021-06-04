@@ -1,10 +1,10 @@
-export interface EnvoyMetaJob {
+export type EnvoyMetaJob = {
   id: string,
   name: string,
   identifier: string,
-}
+};
 
-export interface EnvoyMetaLocation {
+export type EnvoyMetaLocation = {
   id: string,
   type: 'locations',
   attributes: {
@@ -23,9 +23,9 @@ export interface EnvoyMetaLocation {
     latitude: number | null,
     'created-at': string,
   }
-}
+};
 
-export interface EnvoyMetaCompany {
+export type EnvoyMetaCompany = {
   id: string,
   type: 'companies',
   attributes: {
@@ -33,7 +33,7 @@ export interface EnvoyMetaCompany {
     active: boolean,
     'created-at': string,
   }
-}
+};
 
 /**
  * A short-lived userAPI token.
@@ -51,7 +51,7 @@ export type EnvoyMetaAuth = {
 /**
  * Metadata that will be included in the request body for events.
  */
-export interface EnvoyEventMeta {
+export type EnvoyEventMeta = {
   event: string,
   plugin_id: string,
   install_id: string,
@@ -60,13 +60,13 @@ export interface EnvoyEventMeta {
   location: EnvoyMetaLocation,
   company: EnvoyMetaCompany,
   auth: EnvoyMetaAuth | null,
-}
+};
 
 /**
  * Metadata that will be included in the request body for setup routes,
  * like validation URLs or options URLs.
  */
-export interface EnvoyRouteMeta {
+export type EnvoyRouteMeta = {
   route: string,
   plugin_id: string,
   install_id: string,
@@ -76,7 +76,7 @@ export interface EnvoyRouteMeta {
   company: EnvoyMetaCompany,
   auth: EnvoyMetaAuth | null,
   forwarded_bearer_token?: string,
-}
+};
 
 /**
  * Metadata that will be included in every request Envoy sends to your plugin.

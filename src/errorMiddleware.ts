@@ -1,13 +1,13 @@
 import { NextFunction } from 'express';
 import HttpStatus from './HttpStatus';
-import EnvoyBaseRequest from './EnvoyRequest';
+import EnvoyRequest from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
 
 /**
  * Catches errors and sets the proper status code.
  */
 export default function errorMiddleware(onError: (err: Error) => void = () => {}) {
-  return (err: Error, req: EnvoyBaseRequest, res: EnvoyResponse, next: NextFunction): void => {
+  return (err: Error, req: EnvoyRequest, res: EnvoyResponse, next: NextFunction): void => {
     onError(err);
     if (res.headersSent) {
       return next(err);
