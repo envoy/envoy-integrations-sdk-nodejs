@@ -1,14 +1,18 @@
 import EnvoyPluginStoragePipeline from './EnvoyPluginStoragePipeline';
-import EnvoyAPI from './EnvoyAPI';
 import { EnvoyStorageSetUniqueNumOptions, EnvoyStorageSetUniqueOptions } from './EnvoyStorageCommand';
 import EnvoyStorageItem from './EnvoyStorageItem';
+import EnvoyPluginAPI from './EnvoyPluginAPI';
 
+/**
+ * A key-value storage that can be scoped to a specific install,
+ * or to the plugin itself.
+ */
 export default class EnvoyPluginStorage {
-  readonly api: EnvoyAPI;
+  readonly api: EnvoyPluginAPI;
 
   readonly installId: string | undefined;
 
-  constructor(pluginAPI: EnvoyAPI, installId?: string) {
+  constructor(pluginAPI: EnvoyPluginAPI, installId?: string) {
     this.api = pluginAPI;
     this.installId = installId;
   }
@@ -30,7 +34,7 @@ export default class EnvoyPluginStorage {
   /**
    * Wrapper for single pipeline set.
    */
-  set(key: string, value: any): Promise<EnvoyStorageItem | null> {
+  set(key: string, value: unknown): Promise<EnvoyStorageItem | null> {
     return this.pipeline().set(key, value).executeSingle();
   }
 

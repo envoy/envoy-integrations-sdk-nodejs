@@ -132,20 +132,7 @@ app.use(errorMiddleware());
 
 ## SDK Reference
 
-For completeness, here is a list of each module exported by the SDK package.
-
-| Name | Type |
-| :--- | :--- |
-| EnvoyAPI | [EnvoyAPI](envoyapi.md) |
-| EnvoyJWT | [EnvoyJWT](envoyjwt.md) |
-| EnvoyPluginJob | [EnvoyPluginJob](envoypluginjob.md) |
-| EnvoyPluginSDK | [EnvoyPluginSDK](envoypluginsdk.md) |
-| EnvoyPluginStorage | [EnvoyPluginStorage](envoypluginstorage.md) |
-| EnvoyPluginStoragePipeline | [EnvoyPluginStoragePipeline](envoypluginstoragepipeline.md) |
-| EnvoySignatureVerifier | [EnvoySignatureVerifier](envoysignatureverifier.md) |
-| middleware | [middleware](middleware.md) |
-| errorMiddleware | [errorMiddleware](errormiddleware.md) |
-| asyncHandler | [asyncHandler](asynchandler.md) |
+Please see detailed documentation [here](docs/README.md).
 
 ### Contributing
 

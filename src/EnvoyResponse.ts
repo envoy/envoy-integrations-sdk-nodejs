@@ -1,7 +1,11 @@
 import { Response } from 'express';
+import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
 
+/**
+ * Use to type your `res` object in Envoy request handlers.
+ */
 export default interface EnvoyResponse extends Response {
-  sendOngoing: (data: any) => void;
-  sendIgnored: (message: string, data?: Record<string, any>) => void;
-  sendFailed: (message: string, data?: Record<string, any>) => void;
+  sendOngoing: (debugInfo?: unknown) => void;
+  sendIgnored: (message: string, debugInfo?: unknown, ...attachments: Array<EnvoyPluginJobAttachment>) => void;
+  sendFailed: (message: string, debugInfo?: unknown, ...attachments: Array<EnvoyPluginJobAttachment>) => void;
 }

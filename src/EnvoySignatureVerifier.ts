@@ -16,6 +16,9 @@ const defaultOptions: EnvoySignatureVerifierOptions = {
   header: 'x-envoy-signature',
 };
 
+/**
+ * Verifies that a request is coming from Envoy.
+ */
 export default class EnvoySignatureVerifier {
   private readonly options: EnvoySignatureVerifierOptions;
 

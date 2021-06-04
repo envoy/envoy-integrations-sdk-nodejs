@@ -1,3 +1,6 @@
+/**
+ * Use these status codes to inform Envoy of a job's or route's status.
+ */
 enum HttpStatus {
   ONGOING = 202,
   IGNORED = 400,

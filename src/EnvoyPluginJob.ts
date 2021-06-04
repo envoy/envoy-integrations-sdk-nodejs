@@ -1,13 +1,20 @@
-import EnvoyAPI from './EnvoyAPI';
 import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
 import EnvoyPluginJobUpdate from './EnvoyPluginJobUpdate';
+import EnvoyPluginAPI from './EnvoyPluginAPI';
 
+/**
+ * A "job" is an event, like `entry_sign_in`.
+ * When your plugin handles the event, you can use this job concept
+ * to update the status (e.g. complete, failed, ignored)
+ * as well as attach extra data to the event's subject
+ * (e.g. showing a generated card number in the dashboard for a visitor on `entry_sign_in`).
+ */
 export default class EnvoyPluginJob {
-  readonly api: EnvoyAPI;
+  readonly api: EnvoyPluginAPI;
 
   readonly id: string;
 
-  constructor(pluginAPI: EnvoyAPI, jobId: string) {
+  constructor(pluginAPI: EnvoyPluginAPI, jobId: string) {
     this.api = pluginAPI;
     this.id = jobId;
   }

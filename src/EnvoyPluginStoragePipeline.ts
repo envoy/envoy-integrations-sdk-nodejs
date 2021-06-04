@@ -1,18 +1,21 @@
-import EnvoyAPI from './EnvoyAPI';
 import EnvoyStorageCommand, {
   EnvoyStorageSetUniqueNumOptions,
   EnvoyStorageSetUniqueOptions,
 } from './EnvoyStorageCommand';
 import EnvoyStorageItem from './EnvoyStorageItem';
+import EnvoyPluginAPI from './EnvoyPluginAPI';
 
+/**
+ * Builds up a request pipeline for submitting storage commands.
+ */
 export default class EnvoyPluginStoragePipeline {
-  readonly api: EnvoyAPI;
+  readonly api: EnvoyPluginAPI;
 
   readonly installId: string | undefined;
 
-  private commands: Array<EnvoyStorageCommand>;
+  private readonly commands: Array<EnvoyStorageCommand>;
 
-  constructor(pluginAPI: EnvoyAPI, installId?: string) {
+  constructor(pluginAPI: EnvoyPluginAPI, installId?: string) {
     this.api = pluginAPI;
     this.installId = installId;
     this.commands = [];
@@ -49,8 +52,7 @@ export default class EnvoyPluginStoragePipeline {
    * Sets a value for a storage item,
    * and returns that item.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  set(key: string, value: any): EnvoyPluginStoragePipeline {
+  set(key: string, value: unknown): EnvoyPluginStoragePipeline {
     return this.addCommand({ action: 'set', key, value });
   }
 

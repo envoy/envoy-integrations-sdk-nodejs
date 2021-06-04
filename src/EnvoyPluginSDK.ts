@@ -1,20 +1,41 @@
-import EnvoyMeta from './EnvoyMeta';
-import EnvoyAPI from './EnvoyAPI';
+import EnvoyMeta, { EnvoyEventMeta, EnvoyRouteMeta } from './EnvoyMeta';
 import EnvoyPluginStorage from './EnvoyPluginStorage';
 import EnvoyPluginJob from './EnvoyPluginJob';
 import EnvoyJWT from './EnvoyJWT';
+import EnvoyUserAPI from './EnvoyUserAPI';
+import EnvoyPluginAPI from './EnvoyPluginAPI';
 
+/**
+ * Every Envoy request has a `meta` and `payload`.
+ */
 export interface EnvoyRequestBody<Meta, Payload> {
   meta: Meta,
   payload: Payload,
 }
 
-export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload = any> {
-  readonly body: EnvoyRequestBody<Meta, Payload>;
+/**
+ * Sets up all relevant Envoy functions.
+ * Attaches itself to every request object using our `middleware`,
+ * to allow for easy access to Envoy functions.
+ */
+export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> {
+  /**
+   * Body of the request.
+   * use `meta` or `payload` to access the relevant properties,
+   * instead of this directly.
+   */
+  private readonly body: EnvoyRequestBody<Meta, Payload>;
 
-  isVerified = false;
+  /**
+   * Verified that the request comes from Envoy.
+   */
+  private readonly isVerified: boolean;
 
-  pluginAccessToken: string | null = null;
+  /**
+   * The internally managed plugin access token.
+   * Use the `pluginAPI` instead of this directly.
+   */
+  private readonly pluginAccessToken: string | null = null;
 
   constructor(body: EnvoyRequestBody<Meta, Payload>, isVerified = false, pluginAccessToken: string | null = null) {
     this.body = body;
@@ -22,6 +43,10 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
     this.pluginAccessToken = pluginAccessToken;
   }
 
+  /**
+   * The metadata for the request.
+   * Either an EnvoyEventMeta or EnvoyRouteMeta.
+   */
   get meta(): Meta {
     if (!this.isVerified) {
       throw new Error('Could not verify meta.');
@@ -29,6 +54,11 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
     return this.body.meta;
   }
 
+  /**
+   * The payload for the request.
+   * For events, it's some Envoy resource, like an Entry or Invite.
+   * For setup step validation URLs, it's the form submitted values for a validation URL.
+   */
   get payload(): Payload {
     if (!this.isVerified) {
       throw new Error('Could not verify payload.');
@@ -40,32 +70,38 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
    * Envoy API scoped to the user.
    * Used only in routes.
    */
-  get userAPI() {
+  get userAPI(): EnvoyUserAPI {
     const { meta } = this;
     const { auth } = meta;
     let accessToken: string | undefined = auth?.access_token;
-    if (!accessToken && 'forwarded_bearer_token' in this.meta) {
-      accessToken = this.meta.forwarded_bearer_token;
+    if (!accessToken && 'forwarded_bearer_token' in meta) {
+      accessToken = (meta as EnvoyRouteMeta).forwarded_bearer_token;
     }
     if (!accessToken) {
       throw new Error("This user's API token was not found. Are you in a route?");
     }
-    return new EnvoyAPI(accessToken);
+    return new EnvoyUserAPI(accessToken);
   }
 
   /**
    * Envoy API scoped to the plugin.
    * Used to perform storage or job operations.
    */
-  get pluginAPI(): EnvoyAPI {
+  get pluginAPI(): EnvoyPluginAPI {
     const { pluginAccessToken } = this;
     if (!pluginAccessToken) {
       throw new Error('No API token found. Are your Envoy client ID and secret set?');
     }
-    return new EnvoyAPI(pluginAccessToken);
+    return new EnvoyPluginAPI(pluginAccessToken);
   }
 
-  get getStorage(): (installId?: string) => EnvoyPluginStorage {
+  /**
+   * A function that returns an instance of EnvoyPluginStorage,
+   * optionally scoped to an install ID.
+   *
+   * Use `installStorage` or `globalStorage` instead of this directly.
+   */
+  private get getStorage(): (installId?: string) => EnvoyPluginStorage {
     return (installId?) => new EnvoyPluginStorage(this.pluginAPI, installId);
   }
 
@@ -100,7 +136,7 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
   get jobId(): string | null {
     const { meta } = this;
     if ('job' in meta) {
-      return meta.job.id;
+      return (meta as EnvoyEventMeta).job.id;
     }
     return null;
   }

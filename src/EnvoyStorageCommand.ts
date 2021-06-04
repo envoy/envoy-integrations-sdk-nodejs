@@ -19,7 +19,7 @@ export interface EnvoyGetStorageCommand extends EnvoyBaseStorageCommand {
 
 export interface EnvoySetStorageCommand extends EnvoyBaseStorageCommand {
   action: 'set',
-  value: any,
+  value: unknown,
 }
 
 export interface EnvoySetUniqueStorageCommand extends EnvoyBaseStorageCommand, EnvoyStorageSetUniqueOptions {

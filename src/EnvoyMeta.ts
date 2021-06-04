@@ -35,6 +35,11 @@ export interface EnvoyMetaCompany {
   }
 }
 
+/**
+ * A short-lived userAPI token.
+ * Will be used to construct the userAPI property
+ * found in req.envoy.userAPI.
+ */
 export type EnvoyMetaAuth = {
   token_type: 'Bearer',
   access_token: string,
@@ -43,28 +48,38 @@ export type EnvoyMetaAuth = {
   refresh_token_expires_in: number | null,
 };
 
+/**
+ * Metadata that will be included in the request body for events.
+ */
 export interface EnvoyEventMeta {
   event: string,
   plugin_id: string,
   install_id: string,
-  config: Record<string, any>,
+  config: Record<string, unknown>,
   job: EnvoyMetaJob,
+  location: EnvoyMetaLocation,
+  company: EnvoyMetaCompany,
+  auth: EnvoyMetaAuth | null,
+}
+
+/**
+ * Metadata that will be included in the request body for setup routes,
+ * like validation URLs or options URLs.
+ */
+export interface EnvoyRouteMeta {
+  route: string,
+  plugin_id: string,
+  install_id: string,
+  config: Record<string, unknown>,
+  params: Record<string, unknown>,
   location: EnvoyMetaLocation,
   company: EnvoyMetaCompany,
   auth: EnvoyMetaAuth | null,
   forwarded_bearer_token?: string,
 }
 
-export interface EnvoyRouteMeta {
-  route: string,
-  plugin_id: string,
-  install_id: string,
-  config: Record<string, any>,
-  params: Record<string, any>,
-  location: EnvoyMetaLocation,
-  company: EnvoyMetaCompany,
-  auth: EnvoyMetaAuth | null,
-}
-
+/**
+ * Metadata that will be included in every request Envoy sends to your plugin.
+ */
 type EnvoyMeta = EnvoyEventMeta | EnvoyRouteMeta;
 export default EnvoyMeta;
