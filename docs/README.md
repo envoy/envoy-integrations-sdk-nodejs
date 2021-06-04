@@ -23,17 +23,55 @@
 
 - [EnvoyResponse](interfaces/envoyresponse.md)
 
+### Type aliases
+
+- [EnvoyRequest](README.md#envoyrequest)
+- [EnvoyStorageItem](README.md#envoystorageitem)
+
 ### Functions
 
 - [asyncHandler](README.md#asynchandler)
 - [errorMiddleware](README.md#errormiddleware)
 - [middleware](README.md#middleware)
 
+## Type aliases
+
+### EnvoyRequest
+
+Ƭ **EnvoyRequest**<Payload\>: `EnvoyBaseRequest`<EnvoyRouteMeta \| EnvoyEventMeta, Payload\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Payload` | `Payload` = `unknown` |
+
+#### Defined in
+
+[src/EnvoyRequest.ts:41](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyRequest.ts#L41)
+
+___
+
+### EnvoyStorageItem
+
+Ƭ **EnvoyStorageItem**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `string` |
+| `value` | `unknown` |
+
+#### Defined in
+
+[src/EnvoyStorageItem.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyStorageItem.ts#L1)
+
 ## Functions
 
 ### asyncHandler
 
-▸ **asyncHandler**(`handler`): (`req`: `EnvoyRequest`<unknown\>, `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `Promise`<void\>
+▸ **asyncHandler**(`handler`): (`req`: [EnvoyRequest](README.md#envoyrequest)<unknown\>, `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `Promise`<void\>
 
 Catches Promise-based errors.
 
@@ -53,7 +91,7 @@ Catches Promise-based errors.
 
 | Name | Type |
 | :------ | :------ |
-| `req` | `EnvoyRequest`<unknown\> |
+| `req` | [EnvoyRequest](README.md#envoyrequest)<unknown\> |
 | `res` | [EnvoyResponse](interfaces/envoyresponse.md) |
 | `next` | `NextFunction` |
 
@@ -63,13 +101,13 @@ Catches Promise-based errors.
 
 #### Defined in
 
-[asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/asyncHandler.ts#L10)
+[src/asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/asyncHandler.ts#L10)
 
 ___
 
 ### errorMiddleware
 
-▸ **errorMiddleware**(`onError?`): (`err`: `Error`, `req`: `EnvoyRequest`<unknown\>, `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `void`
+▸ **errorMiddleware**(`onError?`): (`err`: `Error`, `req`: [EnvoyRequest](README.md#envoyrequest)<unknown\>, `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `void`
 
 Catches errors and sets the proper status code.
 
@@ -90,7 +128,7 @@ Catches errors and sets the proper status code.
 | Name | Type |
 | :------ | :------ |
 | `err` | `Error` |
-| `req` | `EnvoyRequest`<unknown\> |
+| `req` | [EnvoyRequest](README.md#envoyrequest)<unknown\> |
 | `res` | [EnvoyResponse](interfaces/envoyresponse.md) |
 | `next` | `NextFunction` |
 
@@ -100,7 +138,7 @@ Catches errors and sets the proper status code.
 
 #### Defined in
 
-[errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/errorMiddleware.ts#L9)
+[src/errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/errorMiddleware.ts#L9)
 
 ___
 
@@ -126,4 +164,4 @@ as well as managing the plugin access token lifecycle.
 
 #### Defined in
 
-[middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/middleware.ts#L21)
+[src/middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/middleware.ts#L21)

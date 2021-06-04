@@ -3,7 +3,5 @@
   "out": "docs",
   "excludePrivate": true,
   "excludeProtected": true,
-  "excludeExternals": true,
-  "excludeNotDocumented": true,
   "readme": "none"
 }

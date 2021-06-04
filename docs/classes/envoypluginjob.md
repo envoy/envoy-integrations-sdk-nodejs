@@ -14,6 +14,20 @@ as well as attach extra data to the event's subject
 
 - [constructor](envoypluginjob.md#constructor)
 
+### Properties
+
+- [api](envoypluginjob.md#api)
+- [id](envoypluginjob.md#id)
+
+### Methods
+
+- [attach](envoypluginjob.md#attach)
+- [complete](envoypluginjob.md#complete)
+- [execute](envoypluginjob.md#execute)
+- [fail](envoypluginjob.md#fail)
+- [ignore](envoypluginjob.md#ignore)
+- [update](envoypluginjob.md#update)
+
 ## Constructors
 
 ### constructor
@@ -29,4 +43,151 @@ as well as attach extra data to the event's subject
 
 #### Defined in
 
-[EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginJob.ts#L15)
+[src/EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L15)
+
+## Properties
+
+### api
+
+• `Readonly` **api**: [EnvoyPluginAPI](envoypluginapi.md)
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L13)
+
+___
+
+### id
+
+• `Readonly` **id**: `string`
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L15)
+
+## Methods
+
+### attach
+
+▸ **attach**(...`attachments`): `Promise`<void\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...attachments` | `EnvoyPluginJobAttachment`[] |
+
+#### Returns
+
+`Promise`<void\>
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:43](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L43)
+
+___
+
+### complete
+
+▸ **complete**(`message`, ...`attachments`): `Promise`<void\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+| `...attachments` | `EnvoyPluginJobAttachment`[] |
+
+#### Returns
+
+`Promise`<void\>
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L47)
+
+___
+
+### execute
+
+▸ **execute**(`status`, `message`, `reason`, `attachments?`): `Promise`<void\>
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `status` | ``null`` \| `string` | `undefined` |
+| `message` | ``null`` \| `string` | `undefined` |
+| `reason` | ``null`` \| `string` | `undefined` |
+| `attachments` | `EnvoyPluginJobAttachment`[] | [] |
+
+#### Returns
+
+`Promise`<void\>
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L22)
+
+___
+
+### fail
+
+▸ **fail**(`message`, `reason`): `Promise`<void\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+| `reason` | `string` |
+
+#### Returns
+
+`Promise`<void\>
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:55](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L55)
+
+___
+
+### ignore
+
+▸ **ignore**(`message`, `reason`): `Promise`<void\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+| `reason` | `string` |
+
+#### Returns
+
+`Promise`<void\>
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:51](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L51)
+
+___
+
+### update
+
+▸ **update**(`message`, ...`attachments`): `Promise`<void\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+| `...attachments` | `EnvoyPluginJobAttachment`[] |
+
+#### Returns
+
+`Promise`<void\>
+
+#### Defined in
+
+[src/EnvoyPluginJob.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginJob.ts#L59)

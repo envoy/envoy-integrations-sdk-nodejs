@@ -55,7 +55,7 @@ to allow for easy access to Envoy functions.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:38](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L38)
+[src/EnvoyPluginSDK.ts:38](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L38)
 
 ## Accessors
 
@@ -83,7 +83,7 @@ Returns a job based on an ID.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:129](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L129)
+[src/EnvoyPluginSDK.ts:129](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L129)
 
 ___
 
@@ -99,7 +99,7 @@ Storage scoped globally (across installs).
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:122](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L122)
+[src/EnvoyPluginSDK.ts:122](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L122)
 
 ___
 
@@ -115,7 +115,7 @@ Storage scoped to the install.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:111](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L111)
+[src/EnvoyPluginSDK.ts:111](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L111)
 
 ___
 
@@ -131,7 +131,7 @@ Perform operations on the current job.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:147](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L147)
+[src/EnvoyPluginSDK.ts:147](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L147)
 
 ___
 
@@ -147,7 +147,7 @@ Returns the current job's ID.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:136](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L136)
+[src/EnvoyPluginSDK.ts:136](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L136)
 
 ___
 
@@ -164,7 +164,7 @@ Useful for verifiable communications between plugin endpoints.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:160](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L160)
+[src/EnvoyPluginSDK.ts:160](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L160)
 
 ___
 
@@ -181,7 +181,7 @@ Either an EnvoyEventMeta or EnvoyRouteMeta.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:50](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L50)
+[src/EnvoyPluginSDK.ts:50](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L50)
 
 ___
 
@@ -199,7 +199,7 @@ For setup step validation URLs, it's the form submitted values for a validation 
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:62](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L62)
+[src/EnvoyPluginSDK.ts:62](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L62)
 
 ___
 
@@ -216,7 +216,7 @@ Used to perform storage or job operations.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:90](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L90)
+[src/EnvoyPluginSDK.ts:90](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L90)
 
 ___
 
@@ -233,4 +233,4 @@ Used only in routes.
 
 #### Defined in
 
-[EnvoyPluginSDK.ts:73](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyPluginSDK.ts#L73)
+[src/EnvoyPluginSDK.ts:73](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyPluginSDK.ts#L73)

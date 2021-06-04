@@ -10,6 +10,11 @@ Helper to encode and decode JWTs.
 
 - [constructor](envoyjwt.md#constructor)
 
+### Methods
+
+- [decode](envoyjwt.md#decode)
+- [encode](envoyjwt.md#encode)
+
 ## Constructors
 
 ### constructor
@@ -25,4 +30,47 @@ Helper to encode and decode JWTs.
 
 #### Defined in
 
-[EnvoyJWT.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/aecf47b/src/EnvoyJWT.ts#L12)
+[src/EnvoyJWT.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyJWT.ts#L12)
+
+## Methods
+
+### decode
+
+▸ **decode**(`token`, `options?`): `Record`<string, unknown\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `token` | `string` |
+| `options` | `VerifyOptions` |
+
+#### Returns
+
+`Record`<string, unknown\>
+
+#### Defined in
+
+[src/EnvoyJWT.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyJWT.ts#L39)
+
+___
+
+### encode
+
+▸ **encode**(`subject`, `expiresIn`, `payload?`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `subject` | ``null`` \| `string` \| `number` |
+| `expiresIn` | ``null`` \| `string` \| `number` |
+| `payload` | `Record`<string, unknown\> |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/EnvoyJWT.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/2bdd026/src/EnvoyJWT.ts#L22)
