@@ -22,9 +22,11 @@
 ### Interfaces
 
 - [EnvoyResponse](interfaces/envoyresponse.md)
+- [EnvoySignatureVerifierOptions](interfaces/envoysignatureverifieroptions.md)
 
 ### Type aliases
 
+- [EnvoyMiddleware](README.md#envoymiddleware)
 - [EnvoyRequest](README.md#envoyrequest)
 - [EnvoyStorageItem](README.md#envoystorageitem)
 
@@ -35,6 +37,32 @@
 - [middleware](README.md#middleware)
 
 ## Type aliases
+
+### EnvoyMiddleware
+
+Ƭ **EnvoyMiddleware**: (`req`: [EnvoyRequest](README.md#envoyrequest), `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `void`
+
+#### Type declaration
+
+▸ (`req`, `res`, `next`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `req` | [EnvoyRequest](README.md#envoyrequest) |
+| `res` | [EnvoyResponse](interfaces/envoyresponse.md) |
+| `next` | `NextFunction` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[middleware.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/015c9eb/src/middleware.ts#L12)
+
+___
 
 ### EnvoyRequest
 
@@ -48,7 +76,7 @@
 
 #### Defined in
 
-[EnvoyRequest.ts:41](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyRequest.ts#L41)
+[EnvoyRequest.ts:41](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/015c9eb/src/EnvoyRequest.ts#L41)
 
 ___
 
@@ -65,7 +93,7 @@ ___
 
 #### Defined in
 
-[EnvoyStorageItem.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyStorageItem.ts#L1)
+[EnvoyStorageItem.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/015c9eb/src/EnvoyStorageItem.ts#L1)
 
 ## Functions
 
@@ -101,7 +129,7 @@ Catches Promise-based errors.
 
 #### Defined in
 
-[asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/asyncHandler.ts#L10)
+[asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/015c9eb/src/asyncHandler.ts#L10)
 
 ___
 
@@ -138,13 +166,13 @@ Catches errors and sets the proper status code.
 
 #### Defined in
 
-[errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/errorMiddleware.ts#L9)
+[errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/015c9eb/src/errorMiddleware.ts#L9)
 
 ___
 
 ### middleware
 
-▸ **middleware**(`options?`): `EnvoyMiddleware`
+▸ **middleware**(`options?`): [EnvoyMiddleware](README.md#envoymiddleware)
 
 Sets up an `EnvoyPluginSDK` object in the path `req.envoy`.
 Modifies the `res` object to include Envoy's helpers, per `EnvoyResponse`.
@@ -156,12 +184,12 @@ as well as managing the plugin access token lifecycle.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `EnvoySignatureVerifierOptions` |
+| `options?` | [EnvoySignatureVerifierOptions](interfaces/envoysignatureverifieroptions.md) |
 
 #### Returns
 
-`EnvoyMiddleware`
+[EnvoyMiddleware](README.md#envoymiddleware)
 
 #### Defined in
 
-[middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/middleware.ts#L21)
+[middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/015c9eb/src/middleware.ts#L21)

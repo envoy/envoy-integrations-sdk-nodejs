@@ -1,33 +1,35 @@
 import asyncHandler from './asyncHandler';
+import errorMiddleware from './errorMiddleware';
 import EnvoyJWT from './EnvoyJWT';
 import EnvoyPluginJob from './EnvoyPluginJob';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginStorage from './EnvoyPluginStorage';
-import EnvoyStorageItem from './EnvoyStorageItem';
 import EnvoyPluginStoragePipeline from './EnvoyPluginStoragePipeline';
 import EnvoyRequest from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
-import EnvoySignatureVerifier from './EnvoySignatureVerifier';
+import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from './EnvoySignatureVerifier';
+import EnvoyStorageItem from './EnvoyStorageItem';
 import EnvoyUserAPI from './EnvoyUserAPI';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 import HttpStatus from './HttpStatus';
-import middleware from './middleware';
-import errorMiddleware from './errorMiddleware';
+import middleware, { EnvoyMiddleware } from './middleware';
 
 export {
   asyncHandler,
+  errorMiddleware,
   EnvoyJWT,
+  EnvoyMiddleware,
   EnvoyPluginJob,
   EnvoyPluginSDK,
   EnvoyPluginStorage,
-  EnvoyStorageItem,
   EnvoyPluginStoragePipeline,
-  EnvoySignatureVerifier,
   EnvoyRequest,
   EnvoyResponse,
-  EnvoyUserAPI,
+  EnvoySignatureVerifier,
+  EnvoySignatureVerifierOptions,
+  EnvoyStorageItem,
   EnvoyPluginAPI,
+  EnvoyUserAPI,
   HttpStatus,
   middleware,
-  errorMiddleware,
 };
