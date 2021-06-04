@@ -39,7 +39,7 @@ and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 #### Defined in
 
-[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d2a4136/src/EnvoyRequest.ts#L10)
+[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L10)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[EnvoyRequest.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d2a4136/src/EnvoyRequest.ts#L20)
+[EnvoyRequest.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L20)

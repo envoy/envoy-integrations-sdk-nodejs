@@ -4,5 +4,6 @@
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeExternals": true,
-  "readme": "none"
+  "readme": "none",
+  "theme": "typedoc-github-wiki-theme/dist"
 }
