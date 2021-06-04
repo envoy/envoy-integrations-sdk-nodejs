@@ -2,14 +2,6 @@ import crypto, { BinaryToTextEncoding } from 'crypto';
 import { Request } from 'express';
 import { envoyClientSecret } from './constants';
 
-/**
- * @typedef {Object} SignatureVerifierOptions
- * @property {string} algorithm="sha256"
- * @property {string} encoding="base64"
- * @property {string} secret=process.env.ENVOY_CLIENT_SECRET
- * @property {string} header="x-envoy-signature"
- */
-
 export interface EnvoySignatureVerifierOptions {
   algorithm: 'sha256' | string,
   encoding: BinaryToTextEncoding,

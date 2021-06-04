@@ -12,11 +12,6 @@ export default class EnvoyPluginStoragePipeline {
 
   private commands: Array<EnvoyStorageCommand>;
 
-  /**
-   *
-   * @param {EnvoyAPI} pluginAPI
-   * @param {number|null} [installId]
-   */
   constructor(pluginAPI: EnvoyAPI, installId?: string) {
     this.api = pluginAPI;
     this.installId = installId;

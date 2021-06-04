@@ -31,26 +31,27 @@ export default function middleware(options: EnvoySignatureVerifierOptions) {
         }
 
         req.envoy = new EnvoyPluginSDK(req.body, req[VERIFIED], accessToken);
+
         /**
-         * @param {object} [data]
+         * Respond with "ongoing" for long jobs.
          */
         res.sendOngoing = (data = {}) => {
           res.statusCode = HttpStatus.ONGOING;
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify(data));
         };
+
         /**
-         * @param {string} [message]
-         * @param {object} [data]
+         * Respond with "ignored" if no action will be performed.
          */
         res.sendIgnored = (message = '', data = {}) => {
           res.statusCode = HttpStatus.IGNORED;
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify({ ...(data || {}), message }));
         };
+
         /**
-         * @param {string} [message]
-         * @param {object} [data]
+         * Respond with "failed" in case of errors.
          */
         res.sendFailed = (message = '', data = {}) => {
           res.statusCode = HttpStatus.FAILED;

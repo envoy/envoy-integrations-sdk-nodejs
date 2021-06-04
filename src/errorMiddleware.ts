@@ -2,9 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import HttpStatus from './HttpStatus';
 
 /**
- *
- * @param {Function} onError
- * @returns {Function}
+ * Catches errors and sets the proper status code.
  */
 export default function errorMiddleware(onError: (err: Error) => void = () => {}) {
   return (err: Error, req: Request, res: Response, next: NextFunction): void => {

@@ -39,8 +39,6 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
   /**
    * Envoy API scoped to the user.
    * Used only in routes.
-   *
-   * @returns {EnvoyAPI}
    */
   get userAPI() {
     const { meta } = this;
