@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[EnvoyRequest.ts:41](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyRequest.ts#L41)
+[EnvoyRequest.ts:41](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyRequest.ts#L41)
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-[EnvoyStorageItem.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyStorageItem.ts#L1)
+[EnvoyStorageItem.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyStorageItem.ts#L1)
 
 ## Functions
 
@@ -101,7 +101,7 @@ Catches Promise-based errors.
 
 #### Defined in
 
-[asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/asyncHandler.ts#L10)
+[asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/asyncHandler.ts#L10)
 
 ___
 
@@ -138,7 +138,7 @@ Catches errors and sets the proper status code.
 
 #### Defined in
 
-[errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/errorMiddleware.ts#L9)
+[errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/errorMiddleware.ts#L9)
 
 ___
 
@@ -164,4 +164,4 @@ as well as managing the plugin access token lifecycle.
 
 #### Defined in
 
-[middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/middleware.ts#L21)
+[middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/middleware.ts#L21)

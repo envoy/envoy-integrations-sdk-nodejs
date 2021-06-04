@@ -14,11 +14,40 @@ Use to type your `res` object in Envoy request handlers.
 
 ### Properties
 
+- [send](envoyresponse.md#send)
 - [sendFailed](envoyresponse.md#sendfailed)
 - [sendIgnored](envoyresponse.md#sendignored)
 - [sendOngoing](envoyresponse.md#sendongoing)
 
 ## Properties
+
+### send
+
+• **send**: (`debugInfo?`: `unknown`) => [EnvoyResponse](envoyresponse.md)
+
+#### Type declaration
+
+▸ (`debugInfo?`): [EnvoyResponse](envoyresponse.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `debugInfo?` | `unknown` |
+
+##### Returns
+
+[EnvoyResponse](envoyresponse.md)
+
+#### Overrides
+
+Response.send
+
+#### Defined in
+
+[EnvoyResponse.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyResponse.ts#L8)
+
+___
 
 ### sendFailed
 
@@ -42,7 +71,7 @@ Use to type your `res` object in Envoy request handlers.
 
 #### Defined in
 
-[EnvoyResponse.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyResponse.ts#L10)
+[EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyResponse.ts#L11)
 
 ___
 
@@ -68,7 +97,7 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyResponse.ts#L9)
+[EnvoyResponse.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyResponse.ts#L10)
 
 ___
 
@@ -92,4 +121,4 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/229a60c/src/EnvoyResponse.ts#L8)
+[EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/97c68c9/src/EnvoyResponse.ts#L9)
