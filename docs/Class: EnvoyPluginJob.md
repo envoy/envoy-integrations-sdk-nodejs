@@ -1,7 +1,3 @@
-[@envoy/envoy-integrations-sdk](../README.md) / EnvoyPluginJob
-
-# Class: EnvoyPluginJob
-
 A "job" is an event, like `entry_sign_in`.
 When your plugin handles the event, you can use this job concept
 to update the status (e.g. complete, failed, ignored)
@@ -12,21 +8,21 @@ as well as attach extra data to the event's subject
 
 ### Constructors
 
-- [constructor](envoypluginjob.md#constructor)
+- [constructor](../wiki/Class:%20EnvoyPluginJob#constructor)
 
 ### Properties
 
-- [api](envoypluginjob.md#api)
-- [id](envoypluginjob.md#id)
+- [api](../wiki/Class:%20EnvoyPluginJob#api)
+- [id](../wiki/Class:%20EnvoyPluginJob#id)
 
 ### Methods
 
-- [attach](envoypluginjob.md#attach)
-- [complete](envoypluginjob.md#complete)
-- [execute](envoypluginjob.md#execute)
-- [fail](envoypluginjob.md#fail)
-- [ignore](envoypluginjob.md#ignore)
-- [update](envoypluginjob.md#update)
+- [attach](../wiki/Class:%20EnvoyPluginJob#attach)
+- [complete](../wiki/Class:%20EnvoyPluginJob#complete)
+- [execute](../wiki/Class:%20EnvoyPluginJob#execute)
+- [fail](../wiki/Class:%20EnvoyPluginJob#fail)
+- [ignore](../wiki/Class:%20EnvoyPluginJob#ignore)
+- [update](../wiki/Class:%20EnvoyPluginJob#update)
 
 ## Constructors
 
@@ -38,22 +34,22 @@ as well as attach extra data to the event's subject
 
 | Name | Type |
 | :------ | :------ |
-| `pluginAPI` | [EnvoyPluginAPI](envoypluginapi.md) |
+| `pluginAPI` | [EnvoyPluginAPI](../wiki/Class:%20EnvoyPluginAPI) |
 | `jobId` | `string` |
 
 #### Defined in
 
-[EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L15)
+[EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L15)
 
 ## Properties
 
 ### api
 
-• `Readonly` **api**: [EnvoyPluginAPI](envoypluginapi.md)
+• `Readonly` **api**: [EnvoyPluginAPI](../wiki/Class:%20EnvoyPluginAPI)
 
 #### Defined in
 
-[EnvoyPluginJob.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L13)
+[EnvoyPluginJob.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L13)
 
 ___
 
@@ -63,7 +59,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L15)
+[EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L15)
 
 ## Methods
 
@@ -83,7 +79,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:43](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L43)
+[EnvoyPluginJob.ts:43](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L43)
 
 ___
 
@@ -104,7 +100,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L47)
+[EnvoyPluginJob.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L47)
 
 ___
 
@@ -127,7 +123,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L22)
+[EnvoyPluginJob.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L22)
 
 ___
 
@@ -148,7 +144,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:55](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L55)
+[EnvoyPluginJob.ts:55](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L55)
 
 ___
 
@@ -169,7 +165,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:51](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L51)
+[EnvoyPluginJob.ts:51](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L51)
 
 ___
 
@@ -190,4 +186,4 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyPluginJob.ts#L59)
+[EnvoyPluginJob.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyPluginJob.ts#L59)

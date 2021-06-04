@@ -1,7 +1,3 @@
-[@envoy/envoy-integrations-sdk](../README.md) / EnvoyUserAPI
-
-# Class: EnvoyUserAPI
-
 API endpoints for *user-scoped* tokens.
 To access Envoy resources, this is the API you'd want.
 
@@ -15,35 +11,35 @@ To access Envoy resources, this is the API you'd want.
 
 ### Constructors
 
-- [constructor](envoyuserapi.md#constructor)
+- [constructor](../wiki/Class:%20EnvoyUserAPI#constructor)
 
 ### Properties
 
-- [axios](envoyuserapi.md#axios)
+- [axios](../wiki/Class:%20EnvoyUserAPI#axios)
 
 ### Methods
 
-- [createInvite](envoyuserapi.md#createinvite)
-- [getAgreement](envoyuserapi.md#getagreement)
-- [getAgreementPage](envoyuserapi.md#getagreementpage)
-- [getCompany](envoyuserapi.md#getcompany)
-- [getEmployee](envoyuserapi.md#getemployee)
-- [getEmployeeByEmail](envoyuserapi.md#getemployeebyemail)
-- [getEmployees](envoyuserapi.md#getemployees)
-- [getFlow](envoyuserapi.md#getflow)
-- [getFlows](envoyuserapi.md#getflows)
-- [getInvites](envoyuserapi.md#getinvites)
-- [getLocation](envoyuserapi.md#getlocation)
-- [getLocations](envoyuserapi.md#getlocations)
-- [getSignInField](envoyuserapi.md#getsigninfield)
-- [getSignInFieldPage](envoyuserapi.md#getsigninfieldpage)
-- [getSignInFields](envoyuserapi.md#getsigninfields)
-- [me](envoyuserapi.md#me)
-- [partialUpdateInvite](envoyuserapi.md#partialupdateinvite)
-- [removeInvite](envoyuserapi.md#removeinvite)
-- [updateInvite](envoyuserapi.md#updateinvite)
-- [loginAsPluginInstaller](envoyuserapi.md#loginasplugininstaller)
-- [loginAsUser](envoyuserapi.md#loginasuser)
+- [createInvite](../wiki/Class:%20EnvoyUserAPI#createinvite)
+- [getAgreement](../wiki/Class:%20EnvoyUserAPI#getagreement)
+- [getAgreementPage](../wiki/Class:%20EnvoyUserAPI#getagreementpage)
+- [getCompany](../wiki/Class:%20EnvoyUserAPI#getcompany)
+- [getEmployee](../wiki/Class:%20EnvoyUserAPI#getemployee)
+- [getEmployeeByEmail](../wiki/Class:%20EnvoyUserAPI#getemployeebyemail)
+- [getEmployees](../wiki/Class:%20EnvoyUserAPI#getemployees)
+- [getFlow](../wiki/Class:%20EnvoyUserAPI#getflow)
+- [getFlows](../wiki/Class:%20EnvoyUserAPI#getflows)
+- [getInvites](../wiki/Class:%20EnvoyUserAPI#getinvites)
+- [getLocation](../wiki/Class:%20EnvoyUserAPI#getlocation)
+- [getLocations](../wiki/Class:%20EnvoyUserAPI#getlocations)
+- [getSignInField](../wiki/Class:%20EnvoyUserAPI#getsigninfield)
+- [getSignInFieldPage](../wiki/Class:%20EnvoyUserAPI#getsigninfieldpage)
+- [getSignInFields](../wiki/Class:%20EnvoyUserAPI#getsigninfields)
+- [me](../wiki/Class:%20EnvoyUserAPI#me)
+- [partialUpdateInvite](../wiki/Class:%20EnvoyUserAPI#partialupdateinvite)
+- [removeInvite](../wiki/Class:%20EnvoyUserAPI#removeinvite)
+- [updateInvite](../wiki/Class:%20EnvoyUserAPI#updateinvite)
+- [loginAsPluginInstaller](../wiki/Class:%20EnvoyUserAPI#loginasplugininstaller)
+- [loginAsUser](../wiki/Class:%20EnvoyUserAPI#loginasuser)
 
 ## Constructors
 
@@ -63,7 +59,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[EnvoyAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyAPI.ts#L58)
+[EnvoyAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyAPI.ts#L58)
 
 ## Properties
 
@@ -79,7 +75,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[EnvoyAPI.ts:31](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyAPI.ts#L31)
+[EnvoyAPI.ts:31](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyAPI.ts#L31)
 
 ## Methods
 
@@ -99,7 +95,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[EnvoyUserAPI.ts:111](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L111)
+[EnvoyUserAPI.ts:111](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L111)
 
 ___
 
@@ -120,7 +116,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L28)
+[EnvoyUserAPI.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L28)
 
 ___
 
@@ -141,7 +137,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L24)
+[EnvoyUserAPI.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L24)
 
 ___
 
@@ -162,7 +158,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L32)
+[EnvoyUserAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L32)
 
 ___
 
@@ -183,7 +179,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:36](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L36)
+[EnvoyUserAPI.ts:36](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L36)
 
 ___
 
@@ -204,7 +200,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:56](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L56)
+[EnvoyUserAPI.ts:56](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L56)
 
 ___
 
@@ -224,7 +220,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:75](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L75)
+[EnvoyUserAPI.ts:75](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L75)
 
 ___
 
@@ -245,7 +241,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:40](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L40)
+[EnvoyUserAPI.ts:40](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L40)
 
 ___
 
@@ -265,7 +261,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:82](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L82)
+[EnvoyUserAPI.ts:82](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L82)
 
 ___
 
@@ -285,7 +281,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:99](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L99)
+[EnvoyUserAPI.ts:99](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L99)
 
 ___
 
@@ -306,7 +302,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:44](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L44)
+[EnvoyUserAPI.ts:44](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L44)
 
 ___
 
@@ -326,7 +322,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:87](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L87)
+[EnvoyUserAPI.ts:87](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L87)
 
 ___
 
@@ -347,7 +343,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:52](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L52)
+[EnvoyUserAPI.ts:52](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L52)
 
 ___
 
@@ -368,7 +364,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:48](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L48)
+[EnvoyUserAPI.ts:48](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L48)
 
 ___
 
@@ -388,7 +384,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:94](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L94)
+[EnvoyUserAPI.ts:94](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L94)
 
 ___
 
@@ -402,7 +398,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:106](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L106)
+[EnvoyUserAPI.ts:106](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L106)
 
 ___
 
@@ -423,7 +419,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:130](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L130)
+[EnvoyUserAPI.ts:130](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L130)
 
 ___
 
@@ -443,7 +439,7 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:140](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L140)
+[EnvoyUserAPI.ts:140](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L140)
 
 ___
 
@@ -464,13 +460,13 @@ ___
 
 #### Defined in
 
-[EnvoyUserAPI.ts:120](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L120)
+[EnvoyUserAPI.ts:120](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L120)
 
 ___
 
 ### loginAsPluginInstaller
 
-▸ `Static` **loginAsPluginInstaller**(`installId`, `id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
+▸ `Static` **loginAsPluginInstaller**(`installId`, `id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../wiki/Home#envoymetaauth)\>
 
 Gets a user access token using `plugin_install` as the grant type.
 
@@ -484,17 +480,17 @@ Gets a user access token using `plugin_install` as the grant type.
 
 #### Returns
 
-`Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
+`Promise`<[EnvoyMetaAuth](../wiki/Home#envoymetaauth)\>
 
 #### Defined in
 
-[EnvoyUserAPI.ts:177](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L177)
+[EnvoyUserAPI.ts:177](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L177)
 
 ___
 
 ### loginAsUser
 
-▸ `Static` **loginAsUser**(`username`, `password`, `id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
+▸ `Static` **loginAsUser**(`username`, `password`, `id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../wiki/Home#envoymetaauth)\>
 
 Gets a user access token using `password` as the grant type (discouraged).
 
@@ -509,8 +505,8 @@ Gets a user access token using `password` as the grant type (discouraged).
 
 #### Returns
 
-`Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
+`Promise`<[EnvoyMetaAuth](../wiki/Home#envoymetaauth)\>
 
 #### Defined in
 
-[EnvoyUserAPI.ts:150](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyUserAPI.ts#L150)
+[EnvoyUserAPI.ts:150](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyUserAPI.ts#L150)

@@ -1,18 +1,14 @@
-[@envoy/envoy-integrations-sdk](../README.md) / EnvoySignatureVerifier
-
-# Class: EnvoySignatureVerifier
-
 Verifies that a request is coming from Envoy.
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](envoysignatureverifier.md#constructor)
+- [constructor](../wiki/Class:%20EnvoySignatureVerifier#constructor)
 
 ### Methods
 
-- [verify](envoysignatureverifier.md#verify)
+- [verify](../wiki/Class:%20EnvoySignatureVerifier#verify)
 
 ## Constructors
 
@@ -24,11 +20,11 @@ Verifies that a request is coming from Envoy.
 
 | Name | Type |
 | :------ | :------ |
-| `options` | [EnvoySignatureVerifierOptions](../README.md#envoysignatureverifieroptions) |
+| `options` | [EnvoySignatureVerifierOptions](../wiki/Home#envoysignatureverifieroptions) |
 
 #### Defined in
 
-[EnvoySignatureVerifier.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoySignatureVerifier.ts#L23)
+[EnvoySignatureVerifier.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoySignatureVerifier.ts#L23)
 
 ## Methods
 
@@ -51,4 +47,4 @@ Verifies that the signature provided matches the request body.
 
 #### Defined in
 
-[EnvoySignatureVerifier.ts:36](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoySignatureVerifier.ts#L36)
+[EnvoySignatureVerifier.ts:36](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoySignatureVerifier.ts#L36)

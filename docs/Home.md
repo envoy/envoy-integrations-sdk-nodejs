@@ -1,59 +1,55 @@
-@envoy/envoy-integrations-sdk
-
-# @envoy/envoy-integrations-sdk
-
 ## Table of contents
 
 ### Enumerations
 
-- [HttpStatus](enums/httpstatus.md)
+- [HttpStatus](../wiki/Enumeration:%20HttpStatus)
 
 ### Classes
 
-- [EnvoyJWT](classes/envoyjwt.md)
-- [EnvoyPluginAPI](classes/envoypluginapi.md)
-- [EnvoyPluginJob](classes/envoypluginjob.md)
-- [EnvoyPluginSDK](classes/envoypluginsdk.md)
-- [EnvoyPluginStorage](classes/envoypluginstorage.md)
-- [EnvoyPluginStoragePipeline](classes/envoypluginstoragepipeline.md)
-- [EnvoySignatureVerifier](classes/envoysignatureverifier.md)
-- [EnvoyUserAPI](classes/envoyuserapi.md)
+- [EnvoyJWT](../wiki/Class:%20EnvoyJWT)
+- [EnvoyPluginAPI](../wiki/Class:%20EnvoyPluginAPI)
+- [EnvoyPluginJob](../wiki/Class:%20EnvoyPluginJob)
+- [EnvoyPluginSDK](../wiki/Class:%20EnvoyPluginSDK)
+- [EnvoyPluginStorage](../wiki/Class:%20EnvoyPluginStorage)
+- [EnvoyPluginStoragePipeline](../wiki/Class:%20EnvoyPluginStoragePipeline)
+- [EnvoySignatureVerifier](../wiki/Class:%20EnvoySignatureVerifier)
+- [EnvoyUserAPI](../wiki/Class:%20EnvoyUserAPI)
 
 ### Interfaces
 
-- [EnvoyBaseRequest](interfaces/envoybaserequest.md)
-- [EnvoyResponse](interfaces/envoyresponse.md)
-- [JSONAPIData](interfaces/jsonapidata.md)
-- [VerifiedRequest](interfaces/verifiedrequest.md)
+- [EnvoyBaseRequest](../wiki/Interface:%20EnvoyBaseRequest)
+- [EnvoyResponse](../wiki/Interface:%20EnvoyResponse)
+- [JSONAPIData](../wiki/Interface:%20JSONAPIData)
+- [VerifiedRequest](../wiki/Interface:%20VerifiedRequest)
 
 ### Type aliases
 
-- [EntryPayload](README.md#entrypayload)
-- [EnvoyEntryEventRequest](README.md#envoyentryeventrequest)
-- [EnvoyEventMeta](README.md#envoyeventmeta)
-- [EnvoyEventRequest](README.md#envoyeventrequest)
-- [EnvoyInviteEventRequest](README.md#envoyinviteeventrequest)
-- [EnvoyMetaAuth](README.md#envoymetaauth)
-- [EnvoyMetaCompany](README.md#envoymetacompany)
-- [EnvoyMetaJob](README.md#envoymetajob)
-- [EnvoyMetaLocation](README.md#envoymetalocation)
-- [EnvoyMiddleware](README.md#envoymiddleware)
-- [EnvoyRequest](README.md#envoyrequest)
-- [EnvoyRouteMeta](README.md#envoyroutemeta)
-- [EnvoyRouteRequest](README.md#envoyrouterequest)
-- [EnvoySignatureVerifierOptions](README.md#envoysignatureverifieroptions)
-- [EnvoyStorageItem](README.md#envoystorageitem)
-- [InvitePayload](README.md#invitepayload)
+- [EntryPayload](../wiki/Home#entrypayload)
+- [EnvoyEntryEventRequest](../wiki/Home#envoyentryeventrequest)
+- [EnvoyEventMeta](../wiki/Home#envoyeventmeta)
+- [EnvoyEventRequest](../wiki/Home#envoyeventrequest)
+- [EnvoyInviteEventRequest](../wiki/Home#envoyinviteeventrequest)
+- [EnvoyMetaAuth](../wiki/Home#envoymetaauth)
+- [EnvoyMetaCompany](../wiki/Home#envoymetacompany)
+- [EnvoyMetaJob](../wiki/Home#envoymetajob)
+- [EnvoyMetaLocation](../wiki/Home#envoymetalocation)
+- [EnvoyMiddleware](../wiki/Home#envoymiddleware)
+- [EnvoyRequest](../wiki/Home#envoyrequest)
+- [EnvoyRouteMeta](../wiki/Home#envoyroutemeta)
+- [EnvoyRouteRequest](../wiki/Home#envoyrouterequest)
+- [EnvoySignatureVerifierOptions](../wiki/Home#envoysignatureverifieroptions)
+- [EnvoyStorageItem](../wiki/Home#envoystorageitem)
+- [InvitePayload](../wiki/Home#invitepayload)
 
 ### Variables
 
-- [VERIFIED](README.md#verified)
+- [VERIFIED](../wiki/Home#verified)
 
 ### Functions
 
-- [asyncHandler](README.md#asynchandler)
-- [errorMiddleware](README.md#errormiddleware)
-- [middleware](README.md#middleware)
+- [asyncHandler](../wiki/Home#asynchandler)
+- [errorMiddleware](../wiki/Home#errormiddleware)
+- [middleware](../wiki/Home#middleware)
 
 ## Type aliases
 
@@ -86,37 +82,37 @@
 | `id` | `string` |
 | `relationships` | `Object` |
 | `relationships.agreeable-ndas?` | `Object` |
-| `relationships.agreeable-ndas.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"agreeable-ndas"``\>[] |
+| `relationships.agreeable-ndas.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"agreeable-ndas"``\>[] |
 | `relationships.device?` | `Object` |
-| `relationships.device.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"devices"``\> |
+| `relationships.device.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"devices"``\> |
 | `relationships.employee?` | `Object` |
-| `relationships.employee.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"employees"``\> |
+| `relationships.employee.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"employees"``\> |
 | `relationships.flow?` | `Object` |
-| `relationships.flow.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"flows"``\> |
+| `relationships.flow.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"flows"``\> |
 | `relationships.invite?` | `Object` |
-| `relationships.invite.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"invites"``\> |
+| `relationships.invite.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"invites"``\> |
 | `relationships.location` | `Object` |
-| `relationships.location.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"locations"``\> |
+| `relationships.location.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"locations"``\> |
 | `relationships.visitor-entrance?` | `Object` |
-| `relationships.visitor-entrance.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"visitor-entrances"``\> |
+| `relationships.visitor-entrance.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"visitor-entrances"``\> |
 | `type` | ``"entries"`` |
 
 #### Defined in
 
-[payloads/EntryPayload.ts:3](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/payloads/EntryPayload.ts#L3)
+[payloads/EntryPayload.ts:3](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/payloads/EntryPayload.ts#L3)
 
 ___
 
 ### EnvoyEntryEventRequest
 
-Ƭ **EnvoyEntryEventRequest**: [EnvoyEventRequest](README.md#envoyeventrequest)<[EntryPayload](README.md#entrypayload)\>
+Ƭ **EnvoyEntryEventRequest**: [EnvoyEventRequest](../wiki/Home#envoyeventrequest)<[EntryPayload](../wiki/Home#entrypayload)\>
 
 Use to type your `req` object in entry event handlers,
 such as handlers for `entry_sign_in`.
 
 #### Defined in
 
-[EnvoyRequest.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L39)
+[EnvoyRequest.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyRequest.ts#L39)
 
 ___
 
@@ -130,24 +126,24 @@ Metadata that will be included in the request body for events.
 
 | Name | Type |
 | :------ | :------ |
-| `auth` | [EnvoyMetaAuth](README.md#envoymetaauth) \| ``null`` |
-| `company` | [EnvoyMetaCompany](README.md#envoymetacompany) |
+| `auth` | [EnvoyMetaAuth](../wiki/Home#envoymetaauth) \| ``null`` |
+| `company` | [EnvoyMetaCompany](../wiki/Home#envoymetacompany) |
 | `config` | `Record`<string, unknown\> |
 | `event` | `string` |
 | `install_id` | `string` |
-| `job` | [EnvoyMetaJob](README.md#envoymetajob) |
-| `location` | [EnvoyMetaLocation](README.md#envoymetalocation) |
+| `job` | [EnvoyMetaJob](../wiki/Home#envoymetajob) |
+| `location` | [EnvoyMetaLocation](../wiki/Home#envoymetalocation) |
 | `plugin_id` | `string` |
 
 #### Defined in
 
-[EnvoyMeta.ts:54](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyMeta.ts#L54)
+[EnvoyMeta.ts:54](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyMeta.ts#L54)
 
 ___
 
 ### EnvoyEventRequest
 
-Ƭ **EnvoyEventRequest**<Payload\>: [EnvoyBaseRequest](interfaces/envoybaserequest.md)<[EnvoyEventMeta](README.md#envoyeventmeta), Payload\>
+Ƭ **EnvoyEventRequest**<Payload\>: [EnvoyBaseRequest](../wiki/Interface:%20EnvoyBaseRequest)<[EnvoyEventMeta](../wiki/Home#envoyeventmeta), Payload\>
 
 Base type for event requests.
 You should use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
@@ -160,20 +156,20 @@ You should use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 #### Defined in
 
-[EnvoyRequest.ts:33](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L33)
+[EnvoyRequest.ts:33](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyRequest.ts#L33)
 
 ___
 
 ### EnvoyInviteEventRequest
 
-Ƭ **EnvoyInviteEventRequest**: [EnvoyEventRequest](README.md#envoyeventrequest)<[InvitePayload](README.md#invitepayload)\>
+Ƭ **EnvoyInviteEventRequest**: [EnvoyEventRequest](../wiki/Home#envoyeventrequest)<[InvitePayload](../wiki/Home#invitepayload)\>
 
 Use to type your `req` object in invite event handlers,
 such as handlers for `invite_created` or `upcoming_visit`.
 
 #### Defined in
 
-[EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L45)
+[EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyRequest.ts#L45)
 
 ___
 
@@ -197,7 +193,7 @@ found in req.envoy.userAPI.
 
 #### Defined in
 
-[EnvoyMeta.ts:43](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyMeta.ts#L43)
+[EnvoyMeta.ts:43](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyMeta.ts#L43)
 
 ___
 
@@ -218,7 +214,7 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyMeta.ts#L28)
+[EnvoyMeta.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyMeta.ts#L28)
 
 ___
 
@@ -236,7 +232,7 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyMeta.ts#L1)
+[EnvoyMeta.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyMeta.ts#L1)
 
 ___
 
@@ -268,13 +264,13 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyMeta.ts#L7)
+[EnvoyMeta.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyMeta.ts#L7)
 
 ___
 
 ### EnvoyMiddleware
 
-Ƭ **EnvoyMiddleware**: (`req`: [EnvoyRequest](README.md#envoyrequest), `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `void`
+Ƭ **EnvoyMiddleware**: (`req`: [EnvoyRequest](../wiki/Home#envoyrequest), `res`: [EnvoyResponse](../wiki/Interface:%20EnvoyResponse), `next`: `NextFunction`) => `void`
 
 #### Type declaration
 
@@ -284,8 +280,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `req` | [EnvoyRequest](README.md#envoyrequest) |
-| `res` | [EnvoyResponse](interfaces/envoyresponse.md) |
+| `req` | [EnvoyRequest](../wiki/Home#envoyrequest) |
+| `res` | [EnvoyResponse](../wiki/Interface:%20EnvoyResponse) |
 | `next` | `NextFunction` |
 
 ##### Returns
@@ -294,13 +290,13 @@ ___
 
 #### Defined in
 
-[middleware.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/middleware.ts#L12)
+[middleware.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/middleware.ts#L12)
 
 ___
 
 ### EnvoyRequest
 
-Ƭ **EnvoyRequest**<Payload\>: [EnvoyBaseRequest](interfaces/envoybaserequest.md)<[EnvoyRouteMeta](README.md#envoyroutemeta) \| [EnvoyEventMeta](README.md#envoyeventmeta), Payload\>
+Ƭ **EnvoyRequest**<Payload\>: [EnvoyBaseRequest](../wiki/Interface:%20EnvoyBaseRequest)<[EnvoyRouteMeta](../wiki/Home#envoyroutemeta) \| [EnvoyEventMeta](../wiki/Home#envoyeventmeta), Payload\>
 
 You probably won't need to use this type directly.
 For routes, use `EnvoyRouteRequest`,
@@ -314,7 +310,7 @@ and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 #### Defined in
 
-[EnvoyRequest.ts:52](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L52)
+[EnvoyRequest.ts:52](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyRequest.ts#L52)
 
 ___
 
@@ -329,25 +325,25 @@ like validation URLs or options URLs.
 
 | Name | Type |
 | :------ | :------ |
-| `auth` | [EnvoyMetaAuth](README.md#envoymetaauth) \| ``null`` |
-| `company` | [EnvoyMetaCompany](README.md#envoymetacompany) |
+| `auth` | [EnvoyMetaAuth](../wiki/Home#envoymetaauth) \| ``null`` |
+| `company` | [EnvoyMetaCompany](../wiki/Home#envoymetacompany) |
 | `config` | `Record`<string, unknown\> |
 | `forwarded_bearer_token?` | `string` |
 | `install_id` | `string` |
-| `location` | [EnvoyMetaLocation](README.md#envoymetalocation) |
+| `location` | [EnvoyMetaLocation](../wiki/Home#envoymetalocation) |
 | `params` | `Record`<string, unknown\> |
 | `plugin_id` | `string` |
 | `route` | `string` |
 
 #### Defined in
 
-[EnvoyMeta.ts:69](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyMeta.ts#L69)
+[EnvoyMeta.ts:69](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyMeta.ts#L69)
 
 ___
 
 ### EnvoyRouteRequest
 
-Ƭ **EnvoyRouteRequest**<Payload\>: [EnvoyBaseRequest](interfaces/envoybaserequest.md)<[EnvoyRouteMeta](README.md#envoyroutemeta), Payload\>
+Ƭ **EnvoyRouteRequest**<Payload\>: [EnvoyBaseRequest](../wiki/Interface:%20EnvoyBaseRequest)<[EnvoyRouteMeta](../wiki/Home#envoyroutemeta), Payload\>
 
 Use to type your `req` object in route handlers,
 such as validation URLS or options URLs.
@@ -360,7 +356,7 @@ such as validation URLS or options URLs.
 
 #### Defined in
 
-[EnvoyRequest.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L27)
+[EnvoyRequest.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyRequest.ts#L27)
 
 ___
 
@@ -379,7 +375,7 @@ ___
 
 #### Defined in
 
-[EnvoySignatureVerifier.ts:5](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoySignatureVerifier.ts#L5)
+[EnvoySignatureVerifier.ts:5](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoySignatureVerifier.ts#L5)
 
 ___
 
@@ -396,7 +392,7 @@ ___
 
 #### Defined in
 
-[EnvoyStorageItem.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyStorageItem.ts#L1)
+[EnvoyStorageItem.ts:1](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyStorageItem.ts#L1)
 
 ___
 
@@ -435,36 +431,36 @@ ___
 | `id` | `string` |
 | `relationships` | `Object` |
 | `relationships.agreeable-ndas?` | `Object` |
-| `relationships.agreeable-ndas.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"agreeable-ndas"``\>[] |
+| `relationships.agreeable-ndas.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"agreeable-ndas"``\>[] |
 | `relationships.employee?` | `Object` |
-| `relationships.employee.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"employees"``\> |
+| `relationships.employee.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"employees"``\> |
 | `relationships.entry?` | `Object` |
-| `relationships.entry.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"entries"``\> |
+| `relationships.entry.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"entries"``\> |
 | `relationships.flow?` | `Object` |
-| `relationships.flow.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"flows"``\> |
+| `relationships.flow.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"flows"``\> |
 | `relationships.location` | `Object` |
-| `relationships.location.data` | [JSONAPIData](interfaces/jsonapidata.md)<``"locations"``\> |
+| `relationships.location.data` | [JSONAPIData](../wiki/Interface:%20JSONAPIData)<``"locations"``\> |
 | `type` | ``"invites"`` |
 
 #### Defined in
 
-[payloads/InvitePayload.ts:3](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/payloads/InvitePayload.ts#L3)
+[payloads/InvitePayload.ts:3](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/payloads/InvitePayload.ts#L3)
 
 ## Variables
 
 ### VERIFIED
 
-• `Const` **VERIFIED**: typeof [VERIFIED](README.md#verified)
+• `Const` **VERIFIED**: typeof [VERIFIED](../wiki/Home#verified)
 
 #### Defined in
 
-[EnvoyRequest.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyRequest.ts#L7)
+[EnvoyRequest.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyRequest.ts#L7)
 
 ## Functions
 
 ### asyncHandler
 
-▸ **asyncHandler**(`handler`): (`req`: [EnvoyRequest](README.md#envoyrequest)<unknown\>, `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `Promise`<void\>
+▸ **asyncHandler**(`handler`): (`req`: [EnvoyRequest](../wiki/Home#envoyrequest)<unknown\>, `res`: [EnvoyResponse](../wiki/Interface:%20EnvoyResponse), `next`: `NextFunction`) => `Promise`<void\>
 
 Catches Promise-based errors.
 
@@ -484,8 +480,8 @@ Catches Promise-based errors.
 
 | Name | Type |
 | :------ | :------ |
-| `req` | [EnvoyRequest](README.md#envoyrequest)<unknown\> |
-| `res` | [EnvoyResponse](interfaces/envoyresponse.md) |
+| `req` | [EnvoyRequest](../wiki/Home#envoyrequest)<unknown\> |
+| `res` | [EnvoyResponse](../wiki/Interface:%20EnvoyResponse) |
 | `next` | `NextFunction` |
 
 ##### Returns
@@ -494,13 +490,13 @@ Catches Promise-based errors.
 
 #### Defined in
 
-[asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/asyncHandler.ts#L10)
+[asyncHandler.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/asyncHandler.ts#L10)
 
 ___
 
 ### errorMiddleware
 
-▸ **errorMiddleware**(`onError?`): (`err`: `Error`, `req`: [EnvoyRequest](README.md#envoyrequest)<unknown\>, `res`: [EnvoyResponse](interfaces/envoyresponse.md), `next`: `NextFunction`) => `void`
+▸ **errorMiddleware**(`onError?`): (`err`: `Error`, `req`: [EnvoyRequest](../wiki/Home#envoyrequest)<unknown\>, `res`: [EnvoyResponse](../wiki/Interface:%20EnvoyResponse), `next`: `NextFunction`) => `void`
 
 Catches errors and sets the proper status code.
 
@@ -521,8 +517,8 @@ Catches errors and sets the proper status code.
 | Name | Type |
 | :------ | :------ |
 | `err` | `Error` |
-| `req` | [EnvoyRequest](README.md#envoyrequest)<unknown\> |
-| `res` | [EnvoyResponse](interfaces/envoyresponse.md) |
+| `req` | [EnvoyRequest](../wiki/Home#envoyrequest)<unknown\> |
+| `res` | [EnvoyResponse](../wiki/Interface:%20EnvoyResponse) |
 | `next` | `NextFunction` |
 
 ##### Returns
@@ -531,13 +527,13 @@ Catches errors and sets the proper status code.
 
 #### Defined in
 
-[errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/errorMiddleware.ts#L9)
+[errorMiddleware.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/errorMiddleware.ts#L9)
 
 ___
 
 ### middleware
 
-▸ **middleware**(`options?`): [EnvoyMiddleware](README.md#envoymiddleware)
+▸ **middleware**(`options?`): [EnvoyMiddleware](../wiki/Home#envoymiddleware)
 
 Sets up an `EnvoyPluginSDK` object in the path `req.envoy`.
 Modifies the `res` object to include Envoy's helpers, per `EnvoyResponse`.
@@ -549,12 +545,12 @@ as well as managing the plugin access token lifecycle.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | [EnvoySignatureVerifierOptions](README.md#envoysignatureverifieroptions) |
+| `options?` | [EnvoySignatureVerifierOptions](../wiki/Home#envoysignatureverifieroptions) |
 
 #### Returns
 
-[EnvoyMiddleware](README.md#envoymiddleware)
+[EnvoyMiddleware](../wiki/Home#envoymiddleware)
 
 #### Defined in
 
-[middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/middleware.ts#L21)
+[middleware.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/middleware.ts#L21)

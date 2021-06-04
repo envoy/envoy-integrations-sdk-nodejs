@@ -1,7 +1,3 @@
-[@envoy/envoy-integrations-sdk](../README.md) / EnvoyResponse
-
-# Interface: EnvoyResponse
-
 Use to type your `res` object in Envoy request handlers.
 
 ## Hierarchy
@@ -14,20 +10,20 @@ Use to type your `res` object in Envoy request handlers.
 
 ### Properties
 
-- [send](envoyresponse.md#send)
-- [sendFailed](envoyresponse.md#sendfailed)
-- [sendIgnored](envoyresponse.md#sendignored)
-- [sendOngoing](envoyresponse.md#sendongoing)
+- [send](../wiki/Interface:%20EnvoyResponse#send)
+- [sendFailed](../wiki/Interface:%20EnvoyResponse#sendfailed)
+- [sendIgnored](../wiki/Interface:%20EnvoyResponse#sendignored)
+- [sendOngoing](../wiki/Interface:%20EnvoyResponse#sendongoing)
 
 ## Properties
 
 ### send
 
-• **send**: (`debugInfo?`: `unknown`) => [EnvoyResponse](envoyresponse.md)
+• **send**: (`debugInfo?`: `unknown`) => [EnvoyResponse](../wiki/Interface:%20EnvoyResponse)
 
 #### Type declaration
 
-▸ (`debugInfo?`): [EnvoyResponse](envoyresponse.md)
+▸ (`debugInfo?`): [EnvoyResponse](../wiki/Interface:%20EnvoyResponse)
 
 ##### Parameters
 
@@ -37,7 +33,7 @@ Use to type your `res` object in Envoy request handlers.
 
 ##### Returns
 
-[EnvoyResponse](envoyresponse.md)
+[EnvoyResponse](../wiki/Interface:%20EnvoyResponse)
 
 #### Overrides
 
@@ -45,7 +41,7 @@ Response.send
 
 #### Defined in
 
-[EnvoyResponse.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyResponse.ts#L8)
+[EnvoyResponse.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyResponse.ts#L8)
 
 ___
 
@@ -71,7 +67,7 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyResponse.ts#L11)
+[EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyResponse.ts#L11)
 
 ___
 
@@ -97,7 +93,7 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyResponse.ts#L10)
+[EnvoyResponse.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyResponse.ts#L10)
 
 ___
 
@@ -121,4 +117,4 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7acad5/src/EnvoyResponse.ts#L9)
+[EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/f50d6c5/src/EnvoyResponse.ts#L9)

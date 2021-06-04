@@ -5,5 +5,5 @@
   "excludeProtected": true,
   "excludeExternals": true,
   "readme": "none",
-  "theme": "typedoc-github-wiki-theme/dist"
+  "theme": "./node_modules/typedoc-github-wiki-theme/dist"
 }
