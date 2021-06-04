@@ -10,6 +10,12 @@ export interface VerifiedRequest extends Request {
   [VERIFIED]: boolean
 }
 
+/**
+ * Base type for Envoy requests.
+ * You probably won't need to use this type directly.
+ * For routes, use `EnvoyRouteRequest`,
+ * and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
+ */
 export interface EnvoyBaseRequest<Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
   envoy: EnvoyPluginSDK<Meta, Payload>
 }
@@ -21,8 +27,8 @@ export interface EnvoyBaseRequest<Meta extends EnvoyMeta = EnvoyMeta, Payload = 
 export type EnvoyRouteRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMeta, Payload>;
 
 /**
- * Use to type your `req` object in route handlers,
- * such as validation URLS or options URLs.
+ * Base type for event requests.
+ * You should use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
  */
 export type EnvoyEventRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyEventMeta, Payload>;
 
@@ -38,5 +44,10 @@ export type EnvoyEntryEventRequest = EnvoyEventRequest<EntryPayload>;
  */
 export type EnvoyInviteEventRequest = EnvoyEventRequest<InvitePayload>;
 
+/**
+ * You probably won't need to use this type directly.
+ * For routes, use `EnvoyRouteRequest`,
+ * and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
+ */
 type EnvoyRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMeta | EnvoyEventMeta, Payload>;
 export default EnvoyRequest;
