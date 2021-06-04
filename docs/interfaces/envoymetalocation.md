@@ -1,16 +1,14 @@
-[@envoy/envoy-integrations-sdk](../README.md) / [index](../modules/index.md) / EnvoyMetaLocation
+[@envoy/envoy-integrations-sdk](../README.md) / EnvoyMetaLocation
 
 # Interface: EnvoyMetaLocation
-
-[index](../modules/index.md).EnvoyMetaLocation
 
 ## Table of contents
 
 ### Properties
 
-- [attributes](index.envoymetalocation.md#attributes)
-- [id](index.envoymetalocation.md#id)
-- [type](index.envoymetalocation.md#type)
+- [attributes](envoymetalocation.md#attributes)
+- [id](envoymetalocation.md#id)
+- [type](envoymetalocation.md#type)
 
 ## Properties
 
@@ -39,7 +37,7 @@
 
 #### Defined in
 
-[EnvoyMeta.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d8fa581/src/EnvoyMeta.ts#L10)
+[EnvoyMeta.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7d8339/src/EnvoyMeta.ts#L10)
 
 ___
 
@@ -49,7 +47,7 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d8fa581/src/EnvoyMeta.ts#L8)
+[EnvoyMeta.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7d8339/src/EnvoyMeta.ts#L8)
 
 ___
 
@@ -59,4 +57,4 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/d8fa581/src/EnvoyMeta.ts#L9)
+[EnvoyMeta.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/a7d8339/src/EnvoyMeta.ts#L9)

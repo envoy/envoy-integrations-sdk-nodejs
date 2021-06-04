@@ -1,6 +1,6 @@
 import JSONAPIData from '../util/json-api/JSONAPIData';
 
-export default interface InvitePayload {
+type InvitePayload = {
   id: string,
   type: 'invites',
   attributes: {
@@ -55,4 +55,6 @@ export default interface InvitePayload {
       data: Array<JSONAPIData<'agreeable-ndas'>>,
     }
   }
-}
+};
+
+export default InvitePayload;

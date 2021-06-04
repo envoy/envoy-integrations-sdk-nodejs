@@ -1,6 +1,6 @@
 import JSONAPIData from '../util/json-api/JSONAPIData';
 
-export default interface EntryPayload {
+type EntryPayload = {
   id: string,
   type: 'entries',
   attributes: {
@@ -56,4 +56,6 @@ export default interface EntryPayload {
       data: Array<JSONAPIData<'agreeable-ndas'>>,
     }
   }
-}
+};
+
+export default EntryPayload;
