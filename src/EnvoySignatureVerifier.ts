@@ -2,6 +2,9 @@ import crypto, { BinaryToTextEncoding } from 'crypto';
 import { Request } from 'express';
 import { envoyClientSecret } from './constants';
 
+/**
+ * @category Helper
+ */
 export type EnvoySignatureVerifierOptions = {
   algorithm: 'sha256' | string,
   encoding: BinaryToTextEncoding,
@@ -18,6 +21,8 @@ const defaultOptions: EnvoySignatureVerifierOptions = {
 
 /**
  * Verifies that a request is coming from Envoy.
+ *
+ * @category Helper
  */
 export default class EnvoySignatureVerifier {
   private readonly options: EnvoySignatureVerifierOptions;

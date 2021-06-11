@@ -19,6 +19,9 @@ import { EnvoyMetaAuth } from './EnvoyMeta';
 /**
  * API endpoints for *user-scoped* tokens.
  * To access Envoy resources, this is the API you'd want.
+ *
+ * @category API
+ * @category Request Object
  */
 export default class EnvoyUserAPI extends EnvoyAPI {
   async getAgreementPage(id: string, include?: string): Promise<AgreementPageModel> {
@@ -147,9 +150,10 @@ export default class EnvoyUserAPI extends EnvoyAPI {
   /**
    * Gets a user access token using `password` as the grant type (discouraged).
    */
-  static async loginAsUser(
+  static async loginAsUserWithPassword(
     username: string,
     password: string,
+    scope: Array<string> = [],
     id = envoyClientId,
     secret = envoyClientSecret,
   ): Promise<EnvoyMetaAuth> {
@@ -161,9 +165,35 @@ export default class EnvoyUserAPI extends EnvoyAPI {
       method: 'POST',
       data: {
         grant_type: 'password',
+        scope,
         username,
         password,
-        scope: 'plugin,token.refresh',
+      },
+      url: '/a/auth/v0/token',
+      baseURL: envoyBaseURL,
+    });
+    return data;
+  }
+
+  /**
+   * Gets a user access token using `code` as the grant type.
+   */
+  static async loginAsUserWithCode(
+    code: string,
+    scope: Array<string> = [],
+    id = envoyClientId,
+    secret = envoyClientSecret,
+  ): Promise<EnvoyMetaAuth> {
+    const { data } = await axios({
+      auth: {
+        username: id,
+        password: secret,
+      },
+      method: 'POST',
+      data: {
+        grant_type: 'authorization_code',
+        scope,
+        code,
       },
       url: '/a/auth/v0/token',
       baseURL: envoyBaseURL,

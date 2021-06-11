@@ -8,6 +8,8 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
  * to update the status (e.g. complete, failed, ignored)
  * as well as attach extra data to the event's subject
  * (e.g. showing a generated card number in the dashboard for a visitor on `entry_sign_in`).
+ *
+ * @category Request Object
  */
 export default class EnvoyPluginJob {
   readonly api: EnvoyPluginAPI;

@@ -6,6 +6,9 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
 /**
  * A key-value storage that can be scoped to a specific install,
  * or to the plugin itself.
+ *
+ * @category Storage
+ * @category Request Object
  */
 export default class EnvoyPluginStorage {
   readonly api: EnvoyPluginAPI;

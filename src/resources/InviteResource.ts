@@ -1,7 +1,13 @@
 import JSONAPIModel from '../util/json-api/JSONAPIModel';
 
+/**
+ * @category API Resource
+ */
 export type InviteSortFields = 'name' | 'created_at' | '-name' | '-created_at';
 
+/**
+ * @category API Resource
+ */
 export interface InviteFilterFields {
   email?: string;
   employee?: string;
@@ -16,6 +22,9 @@ export interface InviteFilterFields {
   scope?: 'hosted' | 'mine' | 'include_execs';
 }
 
+/**
+ * @category API Resource
+ */
 export interface InviteAttributes {
   'additional-guests'?: number;
   'approval-status'?: {
@@ -52,6 +61,9 @@ export interface InviteAttributes {
   'updated-at'?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export interface InviteCreationAttributes {
   email?: string;
   'expected-arrival-time'?: string;
@@ -64,8 +76,17 @@ export interface InviteCreationAttributes {
   phone?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export type InviteRelationships = 'attendee' | 'creator' | 'employee' | 'entry' | 'flow' | 'location';
 
+/**
+ * @category API Resource
+ */
 export type InviteModel = JSONAPIModel<InviteAttributes, InviteRelationships, 'invites'>;
 
+/**
+ * @category API Resource
+ */
 export type InviteCreationModel = JSONAPIModel<InviteCreationAttributes, InviteRelationships, 'invites', undefined>;

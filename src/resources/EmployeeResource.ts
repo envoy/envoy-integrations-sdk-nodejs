@@ -1,7 +1,13 @@
 import JSONAPIModel from '../util/json-api/JSONAPIModel';
 
+/**
+ * @category API Resource
+ */
 export type EmployeeSortFields = 'name' | 'created_at' | '-name' | '-created_at';
 
+/**
+ * @category API Resource
+ */
 export interface EmployeeFilterFields {
   deleted?: boolean;
   company?: string;
@@ -15,6 +21,9 @@ export interface EmployeeFilterFields {
   query?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export interface EmployeeAttributes {
   name: string;
   email: string;
@@ -27,6 +36,12 @@ export interface EmployeeAttributes {
   'deleted-at'?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export type EmployeeRelationships = 'locations' | 'company';
 
+/**
+ * @category API Resource
+ */
 export type EmployeeModel = JSONAPIModel<EmployeeAttributes, EmployeeRelationships>;

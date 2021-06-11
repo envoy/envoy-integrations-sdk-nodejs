@@ -1,5 +1,8 @@
 import JSONAPIData from '../util/json-api/JSONAPIData';
 
+/**
+ * @category Event
+ */
 type EntryPayload = {
   id: string,
   type: 'entries',

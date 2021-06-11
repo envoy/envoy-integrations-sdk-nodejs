@@ -5,6 +5,9 @@ export type EnvoyJWTAlgorithm = Algorithm;
 export type EnvoyJWTDecodeOptions = VerifyOptions;
 /**
  * Helper to encode and decode JWTs.
+ *
+ * @category Helper
+ * @category Request Object
  */
 export default class EnvoyJWT {
   private secret: string;

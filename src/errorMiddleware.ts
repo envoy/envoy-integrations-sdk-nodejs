@@ -5,6 +5,8 @@ import EnvoyResponse from './EnvoyResponse';
 
 /**
  * Catches errors and sets the proper status code.
+ *
+ * @category SDK
  */
 export default function errorMiddleware(onError: (err: Error) => void = () => {}) {
   return (err: Error, req: EnvoyRequest, res: EnvoyResponse, next: NextFunction): void => {

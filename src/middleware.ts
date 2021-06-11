@@ -9,6 +9,9 @@ import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 
+/**
+ * @category Helper
+ */
 export type EnvoyMiddleware = (req: EnvoyRequest, res: EnvoyResponse, next: NextFunction) => void;
 
 /**
@@ -17,6 +20,8 @@ export type EnvoyMiddleware = (req: EnvoyRequest, res: EnvoyResponse, next: Next
  *
  * Also verifies that the request is coming from Envoy,
  * as well as managing the plugin access token lifecycle.
+ *
+ * @category SDK
  */
 export default function middleware(options?: EnvoySignatureVerifierOptions): EnvoyMiddleware {
   const signatureVerifier = new EnvoySignatureVerifier(options);
@@ -35,7 +40,7 @@ export default function middleware(options?: EnvoySignatureVerifierOptions): Env
       try {
         const now = Date.now();
         if (now > threshold) {
-          const { access_token: rawAccessToken, expires_in: expiresIn } = await EnvoyPluginAPI.login();
+          const { access_token: rawAccessToken, expires_in: expiresIn } = await EnvoyPluginAPI.loginAsPlugin();
           accessToken = rawAccessToken;
           threshold = now + (expiresIn * 1000) - (1000 * 60 * 10);
         }

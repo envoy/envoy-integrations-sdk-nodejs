@@ -1,3 +1,6 @@
+/**
+ * @category Storage
+ */
 type EnvoyStorageItem = {
   key: string,
   value: unknown,

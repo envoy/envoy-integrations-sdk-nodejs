@@ -16,7 +16,7 @@ and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 ## Hierarchy
 
-- [VerifiedRequest](verifiedrequest.md)
+- `VerifiedRequest`
 
   ↳ **EnvoyBaseRequest**
 
@@ -35,11 +35,11 @@ and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 #### Inherited from
 
-[VerifiedRequest](verifiedrequest.md).[[VERIFIED]](verifiedrequest.md#[verified])
+VerifiedRequest.\_\_@VERIFIED@1237
 
 #### Defined in
 
-[EnvoyRequest.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyRequest.ts#L10)
+[EnvoyRequest.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyRequest.ts#L16)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[EnvoyRequest.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/db5b958/src/EnvoyRequest.ts#L20)
+[EnvoyRequest.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyRequest.ts#L28)

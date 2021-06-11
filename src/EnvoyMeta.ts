@@ -1,9 +1,15 @@
+/**
+ * @category Meta
+ */
 export type EnvoyMetaJob = {
   id: string,
   name: string,
   identifier: string,
 };
 
+/**
+ * @category Meta
+ */
 export type EnvoyMetaLocation = {
   id: string,
   type: 'locations',
@@ -25,6 +31,9 @@ export type EnvoyMetaLocation = {
   }
 };
 
+/**
+ * @category Meta
+ */
 export type EnvoyMetaCompany = {
   id: string,
   type: 'companies',
@@ -36,9 +45,11 @@ export type EnvoyMetaCompany = {
 };
 
 /**
- * A short-lived userAPI token.
- * Will be used to construct the userAPI property
- * found in req.envoy.userAPI.
+ * A short-lived `userAPI` token.
+ * Will be used to construct the `userAPI` property
+ * found in `req.envoy.userAPI`.
+ *
+ * @category Meta
  */
 export type EnvoyMetaAuth = {
   token_type: 'Bearer',
@@ -50,6 +61,8 @@ export type EnvoyMetaAuth = {
 
 /**
  * Metadata that will be included in the request body for events.
+ *
+ * @category Meta
  */
 export type EnvoyEventMeta = {
   event: string,
@@ -65,6 +78,8 @@ export type EnvoyEventMeta = {
 /**
  * Metadata that will be included in the request body for setup routes,
  * like validation URLs or options URLs.
+ *
+ * @category Meta
  */
 export type EnvoyRouteMeta = {
   route: string,
@@ -80,6 +95,8 @@ export type EnvoyRouteMeta = {
 
 /**
  * Metadata that will be included in every request Envoy sends to your plugin.
+ *
+ * @category Meta
  */
 type EnvoyMeta = EnvoyEventMeta | EnvoyRouteMeta;
 export default EnvoyMeta;

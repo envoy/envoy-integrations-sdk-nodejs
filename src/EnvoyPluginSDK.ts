@@ -7,6 +7,7 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
 
 /**
  * Every Envoy request has a `meta` and `payload`.
+ * @category Request
  */
 export interface EnvoyRequestBody<Meta, Payload> {
   meta: Meta,
@@ -17,6 +18,8 @@ export interface EnvoyRequestBody<Meta, Payload> {
  * Sets up all relevant Envoy functions.
  * Attaches itself to every request object using our `middleware`,
  * to allow for easy access to Envoy functions.
+ *
+ * @category Base
  */
 export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> {
   /**
@@ -78,7 +81,7 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
       accessToken = (meta as EnvoyRouteMeta).forwarded_bearer_token;
     }
     if (!accessToken) {
-      throw new Error("This user's API token was not found. Are you in a route?");
+      throw new Error("This user's API token was not found. Either no scopes were asked for, or this is a route.");
     }
     return new EnvoyUserAPI(accessToken);
   }

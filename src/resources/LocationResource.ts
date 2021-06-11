@@ -1,12 +1,21 @@
 import JSONAPIModel from '../util/json-api/JSONAPIModel';
 
+/**
+ * @category API Resource
+ */
 export type LocationSortFields = 'name' | 'created_at' | '-name' | '-created_at';
 
+/**
+ * @category API Resource
+ */
 export interface LocationFilterFields {
   disabled?: boolean;
   company?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export interface LocationAttributes {
   name: string;
   address: string;
@@ -47,6 +56,12 @@ export interface LocationAttributes {
   'updated-at'?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export type LocationRelationships = 'company' | 'employees' | 'flows' | 'employee-screening-flow';
 
+/**
+ * @category API Resource
+ */
 export type LocationModel = JSONAPIModel<LocationAttributes, LocationRelationships>;

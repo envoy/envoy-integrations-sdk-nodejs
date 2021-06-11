@@ -5,7 +5,10 @@ import EnvoyResponse from './EnvoyResponse';
 export type EnvoyHandler = (req: EnvoyRequest, res: EnvoyResponse) => void | Promise<void>;
 
 /**
- * Catches Promise-based errors.
+ * Wraps any express.js-based handlers
+ * to catch Promise-based errors.
+ *
+ * @category Helper
  */
 export default function asyncHandler(handler: RequestHandler | EnvoyHandler) {
   return async (req: EnvoyRequest, res: EnvoyResponse, next: NextFunction): Promise<void> => {

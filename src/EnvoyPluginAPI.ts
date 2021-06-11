@@ -8,6 +8,9 @@ import { EnvoyMetaAuth } from './EnvoyMeta';
 
 /**
  * API endpoints for *plugin-scoped* tokens.
+ *
+ * @category API
+ * @category Request Object
  */
 export default class EnvoyPluginAPI extends EnvoyAPI {
   async updateJob(jobId: string, update: EnvoyPluginJobUpdate): Promise<void> {
@@ -58,7 +61,7 @@ export default class EnvoyPluginAPI extends EnvoyAPI {
   /**
    * Gets a plugin access token using `client_credentials` as the grant type.
    */
-  static async login(id = envoyClientId, secret = envoyClientSecret): Promise<EnvoyMetaAuth> {
+  static async loginAsPlugin(id = envoyClientId, secret = envoyClientSecret): Promise<EnvoyMetaAuth> {
     const { data } = await axios({
       auth: {
         username: id,

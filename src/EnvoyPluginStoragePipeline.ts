@@ -7,6 +7,8 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
 
 /**
  * Builds up a request pipeline for submitting storage commands.
+ *
+ * @category Base
  */
 export default class EnvoyPluginStoragePipeline {
   readonly api: EnvoyPluginAPI;

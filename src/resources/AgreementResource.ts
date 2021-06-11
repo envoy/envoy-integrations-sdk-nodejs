@@ -1,5 +1,8 @@
 import JSONAPIModel from '../util/json-api/JSONAPIModel';
 
+/**
+ * @category API Resource
+ */
 export interface AgreementAttributes {
   name: string;
   optional: boolean;
@@ -12,6 +15,12 @@ export interface AgreementAttributes {
   'updated-at'?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export type AgreementRelationships = 'agreement-page';
 
+/**
+ * @category API Resource
+ */
 export type AgreementModel = JSONAPIModel<AgreementAttributes, AgreementRelationships>;

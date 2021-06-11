@@ -4,5 +4,7 @@
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeExternals": true,
+  "excludeInternal": true,
+  "categorizeByGroup": true,
   "readme": "none"
 }

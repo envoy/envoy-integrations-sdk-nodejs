@@ -3,6 +3,7 @@ import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
 
 /**
  * Use to type your `res` object in Envoy request handlers.
+ * @category Response
  */
 export default interface EnvoyResponse extends Response {
   send: (debugInfo?: unknown) => this;

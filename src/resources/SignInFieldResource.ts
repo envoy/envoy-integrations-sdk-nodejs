@@ -1,5 +1,8 @@
 import JSONAPIModel from '../util/json-api/JSONAPIModel';
 
+/**
+ * @category API Resource
+ */
 export interface SignInFieldAttributes {
   name: string;
   kind: string;
@@ -17,6 +20,12 @@ export interface SignInFieldAttributes {
   'updated-at'?: string;
 }
 
+/**
+ * @category API Resource
+ */
 export type SignInFieldRelationships = 'sign-in-field-page';
 
+/**
+ * @category API Resource
+ */
 export type SignInFieldModel = JSONAPIModel<SignInFieldAttributes, SignInFieldRelationships>;

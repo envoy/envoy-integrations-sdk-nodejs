@@ -2,8 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import DataLoader from 'dataloader';
 import JSONAPIData from './util/json-api/JSONAPIData';
-import { envoyBaseURL, envoyClientId, envoyClientSecret } from './constants';
-import { EnvoyMetaAuth } from './EnvoyMeta';
+import { envoyBaseURL } from './constants';
 
 interface EnvoyWebDataLoaderKey extends JSONAPIData {
   include?: string;
@@ -23,6 +22,8 @@ const TYPE_ALIASES = new Map<string, string>([
  * Uses a data loader to leverage JSONAPI's "include" functionality.
  * This allows us to save everything that was included in the initial response
  * to be used later without re-fetching from the API.
+ *
+ * @category Base
  */
 export default class EnvoyAPI {
   /**

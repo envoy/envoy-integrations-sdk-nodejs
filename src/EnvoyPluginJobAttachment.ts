@@ -1,5 +1,7 @@
 /**
  * Display some text in Envoy's dashboard.
+ *
+ * @category Attachment
  */
 export interface EnvoyPluginTextJobAttachment {
   type?: 'text' | 'password' | 'link' | 'credential_image',
@@ -9,6 +11,8 @@ export interface EnvoyPluginTextJobAttachment {
 
 /**
  * Display a link in Envoy's dashboard.
+ *
+ * @category Attachment
  */
 export interface EnvoyPluginLinkJobAttachment extends EnvoyPluginTextJobAttachment {
   type: 'link',
@@ -18,6 +22,8 @@ export interface EnvoyPluginLinkJobAttachment extends EnvoyPluginTextJobAttachme
 /**
  * Display a credential in Envoy's dashboard,
  * and include the credential's image in the invitee's welcome email.
+ *
+ * @category Attachment
  */
 export interface EnvoyPluginCredentialJobAttachment extends EnvoyPluginTextJobAttachment {
   type: 'credential_image',
@@ -32,6 +38,8 @@ export interface EnvoyPluginCredentialJobAttachment extends EnvoyPluginTextJobAt
  * Attachments to jobs, which will be displayed in the Envoy dashboard.
  * Some attachments like `credential_image` can show up in other places,
  * like an invitee's welcome email.
+ *
+ * @category Attachment
  */
 type EnvoyPluginJobAttachment = EnvoyPluginTextJobAttachment
 | EnvoyPluginLinkJobAttachment

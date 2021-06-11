@@ -1,5 +1,8 @@
 import JSONAPIData from '../util/json-api/JSONAPIData';
 
+/**
+ * @category Event
+ */
 type InvitePayload = {
   id: string,
   type: 'invites',
