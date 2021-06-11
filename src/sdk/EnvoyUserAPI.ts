@@ -1,19 +1,19 @@
 import axios from 'axios';
-import EnvoyAPI from './EnvoyAPI';
-import { AgreementPageModel } from './resources/AgreementPageResource';
-import { AgreementModel } from './resources/AgreementResource';
-import { CompanyModel } from './resources/CompanyResource';
-import { EmployeeFilterFields, EmployeeModel, EmployeeSortFields } from './resources/EmployeeResource';
-import { FlowFilterFields, FlowModel, FlowSortFields } from './resources/FlowResource';
-import { LocationFilterFields, LocationModel, LocationSortFields } from './resources/LocationResource';
-import { SignInFieldPageModel } from './resources/SignInFieldPageResource';
-import { SignInFieldModel } from './resources/SignInFieldResource';
-import JSONAPIPaginationParams from './util/json-api/JSONAPIPaginationParams';
+import EnvoyAPI from '../base/EnvoyAPI';
+import { AgreementPageModel } from '../resources/AgreementPageResource';
+import { AgreementModel } from '../resources/AgreementResource';
+import { CompanyModel } from '../resources/CompanyResource';
+import { EmployeeFilterFields, EmployeeModel, EmployeeSortFields } from '../resources/EmployeeResource';
+import { FlowFilterFields, FlowModel, FlowSortFields } from '../resources/FlowResource';
+import { LocationFilterFields, LocationModel, LocationSortFields } from '../resources/LocationResource';
+import { SignInFieldPageModel } from '../resources/SignInFieldPageResource';
+import { SignInFieldModel } from '../resources/SignInFieldResource';
+import JSONAPIPaginationParams from '../util/json-api/JSONAPIPaginationParams';
 import {
   InviteCreationModel, InviteFilterFields, InviteModel, InviteSortFields,
-} from './resources/InviteResource';
-import { UserModel } from './resources/UserResource';
-import { envoyBaseURL, envoyClientId, envoyClientSecret } from './constants';
+} from '../resources/InviteResource';
+import { UserModel } from '../resources/UserResource';
+import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 
 /**

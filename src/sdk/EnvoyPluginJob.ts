@@ -1,5 +1,5 @@
 import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
-import EnvoyPluginJobUpdate from './EnvoyPluginJobUpdate';
+import EnvoyPluginJobUpdate from '../internal/EnvoyPluginJobUpdate';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 
 /**

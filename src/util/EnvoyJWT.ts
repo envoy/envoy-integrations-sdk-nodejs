@@ -1,5 +1,5 @@
 import jwt, { SignOptions, Algorithm, VerifyOptions } from 'jsonwebtoken';
-import { jwtSecret } from './constants';
+import { jwtSecret } from '../constants';
 
 export type EnvoyJWTAlgorithm = Algorithm;
 export type EnvoyJWTDecodeOptions = VerifyOptions;

@@ -1,5 +1,5 @@
 import { NextFunction } from 'express';
-import HttpStatus from './HttpStatus';
+import HttpStatus from '../internal/HttpStatus';
 import EnvoyRequest from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
 

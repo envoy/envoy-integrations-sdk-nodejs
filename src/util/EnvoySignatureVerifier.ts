@@ -1,6 +1,6 @@
 import crypto, { BinaryToTextEncoding } from 'crypto';
 import { Request } from 'express';
-import { envoyClientSecret } from './constants';
+import { envoyClientSecret } from '../constants';
 
 /**
  * @category Helper

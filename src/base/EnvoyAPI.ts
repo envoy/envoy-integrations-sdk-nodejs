@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 import DataLoader from 'dataloader';
-import JSONAPIData from './util/json-api/JSONAPIData';
-import { envoyBaseURL } from './constants';
+import JSONAPIData from '../util/json-api/JSONAPIData';
+import { envoyBaseURL } from '../constants';
 
 interface EnvoyWebDataLoaderKey extends JSONAPIData {
   include?: string;

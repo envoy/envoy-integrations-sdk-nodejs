@@ -1,9 +1,9 @@
 import EnvoyStorageCommand, {
   EnvoyStorageSetUniqueNumOptions,
   EnvoyStorageSetUniqueOptions,
-} from './EnvoyStorageCommand';
-import EnvoyStorageItem from './EnvoyStorageItem';
-import EnvoyPluginAPI from './EnvoyPluginAPI';
+} from '../internal/EnvoyStorageCommand';
+import EnvoyStorageItem from '../sdk/EnvoyStorageItem';
+import EnvoyPluginAPI from '../sdk/EnvoyPluginAPI';
 
 /**
  * Builds up a request pipeline for submitting storage commands.

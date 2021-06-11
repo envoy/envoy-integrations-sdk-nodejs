@@ -1,4 +1,4 @@
-import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
+import EnvoyPluginJobAttachment from '../sdk/EnvoyPluginJobAttachment';
 
 /**
  * @internal

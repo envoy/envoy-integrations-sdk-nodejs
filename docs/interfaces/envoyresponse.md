@@ -45,7 +45,7 @@ Response.send
 
 #### Defined in
 
-[EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyResponse.ts#L9)
+[sdk/EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L9)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyResponse.ts#L12)
+[sdk/EnvoyResponse.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L12)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyResponse.ts#L11)
+[sdk/EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L11)
 
 ___
 
@@ -121,4 +121,4 @@ ___
 
 #### Defined in
 
-[EnvoyResponse.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyResponse.ts#L10)
+[sdk/EnvoyResponse.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L10)

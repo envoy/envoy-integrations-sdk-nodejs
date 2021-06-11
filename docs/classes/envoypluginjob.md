@@ -43,7 +43,7 @@ as well as attach extra data to the event's subject
 
 #### Defined in
 
-[EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L17)
+[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L17)
 
 ## Properties
 
@@ -53,7 +53,7 @@ as well as attach extra data to the event's subject
 
 #### Defined in
 
-[EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L15)
+[sdk/EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L15)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L17)
+[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L17)
 
 ## Methods
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L45)
+[sdk/EnvoyPluginJob.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L45)
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:49](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L49)
+[sdk/EnvoyPluginJob.ts:49](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L49)
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L24)
+[sdk/EnvoyPluginJob.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L24)
 
 ___
 
@@ -148,7 +148,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:57](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L57)
+[sdk/EnvoyPluginJob.ts:57](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L57)
 
 ___
 
@@ -169,7 +169,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L53)
+[sdk/EnvoyPluginJob.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L53)
 
 ___
 
@@ -190,4 +190,4 @@ ___
 
 #### Defined in
 
-[EnvoyPluginJob.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginJob.ts#L61)
+[sdk/EnvoyPluginJob.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L61)

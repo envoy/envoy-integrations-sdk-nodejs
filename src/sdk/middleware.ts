@@ -1,8 +1,8 @@
 import bodyParser from 'body-parser';
 import { Response, NextFunction } from 'express';
 
-import HttpStatus from './HttpStatus';
-import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from './EnvoySignatureVerifier';
+import HttpStatus from '../internal/HttpStatus';
+import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from '../util/EnvoySignatureVerifier';
 import EnvoyRequest, { VERIFIED, VerifiedRequest } from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
 import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';

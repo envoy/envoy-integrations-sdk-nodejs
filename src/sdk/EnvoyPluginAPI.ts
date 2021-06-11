@@ -1,9 +1,9 @@
 import axios from 'axios';
-import EnvoyAPI from './EnvoyAPI';
-import EnvoyPluginJobUpdate from './EnvoyPluginJobUpdate';
-import EnvoyStorageCommand from './EnvoyStorageCommand';
+import EnvoyAPI from '../base/EnvoyAPI';
+import EnvoyPluginJobUpdate from '../internal/EnvoyPluginJobUpdate';
+import EnvoyStorageCommand from '../internal/EnvoyStorageCommand';
 import EnvoyStorageItem from './EnvoyStorageItem';
-import { envoyBaseURL, envoyClientId, envoyClientSecret } from './constants';
+import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 
 /**

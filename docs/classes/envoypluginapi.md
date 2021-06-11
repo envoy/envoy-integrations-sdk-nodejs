@@ -47,7 +47,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyAPI.ts#L59)
+[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/base/EnvoyAPI.ts#L59)
 
 ## Properties
 
@@ -63,7 +63,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyAPI.ts#L32)
+[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/base/EnvoyAPI.ts#L32)
 
 ## Methods
 
@@ -84,7 +84,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginAPI.ts#L53)
+[sdk/EnvoyPluginAPI.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L53)
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginAPI.ts#L24)
+[sdk/EnvoyPluginAPI.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L24)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:29](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginAPI.ts#L29)
+[sdk/EnvoyPluginAPI.ts:29](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L29)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginAPI.ts#L37)
+[sdk/EnvoyPluginAPI.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L37)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginAPI.ts#L16)
+[sdk/EnvoyPluginAPI.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L16)
 
 ___
 
@@ -190,4 +190,4 @@ Gets a plugin access token using `client_credentials` as the grant type.
 
 #### Defined in
 
-[EnvoyPluginAPI.ts:64](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginAPI.ts#L64)
+[sdk/EnvoyPluginAPI.ts:64](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L64)

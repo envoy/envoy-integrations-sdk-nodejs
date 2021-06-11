@@ -40,7 +40,7 @@ or to the plugin itself.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L16)
+[sdk/EnvoyPluginStorage.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L16)
 
 ## Properties
 
@@ -50,7 +50,7 @@ or to the plugin itself.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L14)
+[sdk/EnvoyPluginStorage.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L14)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L16)
+[sdk/EnvoyPluginStorage.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L16)
 
 ## Methods
 
@@ -82,23 +82,23 @@ Wrapper for single pipeline get.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:33](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L33)
+[sdk/EnvoyPluginStorage.ts:33](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L33)
 
 ___
 
 ### pipeline
 
-▸ **pipeline**(): [EnvoyPluginStoragePipeline](envoypluginstoragepipeline.md)
+▸ **pipeline**(): `default`
 
 Creates a new pipeline instance.
 
 #### Returns
 
-[EnvoyPluginStoragePipeline](envoypluginstoragepipeline.md)
+`default`
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L26)
+[sdk/EnvoyPluginStorage.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L26)
 
 ___
 
@@ -121,7 +121,7 @@ Wrapper for single pipeline set.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:40](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L40)
+[sdk/EnvoyPluginStorage.ts:40](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L40)
 
 ___
 
@@ -144,7 +144,7 @@ Wrapper for single pipeline setUnique.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L47)
+[sdk/EnvoyPluginStorage.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L47)
 
 ___
 
@@ -167,7 +167,7 @@ Wrapper for single pipeline setUnique.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:54](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L54)
+[sdk/EnvoyPluginStorage.ts:54](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L54)
 
 ___
 
@@ -190,4 +190,4 @@ Returns null if the item did not previously exist.
 
 #### Defined in
 
-[EnvoyPluginStorage.ts:62](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyPluginStorage.ts#L62)
+[sdk/EnvoyPluginStorage.ts:62](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginStorage.ts#L62)

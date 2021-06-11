@@ -1,5 +1,5 @@
-import EnvoyPluginStoragePipeline from './EnvoyPluginStoragePipeline';
-import { EnvoyStorageSetUniqueNumOptions, EnvoyStorageSetUniqueOptions } from './EnvoyStorageCommand';
+import EnvoyPluginStoragePipeline from '../base/EnvoyPluginStoragePipeline';
+import { EnvoyStorageSetUniqueNumOptions, EnvoyStorageSetUniqueOptions } from '../internal/EnvoyStorageCommand';
 import EnvoyStorageItem from './EnvoyStorageItem';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 

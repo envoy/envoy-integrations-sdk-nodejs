@@ -1,8 +1,8 @@
 import { Request } from 'express';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyMeta, { EnvoyEventMeta, EnvoyRouteMeta } from './EnvoyMeta';
-import EntryPayload from './payloads/EntryPayload';
-import InvitePayload from './payloads/InvitePayload';
+import EntryPayload from '../payloads/EntryPayload';
+import InvitePayload from '../payloads/InvitePayload';
 
 /**
  * @internal

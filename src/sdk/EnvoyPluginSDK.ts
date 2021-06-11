@@ -1,7 +1,7 @@
 import EnvoyMeta, { EnvoyEventMeta, EnvoyRouteMeta } from './EnvoyMeta';
 import EnvoyPluginStorage from './EnvoyPluginStorage';
 import EnvoyPluginJob from './EnvoyPluginJob';
-import EnvoyJWT from './EnvoyJWT';
+import EnvoyJWT from '../util/EnvoyJWT';
 import EnvoyUserAPI from './EnvoyUserAPI';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 
@@ -19,7 +19,7 @@ export interface EnvoyRequestBody<Meta, Payload> {
  * Attaches itself to every request object using our `middleware`,
  * to allow for easy access to Envoy functions.
  *
- * @category Base
+ * @category SDK
  */
 export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> {
   /**

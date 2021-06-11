@@ -9,11 +9,6 @@
 - [EnvoyPluginAPI](classes/envoypluginapi.md)
 - [EnvoyUserAPI](classes/envoyuserapi.md)
 
-### Base Classes
-
-- [EnvoyPluginSDK](classes/envoypluginsdk.md)
-- [EnvoyPluginStoragePipeline](classes/envoypluginstoragepipeline.md)
-
 ### Helper Classes
 
 - [EnvoyJWT](classes/envoyjwt.md)
@@ -26,6 +21,10 @@
 - [EnvoyPluginJob](classes/envoypluginjob.md)
 - [EnvoyPluginStorage](classes/envoypluginstorage.md)
 - [EnvoyUserAPI](classes/envoyuserapi.md)
+
+### SDK Classes
+
+- [EnvoyPluginSDK](classes/envoypluginsdk.md)
 
 ### Storage Classes
 
@@ -131,7 +130,7 @@
 
 #### Defined in
 
-[payloads/EntryPayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/payloads/EntryPayload.ts#L6)
+[payloads/EntryPayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/payloads/EntryPayload.ts#L6)
 
 ___
 
@@ -183,7 +182,7 @@ ___
 
 #### Defined in
 
-[payloads/InvitePayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/payloads/InvitePayload.ts#L6)
+[payloads/InvitePayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/payloads/InvitePayload.ts#L6)
 
 ___
 
@@ -211,7 +210,7 @@ ___
 
 #### Defined in
 
-[middleware.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/middleware.ts#L15)
+[sdk/middleware.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/middleware.ts#L15)
 
 ___
 
@@ -230,7 +229,7 @@ ___
 
 #### Defined in
 
-[EnvoySignatureVerifier.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoySignatureVerifier.ts#L8)
+[util/EnvoySignatureVerifier.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/util/EnvoySignatureVerifier.ts#L8)
 
 ___
 
@@ -257,7 +256,7 @@ Metadata that will be included in the request body for events.
 
 #### Defined in
 
-[EnvoyMeta.ts:67](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyMeta.ts#L67)
+[sdk/EnvoyMeta.ts:67](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyMeta.ts#L67)
 
 ___
 
@@ -281,7 +280,7 @@ found in `req.envoy.userAPI`.
 
 #### Defined in
 
-[EnvoyMeta.ts:54](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyMeta.ts#L54)
+[sdk/EnvoyMeta.ts:54](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyMeta.ts#L54)
 
 ___
 
@@ -302,7 +301,7 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyMeta.ts#L37)
+[sdk/EnvoyMeta.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyMeta.ts#L37)
 
 ___
 
@@ -320,7 +319,7 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyMeta.ts#L4)
+[sdk/EnvoyMeta.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyMeta.ts#L4)
 
 ___
 
@@ -352,7 +351,7 @@ ___
 
 #### Defined in
 
-[EnvoyMeta.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyMeta.ts#L13)
+[sdk/EnvoyMeta.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyMeta.ts#L13)
 
 ___
 
@@ -379,7 +378,7 @@ like validation URLs or options URLs.
 
 #### Defined in
 
-[EnvoyMeta.ts:84](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyMeta.ts#L84)
+[sdk/EnvoyMeta.ts:84](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyMeta.ts#L84)
 
 ___
 
@@ -394,7 +393,7 @@ such as handlers for `entry_sign_in`.
 
 #### Defined in
 
-[EnvoyRequest.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyRequest.ts#L53)
+[sdk/EnvoyRequest.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyRequest.ts#L53)
 
 ___
 
@@ -413,7 +412,7 @@ You should use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 #### Defined in
 
-[EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyRequest.ts#L45)
+[sdk/EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyRequest.ts#L45)
 
 ___
 
@@ -426,7 +425,7 @@ such as handlers for `invite_created` or `upcoming_visit`.
 
 #### Defined in
 
-[EnvoyRequest.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyRequest.ts#L61)
+[sdk/EnvoyRequest.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyRequest.ts#L61)
 
 ___
 
@@ -446,7 +445,7 @@ and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 #### Defined in
 
-[EnvoyRequest.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyRequest.ts#L70)
+[sdk/EnvoyRequest.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyRequest.ts#L70)
 
 ___
 
@@ -465,7 +464,7 @@ such as validation URLS or options URLs.
 
 #### Defined in
 
-[EnvoyRequest.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyRequest.ts#L37)
+[sdk/EnvoyRequest.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyRequest.ts#L37)
 
 ___
 
@@ -484,7 +483,7 @@ ___
 
 #### Defined in
 
-[EnvoyStorageItem.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/EnvoyStorageItem.ts#L4)
+[sdk/EnvoyStorageItem.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyStorageItem.ts#L4)
 
 ## Helper Functions
 
@@ -521,7 +520,7 @@ to catch Promise-based errors.
 
 #### Defined in
 
-[asyncHandler.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/asyncHandler.ts#L13)
+[sdk/asyncHandler.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/asyncHandler.ts#L13)
 
 ___
 
@@ -560,7 +559,7 @@ Catches errors and sets the proper status code.
 
 #### Defined in
 
-[errorMiddleware.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/errorMiddleware.ts#L11)
+[sdk/errorMiddleware.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/errorMiddleware.ts#L11)
 
 ___
 
@@ -586,4 +585,4 @@ as well as managing the plugin access token lifecycle.
 
 #### Defined in
 
-[middleware.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/cd208f9/src/middleware.ts#L26)
+[sdk/middleware.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/middleware.ts#L26)

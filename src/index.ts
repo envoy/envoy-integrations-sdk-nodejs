@@ -1,24 +1,24 @@
-import asyncHandler from './asyncHandler';
-import errorMiddleware from './errorMiddleware';
-import EnvoyJWT from './EnvoyJWT';
-import EnvoyPluginJob from './EnvoyPluginJob';
-import EnvoyPluginSDK from './EnvoyPluginSDK';
-import EnvoyPluginStorage from './EnvoyPluginStorage';
-import EnvoyPluginStoragePipeline from './EnvoyPluginStoragePipeline';
-import EnvoyRequest from './EnvoyRequest';
-import EnvoyResponse from './EnvoyResponse';
-import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from './EnvoySignatureVerifier';
-import EnvoyStorageItem from './EnvoyStorageItem';
-import EnvoyUserAPI from './EnvoyUserAPI';
-import EnvoyPluginAPI from './EnvoyPluginAPI';
-import HttpStatus from './HttpStatus';
-import middleware, { EnvoyMiddleware } from './middleware';
 import EntryPayload from './payloads/EntryPayload';
 import InvitePayload from './payloads/InvitePayload';
+
+import asyncHandler from './sdk/asyncHandler';
+import errorMiddleware from './sdk/errorMiddleware';
+import EnvoyPluginJob from './sdk/EnvoyPluginJob';
+import EnvoyPluginSDK from './sdk/EnvoyPluginSDK';
+import EnvoyPluginStorage from './sdk/EnvoyPluginStorage';
+import EnvoyRequest from './sdk/EnvoyRequest';
+import EnvoyResponse from './sdk/EnvoyResponse';
+import EnvoyStorageItem from './sdk/EnvoyStorageItem';
+import EnvoyUserAPI from './sdk/EnvoyUserAPI';
+import EnvoyPluginAPI from './sdk/EnvoyPluginAPI';
+import middleware, { EnvoyMiddleware } from './sdk/middleware';
+
+import EnvoyJWT from './util/EnvoyJWT';
+import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from './util/EnvoySignatureVerifier';
 import JSONAPIData from './util/json-api/JSONAPIData';
 
-export * from './EnvoyMeta';
-export * from './EnvoyRequest';
+export * from './sdk/EnvoyMeta';
+export * from './sdk/EnvoyRequest';
 export {
   asyncHandler,
   errorMiddleware,
@@ -29,7 +29,6 @@ export {
   EnvoyPluginJob,
   EnvoyPluginSDK,
   EnvoyPluginStorage,
-  EnvoyPluginStoragePipeline,
   EnvoyRequest,
   EnvoyResponse,
   EnvoySignatureVerifier,
@@ -37,7 +36,6 @@ export {
   EnvoyStorageItem,
   EnvoyPluginAPI,
   EnvoyUserAPI,
-  HttpStatus,
   JSONAPIData,
   middleware,
 };
