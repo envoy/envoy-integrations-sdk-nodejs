@@ -1,12 +1,14 @@
 import { Response } from 'express';
 import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
+import EnvoyOptionsRouteResponseBody from '../internal/EnvoyOptionsRouteResponseBody';
+import EnvoySelectedValuesRouteResponseBody from '../internal/EnvoySelectedValuesRouteResponseBody';
 
 /**
- * Use to type your `res` object in Envoy request handlers.
+ * Use to type your `res` object in Envoy event handlers.
  * @category Response
  */
-export default interface EnvoyResponse extends Response {
-  send: (debugInfo?: unknown) => this;
+export default interface EnvoyResponse<Body = unknown> extends Response {
+  send: (body?: Body) => this;
   /**
    * Marks the job as "ongoing". This is useful for long-running event handling.
    * Later on, you should update the job using
@@ -23,3 +25,15 @@ export default interface EnvoyResponse extends Response {
    */
   sendFailed: (message: string, debugInfo?: unknown, ...attachments: Array<EnvoyPluginJobAttachment>) => void;
 }
+
+/**
+ * Use to type your `res` object in Envoy "options URL" route handlers.
+ * @category Response
+ */
+export type EnvoyOptionsRouteResponse = EnvoyResponse<EnvoyOptionsRouteResponseBody>;
+
+/**
+ * Use to type your `res` object in Envoy "selected values URL" route handlers.
+ * @category Response
+ */
+export type EnvoySelectedValuesRouteResponse = EnvoyResponse<EnvoySelectedValuesRouteResponseBody>;

@@ -21,7 +21,7 @@ export interface EnvoyRequestBody<Meta, Payload> {
  *
  * @category SDK
  */
-export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> {
+export default class EnvoyPluginSDK<Meta = unknown, Payload = unknown> {
   /**
    * Body of the request.
    * use `meta` or `payload` to access the relevant properties,
@@ -82,11 +82,11 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
    * Used only in routes.
    */
   get userAPI(): EnvoyUserAPI {
-    const { meta } = this;
+    const meta = this.meta as unknown as EnvoyRouteMeta;
     const { auth } = meta;
     let accessToken: string | undefined = auth?.access_token;
-    if (!accessToken && 'forwarded_bearer_token' in meta) {
-      accessToken = (meta as EnvoyRouteMeta).forwarded_bearer_token;
+    if (!accessToken && ('forwarded_bearer_token' in meta)) {
+      accessToken = meta.forwarded_bearer_token;
     }
     if (!accessToken) {
       throw new Error("This user's API token was not found. Either no scopes were asked for, or this is a route.");
@@ -120,7 +120,7 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
    * Storage scoped to the install.
    */
   get installStorage(): EnvoyPluginStorage {
-    const { install_id: installId } = this.meta;
+    const { install_id: installId } = this.meta as unknown as EnvoyMeta;
     if (!installId) {
       throw new Error('No install ID found in meta.');
     }
@@ -147,7 +147,7 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
   get jobId(): string | null {
     const { meta } = this;
     if ('job' in meta) {
-      return (meta as EnvoyEventMeta).job.id;
+      return (meta as unknown as EnvoyEventMeta).job.id;
     }
     return null;
   }

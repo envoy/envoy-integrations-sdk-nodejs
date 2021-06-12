@@ -1,9 +1,9 @@
 /**
  * @category Meta
  */
-export type EnvoyMetaJob = {
+export type EnvoyMetaJob<Event extends string = string> = {
   id: string,
-  name: string,
+  name: Event,
   identifier: string,
 };
 
@@ -63,12 +63,12 @@ export type EnvoyMetaAuth = {
  *
  * @category Meta
  */
-export type EnvoyEventMeta = {
-  event: string,
+export type EnvoyEventMeta<Event extends string = string, Config = Record<string, unknown>> = {
+  event: Event,
   plugin_id: string,
   install_id: string,
-  config: Record<string, unknown>,
-  job: EnvoyMetaJob,
+  config: Config,
+  job: EnvoyMetaJob<Event>,
   location: EnvoyMetaLocation,
   company: EnvoyMetaCompany,
   auth: EnvoyMetaAuth | null,
@@ -80,12 +80,12 @@ export type EnvoyEventMeta = {
  *
  * @category Meta
  */
-export type EnvoyRouteMeta = {
+export type EnvoyRouteMeta<Config = Record<string, unknown>, Params = Record<string, unknown>> = {
   route: string,
   plugin_id: string,
   install_id: string,
-  config: Record<string, unknown>,
-  params: Record<string, unknown>,
+  config: Config,
+  params: Params,
   location: EnvoyMetaLocation,
   company: EnvoyMetaCompany,
   auth: EnvoyMetaAuth | null,

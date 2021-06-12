@@ -29,6 +29,7 @@ export * from './resources/UserResource';
 
 export * from './sdk/EnvoyMeta';
 export * from './sdk/EnvoyRequest';
+export * from './sdk/EnvoyResponse';
 
 export * from './util/EnvoySignatureVerifier';
 

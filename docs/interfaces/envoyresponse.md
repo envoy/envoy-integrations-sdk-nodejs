@@ -1,8 +1,14 @@
 [@envoy/envoy-integrations-sdk](../README.md) / EnvoyResponse
 
-# Interface: EnvoyResponse
+# Interface: EnvoyResponse<Body\>
 
-Use to type your `res` object in Envoy request handlers.
+Use to type your `res` object in Envoy event handlers.
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Body` | `Body` = `unknown` |
 
 ## Hierarchy
 
@@ -23,21 +29,21 @@ Use to type your `res` object in Envoy request handlers.
 
 ### send
 
-• **send**: (`debugInfo?`: `unknown`) => [EnvoyResponse](envoyresponse.md)
+• **send**: (`body?`: `Body`) => [EnvoyResponse](envoyresponse.md)<Body\>
 
 #### Type declaration
 
-▸ (`debugInfo?`): [EnvoyResponse](envoyresponse.md)
+▸ (`body?`): [EnvoyResponse](envoyresponse.md)<Body\>
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `debugInfo?` | `unknown` |
+| `body?` | `Body` |
 
 ##### Returns
 
-[EnvoyResponse](envoyresponse.md)
+[EnvoyResponse](envoyresponse.md)<Body\>
 
 #### Overrides
 
@@ -45,7 +51,7 @@ Response.send
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyResponse.ts#L9)
+[sdk/EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L11)
 
 ___
 
@@ -73,7 +79,7 @@ Marks the job as "failed". The message will be communicated to the Envoy Dashboa
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyResponse.ts#L24)
+[sdk/EnvoyResponse.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L26)
 
 ___
 
@@ -101,7 +107,7 @@ Marks the job as "ignored". Useful when you explicitly do not want to handle the
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:19](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyResponse.ts#L19)
+[sdk/EnvoyResponse.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L21)
 
 ___
 
@@ -129,4 +135,4 @@ Later on, you should update the job using
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyResponse.ts#L15)
+[sdk/EnvoyResponse.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L17)

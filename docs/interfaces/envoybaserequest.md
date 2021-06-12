@@ -11,7 +11,7 @@ and for events, use [EnvoyEntryEventRequest](../README.md#envoyentryeventrequest
 
 | Name | Type |
 | :------ | :------ |
-| `Meta` | `Meta`: `EnvoyMeta` = `EnvoyMeta` |
+| `Meta` | `Meta` = `EnvoyMeta` |
 | `Payload` | `Payload` = `unknown` |
 
 ## Hierarchy
@@ -35,11 +35,11 @@ and for events, use [EnvoyEntryEventRequest](../README.md#envoyentryeventrequest
 
 #### Inherited from
 
-VerifiedRequest.\_\_@VERIFIED@1256
+VerifiedRequest.\_\_@VERIFIED@1305
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyRequest.ts#L16)
+[sdk/EnvoyRequest.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyRequest.ts#L23)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyRequest.ts#L28)
+[sdk/EnvoyRequest.ts:35](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyRequest.ts#L35)

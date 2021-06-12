@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[resources/InviteResource.ts:75](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L75)
+[resources/InviteResource.ts:75](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L75)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:68](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L68)
+[resources/InviteResource.ts:68](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L68)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:68](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L68)
+[resources/InviteResource.ts:68](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L68)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:69](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L69)
+[resources/InviteResource.ts:69](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L69)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L70)
+[resources/InviteResource.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L70)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:73](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L73)
+[resources/InviteResource.ts:73](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L73)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:76](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L76)
+[resources/InviteResource.ts:76](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L76)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:71](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L71)
+[resources/InviteResource.ts:71](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L71)
 
 ___
 
@@ -104,4 +104,4 @@ ___
 
 #### Defined in
 
-[resources/InviteResource.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L72)
+[resources/InviteResource.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/InviteResource.ts#L72)

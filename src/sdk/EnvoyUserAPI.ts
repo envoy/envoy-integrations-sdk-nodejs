@@ -17,7 +17,7 @@ import { UserModel } from '../resources/UserResource';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 
-type EnvoyUserAPIScope =
+export type EnvoyUserAPIScope =
   'flows.read' |
   'entries.read' |
   'entries.write' |

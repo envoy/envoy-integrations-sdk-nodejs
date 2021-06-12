@@ -3,6 +3,13 @@ import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyMeta, { EnvoyEventMeta, EnvoyRouteMeta } from './EnvoyMeta';
 import EntryPayload from '../payloads/EntryPayload';
 import InvitePayload from '../payloads/InvitePayload';
+import EnvoyEntryEvent from '../internal/EnvoyEntryEvent';
+import EnvoyInviteEvent from '../internal/EnvoyInviteEvent';
+import EnvoyOptionsRouteResponseBody from '../internal/EnvoyOptionsRouteResponseBody';
+import EnvoyOptionsRouteParams from '../internal/EnvoyOptionsRouteParams';
+import EnvoySelectedValuesRouteResponseBody from '../internal/EnvoySelectedValuesRouteResponseBody';
+import EnvoySelectedValuesRouteParams from '../internal/EnvoySelectedValuesRouteParams';
+import EnvoyRemoteValueRouteResponseBody from '../internal/EnvoyRemoteValueRouteResponseBody';
 
 /**
  * @internal
@@ -22,19 +29,46 @@ export interface VerifiedRequest extends Request {
  * For routes, use {@link EnvoyRouteRequest},
  * and for events, use {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
  *
- * @category Request
+ * @category Base
  */
-export interface EnvoyBaseRequest<Meta extends EnvoyMeta = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
+export interface EnvoyBaseRequest<Meta = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
   envoy: EnvoyPluginSDK<Meta, Payload>
 }
 
 /**
- * Use to type your `req` object in route handlers,
- * such as validation URLS or options URLs.
+ * Use to type your `req` object in Envoy route handlers such as validation URLs.
  *
  * @category Request
  */
-export type EnvoyRouteRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMeta, Payload>;
+export type EnvoyRouteRequest<
+  Payload = unknown,
+  Config = Record<string, unknown>,
+  Params = Record<string, unknown>,
+  > = EnvoyBaseRequest<EnvoyRouteMeta<Config, Params>, Payload>;
+
+/**
+ * Use to type your `req` object in Envoy "options URL" route handlers.
+ *
+ * @category Request
+ */
+export type EnvoyOptionsRouteRequest<Config = Record<string, unknown>> =
+  EnvoyRouteRequest<EnvoyOptionsRouteResponseBody, Config, EnvoyOptionsRouteParams>;
+
+/**
+ * Use to type your `req` object in Envoy "selected values URL" route handlers.
+ *
+ * @category Request
+ */
+export type EnvoySelectedValuesRouteRequest<Config = Record<string, unknown>> =
+  EnvoyRouteRequest<EnvoySelectedValuesRouteResponseBody, Config, EnvoySelectedValuesRouteParams>;
+
+/**
+ * Use to type your `req` object in Envoy "remote value URL" route handlers.
+ *
+ * @category Request
+ */
+export type EnvoyRemoteValueRouteRequest<Config = Record<string, unknown>> =
+  EnvoyRouteRequest<EnvoyRemoteValueRouteResponseBody, Config, never>;
 
 /**
  * Base type for event requests.
@@ -42,7 +76,8 @@ export type EnvoyRouteRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMe
  *
  * @category Request
  */
-export type EnvoyEventRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyEventMeta, Payload>;
+export type EnvoyEventRequest<Event extends string = string, Payload = unknown> =
+  EnvoyBaseRequest<EnvoyEventMeta<Event>, Payload>;
 
 /**
  * Use to type your `req` object in entry event handlers,
@@ -50,7 +85,7 @@ export type EnvoyEventRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyEventMe
  *
  * @category Request
  */
-export type EnvoyEntryEventRequest = EnvoyEventRequest<EntryPayload>;
+export type EnvoyEntryEventRequest = EnvoyEventRequest<EnvoyEntryEvent, EntryPayload>;
 
 /**
  * Use to type your `req` object in invite event handlers,
@@ -58,14 +93,14 @@ export type EnvoyEntryEventRequest = EnvoyEventRequest<EntryPayload>;
  *
  * @category Request
  */
-export type EnvoyInviteEventRequest = EnvoyEventRequest<InvitePayload>;
+export type EnvoyInviteEventRequest = EnvoyEventRequest<EnvoyInviteEvent, InvitePayload>;
 
 /**
  * You probably won't need to use this type directly.
  * For routes, use {@link EnvoyRouteRequest},
  * and for events, use {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
  *
- * @category Request
+ * @category Base
  */
 type EnvoyRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMeta | EnvoyEventMeta, Payload>;
 export default EnvoyRequest;
