@@ -29,6 +29,21 @@
 
 - [EnvoyPluginStorage](classes/envoypluginstorage.md)
 
+### API Resource Interfaces
+
+- [AgreementAttributes](interfaces/agreementattributes.md)
+- [CompanyAttributes](interfaces/companyattributes.md)
+- [EmployeeAttributes](interfaces/employeeattributes.md)
+- [EmployeeFilterFields](interfaces/employeefilterfields.md)
+- [FlowAttributes](interfaces/flowattributes.md)
+- [FlowFilterFields](interfaces/flowfilterfields.md)
+- [InviteAttributes](interfaces/inviteattributes.md)
+- [InviteCreationAttributes](interfaces/invitecreationattributes.md)
+- [InviteFilterFields](interfaces/invitefilterfields.md)
+- [LocationAttributes](interfaces/locationattributes.md)
+- [LocationFilterFields](interfaces/locationfilterfields.md)
+- [SignInFieldAttributes](interfaces/signinfieldattributes.md)
+
 ### Other Interfaces
 
 - [JSONAPIData](interfaces/jsonapidata.md)
@@ -40,6 +55,36 @@
 ### Response Interfaces
 
 - [EnvoyResponse](interfaces/envoyresponse.md)
+
+### API Resource Type aliases
+
+- [AgreementModel](README.md#agreementmodel)
+- [AgreementPageAttributes](README.md#agreementpageattributes)
+- [AgreementPageModel](README.md#agreementpagemodel)
+- [AgreementPageRelationships](README.md#agreementpagerelationships)
+- [AgreementRelationships](README.md#agreementrelationships)
+- [CompanyModel](README.md#companymodel)
+- [CompanyRelationships](README.md#companyrelationships)
+- [EmployeeModel](README.md#employeemodel)
+- [EmployeeRelationships](README.md#employeerelationships)
+- [EmployeeSortFields](README.md#employeesortfields)
+- [FlowModel](README.md#flowmodel)
+- [FlowRelationships](README.md#flowrelationships)
+- [FlowSortFields](README.md#flowsortfields)
+- [InviteCreationModel](README.md#invitecreationmodel)
+- [InviteModel](README.md#invitemodel)
+- [InviteRelationships](README.md#inviterelationships)
+- [InviteSortFields](README.md#invitesortfields)
+- [LocationModel](README.md#locationmodel)
+- [LocationRelationships](README.md#locationrelationships)
+- [LocationSortFields](README.md#locationsortfields)
+- [SignInFieldModel](README.md#signinfieldmodel)
+- [SignInFieldPageAttributes](README.md#signinfieldpageattributes)
+- [SignInFieldPageModel](README.md#signinfieldpagemodel)
+- [SignInFieldPageRelationships](README.md#signinfieldpagerelationships)
+- [SignInFieldRelationships](README.md#signinfieldrelationships)
+- [UserAttributes](README.md#userattributes)
+- [UserModel](README.md#usermodel)
 
 ### Event Type aliases
 
@@ -80,6 +125,299 @@
 
 - [errorMiddleware](README.md#errormiddleware)
 - [middleware](README.md#middleware)
+
+## API Resource Type aliases
+
+### AgreementModel
+
+Ƭ **AgreementModel**: `JSONAPIModel`<[AgreementAttributes](interfaces/agreementattributes.md), [AgreementRelationships](README.md#agreementrelationships)\>
+
+#### Defined in
+
+[resources/AgreementResource.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/AgreementResource.ts#L26)
+
+___
+
+### AgreementPageAttributes
+
+Ƭ **AgreementPageAttributes**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `enabled?` | `boolean` |
+| `position?` | `number` |
+
+#### Defined in
+
+[resources/AgreementPageResource.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/AgreementPageResource.ts#L6)
+
+___
+
+### AgreementPageModel
+
+Ƭ **AgreementPageModel**: `JSONAPIModel`<[AgreementPageAttributes](README.md#agreementpageattributes), [AgreementPageRelationships](README.md#agreementpagerelationships)\>
+
+#### Defined in
+
+[resources/AgreementPageResource.ts:19](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/AgreementPageResource.ts#L19)
+
+___
+
+### AgreementPageRelationships
+
+Ƭ **AgreementPageRelationships**: ``"flow"`` \| ``"agreements"``
+
+#### Defined in
+
+[resources/AgreementPageResource.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/AgreementPageResource.ts#L14)
+
+___
+
+### AgreementRelationships
+
+Ƭ **AgreementRelationships**: ``"agreement-page"``
+
+#### Defined in
+
+[resources/AgreementResource.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/AgreementResource.ts#L21)
+
+___
+
+### CompanyModel
+
+Ƭ **CompanyModel**: `JSONAPIModel`<[CompanyAttributes](interfaces/companyattributes.md), [CompanyRelationships](README.md#companyrelationships)\>
+
+#### Defined in
+
+[resources/CompanyResource.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/CompanyResource.ts#L21)
+
+___
+
+### CompanyRelationships
+
+Ƭ **CompanyRelationships**: ``"locations"``
+
+#### Defined in
+
+[resources/CompanyResource.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/CompanyResource.ts#L16)
+
+___
+
+### EmployeeModel
+
+Ƭ **EmployeeModel**: `JSONAPIModel`<[EmployeeAttributes](interfaces/employeeattributes.md), [EmployeeRelationships](README.md#employeerelationships)\>
+
+#### Defined in
+
+[resources/EmployeeResource.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/EmployeeResource.ts#L47)
+
+___
+
+### EmployeeRelationships
+
+Ƭ **EmployeeRelationships**: ``"locations"`` \| ``"company"``
+
+#### Defined in
+
+[resources/EmployeeResource.ts:42](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/EmployeeResource.ts#L42)
+
+___
+
+### EmployeeSortFields
+
+Ƭ **EmployeeSortFields**: ``"name"`` \| ``"created_at"`` \| ``"-name"`` \| ``"-created_at"``
+
+#### Defined in
+
+[resources/EmployeeResource.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/EmployeeResource.ts#L6)
+
+___
+
+### FlowModel
+
+Ƭ **FlowModel**: `JSONAPIModel`<[FlowAttributes](interfaces/flowattributes.md), [FlowRelationships](README.md#flowrelationships)\>
+
+#### Defined in
+
+[resources/FlowResource.ts:35](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/FlowResource.ts#L35)
+
+___
+
+### FlowRelationships
+
+Ƭ **FlowRelationships**: ``"location"`` \| ``"sign-in-field-page"`` \| ``"agreement-page"``
+
+#### Defined in
+
+[resources/FlowResource.ts:30](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/FlowResource.ts#L30)
+
+___
+
+### FlowSortFields
+
+Ƭ **FlowSortFields**: ``"name"`` \| ``"created_at"`` \| ``"-name"`` \| ``"-created_at"``
+
+#### Defined in
+
+[resources/FlowResource.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/FlowResource.ts#L6)
+
+___
+
+### InviteCreationModel
+
+Ƭ **InviteCreationModel**: `JSONAPIModel`<[InviteCreationAttributes](interfaces/invitecreationattributes.md), [InviteRelationships](README.md#inviterelationships), ``"invites"``, undefined\>
+
+#### Defined in
+
+[resources/InviteResource.ts:92](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L92)
+
+___
+
+### InviteModel
+
+Ƭ **InviteModel**: `JSONAPIModel`<[InviteAttributes](interfaces/inviteattributes.md), [InviteRelationships](README.md#inviterelationships), ``"invites"``\>
+
+#### Defined in
+
+[resources/InviteResource.ts:87](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L87)
+
+___
+
+### InviteRelationships
+
+Ƭ **InviteRelationships**: ``"attendee"`` \| ``"creator"`` \| ``"employee"`` \| ``"entry"`` \| ``"flow"`` \| ``"location"``
+
+#### Defined in
+
+[resources/InviteResource.ts:82](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L82)
+
+___
+
+### InviteSortFields
+
+Ƭ **InviteSortFields**: ``"name"`` \| ``"created_at"`` \| ``"-name"`` \| ``"-created_at"``
+
+#### Defined in
+
+[resources/InviteResource.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/InviteResource.ts#L6)
+
+___
+
+### LocationModel
+
+Ƭ **LocationModel**: `JSONAPIModel`<[LocationAttributes](interfaces/locationattributes.md), [LocationRelationships](README.md#locationrelationships)\>
+
+#### Defined in
+
+[resources/LocationResource.ts:67](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/LocationResource.ts#L67)
+
+___
+
+### LocationRelationships
+
+Ƭ **LocationRelationships**: ``"company"`` \| ``"employees"`` \| ``"flows"`` \| ``"employee-screening-flow"``
+
+#### Defined in
+
+[resources/LocationResource.ts:62](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/LocationResource.ts#L62)
+
+___
+
+### LocationSortFields
+
+Ƭ **LocationSortFields**: ``"name"`` \| ``"created_at"`` \| ``"-name"`` \| ``"-created_at"``
+
+#### Defined in
+
+[resources/LocationResource.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/LocationResource.ts#L6)
+
+___
+
+### SignInFieldModel
+
+Ƭ **SignInFieldModel**: `JSONAPIModel`<[SignInFieldAttributes](interfaces/signinfieldattributes.md), [SignInFieldRelationships](README.md#signinfieldrelationships)\>
+
+#### Defined in
+
+[resources/SignInFieldResource.ts:31](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/SignInFieldResource.ts#L31)
+
+___
+
+### SignInFieldPageAttributes
+
+Ƭ **SignInFieldPageAttributes**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `enabled?` | `boolean` |
+| `position?` | `number` |
+
+#### Defined in
+
+[resources/SignInFieldPageResource.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/SignInFieldPageResource.ts#L6)
+
+___
+
+### SignInFieldPageModel
+
+Ƭ **SignInFieldPageModel**: `JSONAPIModel`<[SignInFieldPageAttributes](README.md#signinfieldpageattributes), [SignInFieldPageRelationships](README.md#signinfieldpagerelationships)\>
+
+#### Defined in
+
+[resources/SignInFieldPageResource.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/SignInFieldPageResource.ts#L23)
+
+___
+
+### SignInFieldPageRelationships
+
+Ƭ **SignInFieldPageRelationships**: ``"flow"`` \| ``"actionable-sign-in-field-actions"`` \| ``"actionable-sign-in-fields"`` \| ``"sign-in-field-actions"`` \| ``"sign-in-fields"``
+
+#### Defined in
+
+[resources/SignInFieldPageResource.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/SignInFieldPageResource.ts#L14)
+
+___
+
+### SignInFieldRelationships
+
+Ƭ **SignInFieldRelationships**: ``"sign-in-field-page"``
+
+#### Defined in
+
+[resources/SignInFieldResource.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/SignInFieldResource.ts#L26)
+
+___
+
+### UserAttributes
+
+Ƭ **UserAttributes**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `email` | `string` |
+| `name` | `string` |
+
+#### Defined in
+
+[resources/UserResource.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/UserResource.ts#L6)
+
+___
+
+### UserModel
+
+Ƭ **UserModel**: `JSONAPIModel`<[UserAttributes](README.md#userattributes), ``""``\>
+
+#### Defined in
+
+[resources/UserResource.ts:14](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/resources/UserResource.ts#L14)
+
+___
 
 ## Event Type aliases
 
@@ -129,7 +467,7 @@
 
 #### Defined in
 
-[payloads/EntryPayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/payloads/EntryPayload.ts#L6)
+[payloads/EntryPayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/payloads/EntryPayload.ts#L6)
 
 ___
 
@@ -181,7 +519,7 @@ ___
 
 #### Defined in
 
-[payloads/InvitePayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/payloads/InvitePayload.ts#L6)
+[payloads/InvitePayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/payloads/InvitePayload.ts#L6)
 
 ___
 
@@ -209,7 +547,7 @@ ___
 
 #### Defined in
 
-[sdk/middleware.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/middleware.ts#L15)
+[sdk/middleware.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/middleware.ts#L15)
 
 ___
 
@@ -228,7 +566,7 @@ ___
 
 #### Defined in
 
-[util/EnvoySignatureVerifier.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/util/EnvoySignatureVerifier.ts#L8)
+[util/EnvoySignatureVerifier.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/util/EnvoySignatureVerifier.ts#L8)
 
 ___
 
@@ -255,7 +593,7 @@ Metadata that will be included in the request body for events.
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:66](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L66)
+[sdk/EnvoyMeta.ts:66](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyMeta.ts#L66)
 
 ___
 
@@ -278,7 +616,7 @@ Will be used to construct the `userAPI` property found in `req.envoy.userAPI`.
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L53)
+[sdk/EnvoyMeta.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyMeta.ts#L53)
 
 ___
 
@@ -299,7 +637,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L37)
+[sdk/EnvoyMeta.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyMeta.ts#L37)
 
 ___
 
@@ -317,7 +655,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L4)
+[sdk/EnvoyMeta.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyMeta.ts#L4)
 
 ___
 
@@ -349,7 +687,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L13)
+[sdk/EnvoyMeta.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyMeta.ts#L13)
 
 ___
 
@@ -376,7 +714,7 @@ like validation URLs or options URLs.
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:83](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L83)
+[sdk/EnvoyMeta.ts:83](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyMeta.ts#L83)
 
 ___
 
@@ -391,7 +729,7 @@ such as handlers for `entry_sign_in`.
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L53)
+[sdk/EnvoyRequest.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyRequest.ts#L53)
 
 ___
 
@@ -410,7 +748,7 @@ You should use [EnvoyEntryEventRequest](README.md#envoyentryeventrequest) or [En
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L45)
+[sdk/EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyRequest.ts#L45)
 
 ___
 
@@ -423,7 +761,7 @@ such as handlers for `invite_created` or `upcoming_visit`.
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L61)
+[sdk/EnvoyRequest.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyRequest.ts#L61)
 
 ___
 
@@ -443,7 +781,7 @@ and for events, use [EnvoyEntryEventRequest](README.md#envoyentryeventrequest) o
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L70)
+[sdk/EnvoyRequest.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyRequest.ts#L70)
 
 ___
 
@@ -462,7 +800,7 @@ such as validation URLS or options URLs.
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L37)
+[sdk/EnvoyRequest.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyRequest.ts#L37)
 
 ___
 
@@ -481,7 +819,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyStorageItem.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyStorageItem.ts#L4)
+[sdk/EnvoyStorageItem.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyStorageItem.ts#L4)
 
 ## Helper Functions
 
@@ -518,7 +856,7 @@ to catch Promise-based errors.
 
 #### Defined in
 
-[sdk/asyncHandler.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/asyncHandler.ts#L13)
+[sdk/asyncHandler.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/asyncHandler.ts#L13)
 
 ___
 
@@ -557,7 +895,7 @@ Catches errors and sets the proper status code.
 
 #### Defined in
 
-[sdk/errorMiddleware.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/errorMiddleware.ts#L11)
+[sdk/errorMiddleware.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/errorMiddleware.ts#L11)
 
 ___
 
@@ -583,4 +921,4 @@ as well as managing the plugin access token lifecycle.
 
 #### Defined in
 
-[sdk/middleware.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/middleware.ts#L26)
+[sdk/middleware.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/middleware.ts#L26)

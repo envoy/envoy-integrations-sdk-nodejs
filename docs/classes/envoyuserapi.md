@@ -65,7 +65,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/base/EnvoyAPI.ts#L59)
+[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/base/EnvoyAPI.ts#L59)
 
 ## Properties
 
@@ -81,13 +81,13 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/base/EnvoyAPI.ts#L32)
+[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/base/EnvoyAPI.ts#L32)
 
 ## Methods
 
 ### createInvite
 
-▸ **createInvite**(`invite`): `Promise`<InviteModel\>
+▸ **createInvite**(`invite`): `Promise`<[InviteModel](../README.md#invitemodel)\>
 
 Requires `invites.write` scope.
 May also require `invites.attest` scope if setting `attested: true`.
@@ -96,21 +96,21 @@ May also require `invites.attest` scope if setting `attested: true`.
 
 | Name | Type |
 | :------ | :------ |
-| `invite` | `InviteCreationModel` |
+| `invite` | [InviteCreationModel](../README.md#invitecreationmodel) |
 
 #### Returns
 
-`Promise`<InviteModel\>
+`Promise`<[InviteModel](../README.md#invitemodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:188](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L188)
+[sdk/EnvoyUserAPI.ts:188](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L188)
 
 ___
 
 ### getAgreement
 
-▸ **getAgreement**(`id`, `include?`): `Promise`<AgreementModel\>
+▸ **getAgreement**(`id`, `include?`): `Promise`<[AgreementModel](../README.md#agreementmodel)\>
 
 Requires `agreements.read` scope.
 
@@ -123,19 +123,19 @@ Requires `agreements.read` scope.
 
 #### Returns
 
-`Promise`<AgreementModel\>
+`Promise`<[AgreementModel](../README.md#agreementmodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:65](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L65)
+[sdk/EnvoyUserAPI.ts:65](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L65)
 
 ___
 
 ### getAgreementPage
 
-▸ **getAgreementPage**(`id`, `include?`): `Promise`<AgreementPageModel\>
+▸ **getAgreementPage**(`id`, `include?`): `Promise`<[AgreementPageModel](../README.md#agreementpagemodel)\>
 
-{@link AgreementPageModel}
+[AgreementPageModel](../README.md#agreementpagemodel)
 
 #### Parameters
 
@@ -146,17 +146,17 @@ ___
 
 #### Returns
 
-`Promise`<AgreementPageModel\>
+`Promise`<[AgreementPageModel](../README.md#agreementpagemodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L58)
+[sdk/EnvoyUserAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L58)
 
 ___
 
 ### getCompany
 
-▸ **getCompany**(`id`, `include?`): `Promise`<CompanyModel\>
+▸ **getCompany**(`id`, `include?`): `Promise`<[CompanyModel](../README.md#companymodel)\>
 
 Requires `companies.read` scope.
 
@@ -169,17 +169,17 @@ Requires `companies.read` scope.
 
 #### Returns
 
-`Promise`<CompanyModel\>
+`Promise`<[CompanyModel](../README.md#companymodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L72)
+[sdk/EnvoyUserAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L72)
 
 ___
 
 ### getEmployee
 
-▸ **getEmployee**(`id`, `include?`): `Promise`<EmployeeModel\>
+▸ **getEmployee**(`id`, `include?`): `Promise`<[EmployeeModel](../README.md#employeemodel)\>
 
 Requires `employees.read` scope.
 
@@ -192,17 +192,17 @@ Requires `employees.read` scope.
 
 #### Returns
 
-`Promise`<EmployeeModel\>
+`Promise`<[EmployeeModel](../README.md#employeemodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:79](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L79)
+[sdk/EnvoyUserAPI.ts:79](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L79)
 
 ___
 
 ### getEmployeeByEmail
 
-▸ **getEmployeeByEmail**(`email`, `include?`): `Promise`<EmployeeModel\>
+▸ **getEmployeeByEmail**(`email`, `include?`): `Promise`<[EmployeeModel](../README.md#employeemodel)\>
 
 Requires `employees.read` scope.
 
@@ -215,17 +215,17 @@ Requires `employees.read` scope.
 
 #### Returns
 
-`Promise`<EmployeeModel\>
+`Promise`<[EmployeeModel](../README.md#employeemodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:114](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L114)
+[sdk/EnvoyUserAPI.ts:114](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L114)
 
 ___
 
 ### getEmployees
 
-▸ **getEmployees**(`params?`): `Promise`<EmployeeModel[]\>
+▸ **getEmployees**(`params?`): `Promise`<[EmployeeModel](../README.md#employeemodel)[]\>
 
 Requires `employees.read` scope.
 
@@ -233,21 +233,21 @@ Requires `employees.read` scope.
 
 | Name | Type |
 | :------ | :------ |
-| `params?` | `default`<EmployeeFilterFields, EmployeeSortFields\> |
+| `params?` | `default`<[EmployeeFilterFields](../interfaces/employeefilterfields.md), [EmployeeSortFields](../README.md#employeesortfields)\> |
 
 #### Returns
 
-`Promise`<EmployeeModel[]\>
+`Promise`<[EmployeeModel](../README.md#employeemodel)[]\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:136](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L136)
+[sdk/EnvoyUserAPI.ts:136](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L136)
 
 ___
 
 ### getFlow
 
-▸ **getFlow**(`id`, `include?`): `Promise`<FlowModel\>
+▸ **getFlow**(`id`, `include?`): `Promise`<[FlowModel](../README.md#flowmodel)\>
 
 Requires `flows.read` scope.
 
@@ -260,17 +260,17 @@ Requires `flows.read` scope.
 
 #### Returns
 
-`Promise`<FlowModel\>
+`Promise`<[FlowModel](../README.md#flowmodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:86](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L86)
+[sdk/EnvoyUserAPI.ts:86](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L86)
 
 ___
 
 ### getFlows
 
-▸ **getFlows**(`params?`): `Promise`<FlowModel[]\>
+▸ **getFlows**(`params?`): `Promise`<[FlowModel](../README.md#flowmodel)[]\>
 
 Requires `flows.read` scope.
 
@@ -278,21 +278,21 @@ Requires `flows.read` scope.
 
 | Name | Type |
 | :------ | :------ |
-| `params?` | `default`<FlowFilterFields, FlowSortFields\> |
+| `params?` | `default`<[FlowFilterFields](../interfaces/flowfilterfields.md), [FlowSortFields](../README.md#flowsortfields)\> |
 
 #### Returns
 
-`Promise`<FlowModel[]\>
+`Promise`<[FlowModel](../README.md#flowmodel)[]\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:146](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L146)
+[sdk/EnvoyUserAPI.ts:146](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L146)
 
 ___
 
 ### getInvites
 
-▸ **getInvites**(`params?`): `Promise`<InviteModel[]\>
+▸ **getInvites**(`params?`): `Promise`<[InviteModel](../README.md#invitemodel)[]\>
 
 Requires `invites.read` scope.
 
@@ -300,21 +300,21 @@ Requires `invites.read` scope.
 
 | Name | Type |
 | :------ | :------ |
-| `params?` | `default`<InviteFilterFields, InviteSortFields\> |
+| `params?` | `default`<[InviteFilterFields](../interfaces/invitefilterfields.md), [InviteSortFields](../README.md#invitesortfields)\> |
 
 #### Returns
 
-`Promise`<InviteModel[]\>
+`Promise`<[InviteModel](../README.md#invitemodel)[]\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:172](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L172)
+[sdk/EnvoyUserAPI.ts:172](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L172)
 
 ___
 
 ### getLocation
 
-▸ **getLocation**(`id`, `include?`): `Promise`<LocationModel\>
+▸ **getLocation**(`id`, `include?`): `Promise`<[LocationModel](../README.md#locationmodel)\>
 
 Requires `locations.read` scope.
 
@@ -327,17 +327,17 @@ Requires `locations.read` scope.
 
 #### Returns
 
-`Promise`<LocationModel\>
+`Promise`<[LocationModel](../README.md#locationmodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:93](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L93)
+[sdk/EnvoyUserAPI.ts:93](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L93)
 
 ___
 
 ### getLocations
 
-▸ **getLocations**(`params?`): `Promise`<LocationModel[]\>
+▸ **getLocations**(`params?`): `Promise`<[LocationModel](../README.md#locationmodel)[]\>
 
 Requires `locations.read` scope.
 
@@ -345,21 +345,21 @@ Requires `locations.read` scope.
 
 | Name | Type |
 | :------ | :------ |
-| `params?` | `default`<LocationFilterFields, LocationSortFields\> |
+| `params?` | `default`<[LocationFilterFields](../interfaces/locationfilterfields.md), [LocationSortFields](../README.md#locationsortfields)\> |
 
 #### Returns
 
-`Promise`<LocationModel[]\>
+`Promise`<[LocationModel](../README.md#locationmodel)[]\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:154](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L154)
+[sdk/EnvoyUserAPI.ts:154](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L154)
 
 ___
 
 ### getSignInField
 
-▸ **getSignInField**(`id`, `include?`): `Promise`<SignInFieldModel\>
+▸ **getSignInField**(`id`, `include?`): `Promise`<[SignInFieldModel](../README.md#signinfieldmodel)\>
 
 Requires `sign-in-fields.read` scope.
 
@@ -372,17 +372,17 @@ Requires `sign-in-fields.read` scope.
 
 #### Returns
 
-`Promise`<SignInFieldModel\>
+`Promise`<[SignInFieldModel](../README.md#signinfieldmodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:107](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L107)
+[sdk/EnvoyUserAPI.ts:107](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L107)
 
 ___
 
 ### getSignInFieldPage
 
-▸ **getSignInFieldPage**(`id`, `include?`): `Promise`<SignInFieldPageModel\>
+▸ **getSignInFieldPage**(`id`, `include?`): `Promise`<[SignInFieldPageModel](../README.md#signinfieldpagemodel)\>
 
 Requires `sign-in-field-pages.read` scope.
 
@@ -395,17 +395,17 @@ Requires `sign-in-field-pages.read` scope.
 
 #### Returns
 
-`Promise`<SignInFieldPageModel\>
+`Promise`<[SignInFieldPageModel](../README.md#signinfieldpagemodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:100](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L100)
+[sdk/EnvoyUserAPI.ts:100](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L100)
 
 ___
 
 ### getSignInFields
 
-▸ **getSignInFields**(`signInFieldPageId`): `Promise`<SignInFieldModel[]\>
+▸ **getSignInFields**(`signInFieldPageId`): `Promise`<[SignInFieldModel](../README.md#signinfieldmodel)[]\>
 
 Requires `sign-in-fields.read` scope.
 
@@ -417,31 +417,31 @@ Requires `sign-in-fields.read` scope.
 
 #### Returns
 
-`Promise`<SignInFieldModel[]\>
+`Promise`<[SignInFieldModel](../README.md#signinfieldmodel)[]\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:164](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L164)
+[sdk/EnvoyUserAPI.ts:164](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L164)
 
 ___
 
 ### me
 
-▸ **me**(): `Promise`<UserModel\>
+▸ **me**(): `Promise`<[UserModel](../README.md#usermodel)\>
 
 #### Returns
 
-`Promise`<UserModel\>
+`Promise`<[UserModel](../README.md#usermodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:179](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L179)
+[sdk/EnvoyUserAPI.ts:179](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L179)
 
 ___
 
 ### partialUpdateInvite
 
-▸ **partialUpdateInvite**(`inviteId`, `invite`): `Promise`<InviteModel\>
+▸ **partialUpdateInvite**(`inviteId`, `invite`): `Promise`<[InviteModel](../README.md#invitemodel)\>
 
 Requires `invites.write` scope.
 
@@ -450,15 +450,15 @@ Requires `invites.write` scope.
 | Name | Type |
 | :------ | :------ |
 | `inviteId` | `string` |
-| `invite` | `InviteCreationModel` |
+| `invite` | [InviteCreationModel](../README.md#invitecreationmodel) |
 
 #### Returns
 
-`Promise`<InviteModel\>
+`Promise`<[InviteModel](../README.md#invitemodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:213](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L213)
+[sdk/EnvoyUserAPI.ts:213](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L213)
 
 ___
 
@@ -480,13 +480,13 @@ Requires `invites.write` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:226](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L226)
+[sdk/EnvoyUserAPI.ts:226](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L226)
 
 ___
 
 ### updateInvite
 
-▸ **updateInvite**(`inviteId`, `invite`): `Promise`<InviteModel\>
+▸ **updateInvite**(`inviteId`, `invite`): `Promise`<[InviteModel](../README.md#invitemodel)\>
 
 Requires `invites.write` scope.
 
@@ -495,15 +495,15 @@ Requires `invites.write` scope.
 | Name | Type |
 | :------ | :------ |
 | `inviteId` | `string` |
-| `invite` | `InviteCreationModel` |
+| `invite` | [InviteCreationModel](../README.md#invitecreationmodel) |
 
 #### Returns
 
-`Promise`<InviteModel\>
+`Promise`<[InviteModel](../README.md#invitemodel)\>
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:200](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L200)
+[sdk/EnvoyUserAPI.ts:200](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L200)
 
 ___
 
@@ -531,7 +531,7 @@ Use the [loginAsUserWithCode](envoyuserapi.md#loginasuserwithcode) method to exc
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:240](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L240)
+[sdk/EnvoyUserAPI.ts:240](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L240)
 
 ___
 
@@ -555,7 +555,7 @@ Gets a user access token using `plugin_install` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:306](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L306)
+[sdk/EnvoyUserAPI.ts:306](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L306)
 
 ___
 
@@ -580,7 +580,7 @@ Gets a user access token using `code` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:280](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L280)
+[sdk/EnvoyUserAPI.ts:280](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L280)
 
 ___
 
@@ -606,4 +606,4 @@ Gets a user access token using `password` as the grant type (discouraged - use [
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:252](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L252)
+[sdk/EnvoyUserAPI.ts:252](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/b26deae/src/sdk/EnvoyUserAPI.ts#L252)
