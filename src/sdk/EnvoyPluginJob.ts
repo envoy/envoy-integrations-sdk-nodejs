@@ -21,7 +21,7 @@ export default class EnvoyPluginJob {
     this.id = jobId;
   }
 
-  execute(
+  private execute(
     status: string | null,
     message: string | null,
     reason: string | null,
@@ -42,22 +42,48 @@ export default class EnvoyPluginJob {
     return this.api.updateJob(this.id, updates);
   }
 
+  /**
+   * Add attachments to this job.
+   */
   attach(...attachments: Array<EnvoyPluginJobAttachment>): Promise<void> {
     return this.execute(null, null, null, attachments);
   }
 
+  /**
+   * Reports that the job is complete.
+   *
+   * Instead of calling this directly, you can return a 200 response from the job's event handler,
+   * using {@link EnvoyRequest.send}.
+   */
   complete(message: string, ...attachments: Array<EnvoyPluginJobAttachment>): Promise<void> {
     return this.execute('done', message, null, attachments);
   }
 
+  /**
+   * Reports that the job is ignored.
+   *
+   * Instead of calling this directly, you can return a 400 response from the job's event handler,
+   * using {@link EnvoyRequest.sendIgnored}.
+   */
   ignore(message: string, reason: string): Promise<void> {
     return this.execute('ignored', message, reason);
   }
 
+  /**
+   * Reports that the job is ignored.
+   *
+   * Instead of calling this directly, you can return a 400 response from the job's event handler,
+   * using {@link EnvoyRequest.sendFailed}.
+   */
   fail(message: string, reason: string): Promise<void> {
     return this.execute('failed', message, reason);
   }
 
+  /**
+   * Updates the job with a new message and attachments.
+   *
+   * Can be used to periodically update long-running jobs.
+   */
   update(message: string, ...attachments: Array<EnvoyPluginJobAttachment>): Promise<void> {
     return this.execute(null, message, null, attachments);
   }

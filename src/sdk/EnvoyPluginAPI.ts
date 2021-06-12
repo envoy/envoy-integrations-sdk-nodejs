@@ -21,11 +21,19 @@ export default class EnvoyPluginAPI extends EnvoyAPI {
     });
   }
 
+  /**
+   * Fetches the current `config` saved for this install during setup by the customer.
+   */
   async getPluginInstallConfig(installId: string): Promise<Record<string, unknown>> {
     const { data } = await this.axios.get(`/api/v2/plugin-services/installs/${installId}/config`);
     return data.data;
   }
 
+  /**
+   * Merges changes with the current `config` saved for this install during setup by the customer.
+   *
+   * To remove an item from the saved `config`, set the item's key to `null`.
+   */
   async setPluginInstallConfig(installId: string, config: Record<string, unknown>): Promise<void> {
     await this.axios({
       method: 'PUT',

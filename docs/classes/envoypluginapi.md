@@ -47,7 +47,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/base/EnvoyAPI.ts#L59)
+[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/base/EnvoyAPI.ts#L59)
 
 ## Properties
 
@@ -63,7 +63,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/base/EnvoyAPI.ts#L32)
+[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/base/EnvoyAPI.ts#L32)
 
 ## Methods
 
@@ -84,13 +84,15 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L53)
+[sdk/EnvoyPluginAPI.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginAPI.ts#L61)
 
 ___
 
 ### getPluginInstallConfig
 
 ▸ **getPluginInstallConfig**(`installId`): `Promise`<Record<string, unknown\>\>
+
+Fetches the current `config` saved for this install during setup by the customer.
 
 #### Parameters
 
@@ -104,13 +106,17 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L24)
+[sdk/EnvoyPluginAPI.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginAPI.ts#L27)
 
 ___
 
 ### setPluginInstallConfig
 
 ▸ **setPluginInstallConfig**(`installId`, `config`): `Promise`<void\>
+
+Merges changes with the current `config` saved for this install during setup by the customer.
+
+To remove an item from the saved `config`, set the item's key to `null`.
 
 #### Parameters
 
@@ -125,7 +131,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:29](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L29)
+[sdk/EnvoyPluginAPI.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginAPI.ts#L37)
 
 ___
 
@@ -146,7 +152,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L37)
+[sdk/EnvoyPluginAPI.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginAPI.ts#L45)
 
 ___
 
@@ -167,7 +173,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L16)
+[sdk/EnvoyPluginAPI.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginAPI.ts#L16)
 
 ___
 
@@ -190,4 +196,4 @@ Gets a plugin access token using `client_credentials` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:64](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginAPI.ts#L64)
+[sdk/EnvoyPluginAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginAPI.ts#L72)

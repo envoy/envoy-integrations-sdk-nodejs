@@ -1,3 +1,4 @@
+import { Url } from 'url';
 import axios from 'axios';
 import EnvoyAPI from '../base/EnvoyAPI';
 import { AgreementPageModel } from '../resources/AgreementPageResource';
@@ -16,6 +17,32 @@ import { UserModel } from '../resources/UserResource';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 
+type EnvoyUserAPIScope =
+  'flows.read' |
+  'entries.read' |
+  'entries.write' |
+  'invites.read' |
+  'invites.write' |
+  'invites.attest' |
+  'locations.read' |
+  'companies.read' |
+  'agreements.read' |
+  'agreements.write' |
+  'sign-in-field-pages.read' |
+  'sign-in-fields.read' |
+  'sign-in-fields.write' |
+  'employees.read' |
+  'employees.write' |
+  'badges.read' |
+  'blacklist-filters.read' |
+  'blacklist-filters.write' |
+  'tickets.read' |
+  'tickets.write' |
+  'spaces.read' |
+  'reservations.read' |
+  'reservations.write' |
+  string;
+
 /**
  * API endpoints for *user-scoped* tokens.
  * To access Envoy resources, this is the API you'd want.
@@ -24,38 +51,66 @@ import { EnvoyMetaAuth } from './EnvoyMeta';
  * @category Request Object
  */
 export default class EnvoyUserAPI extends EnvoyAPI {
+  /**
+   *
+   * {@link AgreementPageModel}
+   */
   async getAgreementPage(id: string, include?: string): Promise<AgreementPageModel> {
     return this.dataLoader.load({ type: 'agreement-pages', id, include });
   }
 
+  /**
+   * Requires `agreements.read` scope.
+   */
   async getAgreement(id: string, include?: string): Promise<AgreementModel> {
     return this.dataLoader.load({ type: 'agreements', id, include });
   }
 
+  /**
+   * Requires `companies.read` scope.
+   */
   async getCompany(id: string, include?: string): Promise<CompanyModel> {
     return this.dataLoader.load({ type: 'companies', id, include });
   }
 
+  /**
+   * Requires `employees.read` scope.
+   */
   async getEmployee(id: string, include?: string): Promise<EmployeeModel> {
     return this.dataLoader.load({ type: 'employees', id, include });
   }
 
+  /**
+   * Requires `flows.read` scope.
+   */
   async getFlow(id: string, include?: string): Promise<FlowModel> {
     return this.dataLoader.load({ type: 'flows', id, include });
   }
 
+  /**
+   * Requires `locations.read` scope.
+   */
   async getLocation(id: string, include?: string): Promise<LocationModel> {
     return this.dataLoader.load({ type: 'locations', id, include });
   }
 
+  /**
+   * Requires `sign-in-field-pages.read` scope.
+   */
   async getSignInFieldPage(id: string, include?: string): Promise<SignInFieldPageModel> {
     return this.dataLoader.load({ type: 'sign-in-field-pages', id, include });
   }
 
+  /**
+   * Requires `sign-in-fields.read` scope.
+   */
   async getSignInField(id: string, include?: string): Promise<SignInFieldModel> {
     return this.dataLoader.load({ type: 'sign-in-fields', id, include });
   }
 
+  /**
+   * Requires `employees.read` scope.
+   */
   async getEmployeeByEmail(email: string, include?: string): Promise<EmployeeModel> {
     const paginationParams: JSONAPIPaginationParams<EmployeeFilterFields, EmployeeSortFields> = {
       filter: {
@@ -75,6 +130,9 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return employee;
   }
 
+  /**
+   * Requires `employees.read` scope.
+   */
   async getEmployees(
     params?: JSONAPIPaginationParams<EmployeeFilterFields, EmployeeSortFields>,
   ): Promise<Array<EmployeeModel>> {
@@ -82,11 +140,17 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
+  /**
+   * Requires `flows.read` scope.
+   */
   async getFlows(params?: JSONAPIPaginationParams<FlowFilterFields, FlowSortFields>): Promise<Array<FlowModel>> {
     const { data } = await this.axios.get('/api/v3/flows', { params });
     return data.data;
   }
 
+  /**
+   * Requires `locations.read` scope.
+   */
   async getLocations(
     params?: JSONAPIPaginationParams<LocationFilterFields, LocationSortFields>,
   ): Promise<Array<LocationModel>> {
@@ -94,11 +158,17 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
+  /**
+   * Requires `sign-in-fields.read` scope.
+   */
   async getSignInFields(signInFieldPageId: string): Promise<Array<SignInFieldModel>> {
     const { data } = await this.axios.get(`/api/v3/sign-in-field-pages/${signInFieldPageId}/sign-in-fields`);
     return data.data;
   }
 
+  /**
+   * Requires `invites.read` scope.
+   */
   async getInvites(
     params?: JSONAPIPaginationParams<InviteFilterFields, InviteSortFields>,
   ): Promise<Array<InviteModel>> {
@@ -111,6 +181,10 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
+  /**
+   * Requires `invites.write` scope.
+   * May also require `invites.attest` scope if setting `attested: true`.
+   */
   async createInvite(invite: InviteCreationModel): Promise<InviteModel> {
     const { data } = await this.axios({
       method: 'POST',
@@ -120,6 +194,9 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
+  /**
+   * Requires `invites.write` scope.
+   */
   async updateInvite(inviteId: string, invite: InviteCreationModel): Promise<InviteModel> {
     const { data } = await this.axios({
       method: 'PUT',
@@ -130,6 +207,9 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
+  /**
+   * Requires `invites.write` scope.
+   */
   async partialUpdateInvite(inviteId: string, invite: InviteCreationModel): Promise<InviteModel> {
     const { data } = await this.axios({
       method: 'PATCH',
@@ -140,6 +220,9 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
+  /**
+   * Requires `invites.write` scope.
+   */
   async removeInvite(inviteId: string): Promise<void> {
     await this.axios({
       method: 'DELETE',
@@ -148,19 +231,35 @@ export default class EnvoyUserAPI extends EnvoyAPI {
   }
 
   /**
-   * Gets a user access token using `password` as the grant type (discouraged).
+   * Builds the authorize URL to redirect a user to initiate the auth code oauth2 flow.
+   *
+   * Upon completion, they will be redirected to `redirectURL`, with a `code` query param in the url.
+   *
+   * Use the {@link loginAsUserWithCode} method to exchange that code for an access token.
+   */
+  static getAuthorizeURL(redirectURL: string, scope: Array<EnvoyUserAPIScope>, clientId = envoyClientId): string {
+    const url = new URL(envoyBaseURL);
+    url.pathname = '/a/auth/v0/authorize';
+    url.searchParams.append('response_type', 'code');
+    url.searchParams.append('client_id', clientId);
+    url.searchParams.append('redirect_uri', redirectURL);
+    return `${url.href}&scope=${scope.join('+')}`;
+  }
+
+  /**
+   * Gets a user access token using `password` as the grant type (discouraged - use {@link loginAsUserWithCode} below).
    */
   static async loginAsUserWithPassword(
     username: string,
     password: string,
-    scope: Array<string> = [],
-    id = envoyClientId,
-    secret = envoyClientSecret,
+    scope: Array<EnvoyUserAPIScope>,
+    clientId = envoyClientId,
+    clientSecret = envoyClientSecret,
   ): Promise<EnvoyMetaAuth> {
     const { data } = await axios({
       auth: {
-        username: id,
-        password: secret,
+        username: clientId,
+        password: clientSecret,
       },
       method: 'POST',
       data: {
@@ -180,14 +279,14 @@ export default class EnvoyUserAPI extends EnvoyAPI {
    */
   static async loginAsUserWithCode(
     code: string,
-    scope: Array<string> = [],
-    id = envoyClientId,
-    secret = envoyClientSecret,
+    scope: Array<EnvoyUserAPIScope>,
+    clientId = envoyClientId,
+    clientSecret = envoyClientSecret,
   ): Promise<EnvoyMetaAuth> {
     const { data } = await axios({
       auth: {
-        username: id,
-        password: secret,
+        username: clientId,
+        password: clientSecret,
       },
       method: 'POST',
       data: {
@@ -206,13 +305,13 @@ export default class EnvoyUserAPI extends EnvoyAPI {
    */
   static async loginAsPluginInstaller(
     installId: string,
-    id = envoyClientId,
-    secret = envoyClientSecret,
+    clientId = envoyClientId,
+    clientSecret = envoyClientSecret,
   ): Promise<EnvoyMetaAuth> {
     const { data } = await axios({
       auth: {
-        username: id,
-        password: secret,
+        username: clientId,
+        password: clientSecret,
       },
       method: 'POST',
       data: {

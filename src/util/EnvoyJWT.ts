@@ -16,7 +16,7 @@ export default class EnvoyJWT {
 
   constructor(secret = jwtSecret, algorithm: EnvoyJWTAlgorithm = 'HS256') {
     if (!secret) {
-      throw new Error('JWT secret missing.');
+      throw new Error('JWT secret missing. Have you set the `JWT_SECRET` environment variable?');
     }
     this.secret = secret;
     this.algorithm = algorithm;

@@ -14,11 +14,24 @@ import EnvoyPluginAPI from './sdk/EnvoyPluginAPI';
 import middleware, { EnvoyMiddleware } from './sdk/middleware';
 
 import EnvoyJWT from './util/EnvoyJWT';
-import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from './util/EnvoySignatureVerifier';
 import JSONAPIData from './util/json-api/JSONAPIData';
+
+// export * from './resources/AgreementPageResource';
+// export * from './resources/AgreementResource';
+// export * from './resources/CompanyResource';
+// export * from './resources/EmployeeResource';
+// export * from './resources/FlowResource';
+// export * from './resources/InviteResource';
+// export * from './resources/LocationResource';
+// export * from './resources/SignInFieldPageResource';
+// export * from './resources/SignInFieldResource';
+// export * from './resources/UserResource';
 
 export * from './sdk/EnvoyMeta';
 export * from './sdk/EnvoyRequest';
+
+export * from './util/EnvoySignatureVerifier';
+
 export {
   asyncHandler,
   errorMiddleware,
@@ -31,8 +44,6 @@ export {
   EnvoyPluginStorage,
   EnvoyRequest,
   EnvoyResponse,
-  EnvoySignatureVerifier,
-  EnvoySignatureVerifierOptions,
   EnvoyStorageItem,
   EnvoyPluginAPI,
   EnvoyUserAPI,

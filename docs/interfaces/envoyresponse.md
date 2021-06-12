@@ -45,7 +45,7 @@ Response.send
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L9)
+[sdk/EnvoyResponse.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyResponse.ts#L9)
 
 ___
 
@@ -53,6 +53,8 @@ ___
 
 • **sendFailed**: (`message`: `string`, `debugInfo?`: `unknown`, ...`attachments`: `EnvoyPluginJobAttachment`[]) => `void`
 
+Marks the job as "failed". The message will be communicated to the Envoy Dashboard user.
+
 #### Type declaration
 
 ▸ (`message`, `debugInfo?`, ...`attachments`): `void`
@@ -71,7 +73,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L12)
+[sdk/EnvoyResponse.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyResponse.ts#L24)
 
 ___
 
@@ -79,6 +81,8 @@ ___
 
 • **sendIgnored**: (`message`: `string`, `debugInfo?`: `unknown`, ...`attachments`: `EnvoyPluginJobAttachment`[]) => `void`
 
+Marks the job as "ignored". Useful when you explicitly do not want to handle the event.
+
 #### Type declaration
 
 ▸ (`message`, `debugInfo?`, ...`attachments`): `void`
@@ -97,13 +101,17 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L11)
+[sdk/EnvoyResponse.ts:19](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyResponse.ts#L19)
 
 ___
 
 ### sendOngoing
 
 • **sendOngoing**: (`debugInfo?`: `unknown`) => `void`
+
+Marks the job as "ongoing". This is useful for long-running event handling.
+Later on, you should update the job using
+[EnvoyPluginJob.complete](../classes/envoypluginjob.md#complete), [EnvoyPluginJob.fail](../classes/envoypluginjob.md#fail), or [EnvoyPluginJob.ignore](../classes/envoypluginjob.md#ignore).
 
 #### Type declaration
 
@@ -121,4 +129,4 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:10](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyResponse.ts#L10)
+[sdk/EnvoyResponse.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyResponse.ts#L15)

@@ -46,8 +46,7 @@ export type EnvoyMetaCompany = {
 
 /**
  * A short-lived `userAPI` token.
- * Will be used to construct the `userAPI` property
- * found in `req.envoy.userAPI`.
+ * Will be used to construct the `userAPI` property found in `req.envoy.userAPI`.
  *
  * @category Meta
  */

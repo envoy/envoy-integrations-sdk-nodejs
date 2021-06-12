@@ -38,6 +38,10 @@ to allow for easy access to Envoy functions.
 
 • **new EnvoyPluginSDK**<Meta, Payload\>(`body`, `isVerified?`, `pluginAccessToken?`)
 
+Don't create an instance of this class directly.
+
+Instead, use [middleware](../README.md#middleware) to automatically attach an instance to `req` on every request.
+
 #### Type parameters
 
 | Name | Type |
@@ -47,15 +51,15 @@ to allow for easy access to Envoy functions.
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `body` | `EnvoyRequestBody`<Meta, Payload\> | `undefined` |
-| `isVerified` | `boolean` | false |
-| `pluginAccessToken` | ``null`` \| `string` | null |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `body` | `EnvoyRequestBody`<Meta, Payload\> | `undefined` | Request body |
+| `isVerified` | `boolean` | false | If the request has been verified via {@link EnvoySignatureVerifier} |
+| `pluginAccessToken` | ``null`` \| `string` | null | An access token from [EnvoyPluginAPI.loginAsPlugin](envoypluginapi.md#loginasplugin) |
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:41](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L41)
+[sdk/EnvoyPluginSDK.ts:41](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L41)
 
 ## Accessors
 
@@ -83,7 +87,7 @@ Returns a job based on an ID.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:132](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L132)
+[sdk/EnvoyPluginSDK.ts:140](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L140)
 
 ___
 
@@ -99,7 +103,7 @@ Storage scoped globally (across installs).
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:125](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L125)
+[sdk/EnvoyPluginSDK.ts:133](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L133)
 
 ___
 
@@ -115,7 +119,7 @@ Storage scoped to the install.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:114](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L114)
+[sdk/EnvoyPluginSDK.ts:122](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L122)
 
 ___
 
@@ -131,7 +135,7 @@ Perform operations on the current job.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:150](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L150)
+[sdk/EnvoyPluginSDK.ts:158](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L158)
 
 ___
 
@@ -147,7 +151,7 @@ Returns the current job's ID.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:139](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L139)
+[sdk/EnvoyPluginSDK.ts:147](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L147)
 
 ___
 
@@ -164,7 +168,7 @@ Useful for verifiable communications between plugin endpoints.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:163](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L163)
+[sdk/EnvoyPluginSDK.ts:171](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L171)
 
 ___
 
@@ -173,7 +177,7 @@ ___
 • `get` **meta**(): `Meta`
 
 The metadata for the request.
-Either an EnvoyEventMeta or EnvoyRouteMeta.
+Either an [EnvoyEventMeta](../README.md#envoyeventmeta)} or [EnvoyRouteMeta](../README.md#envoyroutemeta).
 
 #### Returns
 
@@ -181,7 +185,7 @@ Either an EnvoyEventMeta or EnvoyRouteMeta.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L53)
+[sdk/EnvoyPluginSDK.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L61)
 
 ___
 
@@ -190,7 +194,7 @@ ___
 • `get` **payload**(): `Payload`
 
 The payload for the request.
-For events, it's some Envoy resource, like an Entry or Invite.
+For events, it's some Envoy event payload, like an [EntryPayload](../README.md#entrypayload) or [InvitePayload](../README.md#invitepayload).
 For setup step validation URLs, it's the form submitted values for a validation URL.
 
 #### Returns
@@ -199,7 +203,7 @@ For setup step validation URLs, it's the form submitted values for a validation 
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:65](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L65)
+[sdk/EnvoyPluginSDK.ts:73](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L73)
 
 ___
 
@@ -216,7 +220,7 @@ Used to perform storage or job operations.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:93](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L93)
+[sdk/EnvoyPluginSDK.ts:101](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L101)
 
 ___
 
@@ -233,4 +237,4 @@ Used only in routes.
 
 #### Defined in
 
-[sdk/EnvoyPluginSDK.ts:76](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginSDK.ts#L76)
+[sdk/EnvoyPluginSDK.ts:84](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginSDK.ts#L84)

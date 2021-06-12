@@ -19,8 +19,8 @@ export interface VerifiedRequest extends Request {
 /**
  * Base type for Envoy requests.
  * You probably won't need to use this type directly.
- * For routes, use `EnvoyRouteRequest`,
- * and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
+ * For routes, use {@link EnvoyRouteRequest},
+ * and for events, use {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
  *
  * @category Request
  */
@@ -38,7 +38,7 @@ export type EnvoyRouteRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMe
 
 /**
  * Base type for event requests.
- * You should use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
+ * You should use {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
  *
  * @category Request
  */
@@ -62,8 +62,8 @@ export type EnvoyInviteEventRequest = EnvoyEventRequest<InvitePayload>;
 
 /**
  * You probably won't need to use this type directly.
- * For routes, use `EnvoyRouteRequest`,
- * and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
+ * For routes, use {@link EnvoyRouteRequest},
+ * and for events, use {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
  *
  * @category Request
  */

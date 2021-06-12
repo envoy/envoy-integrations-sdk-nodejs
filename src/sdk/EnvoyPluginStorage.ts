@@ -28,6 +28,8 @@ export default class EnvoyPluginStorage {
   }
 
   /**
+   * Gets a single {@link EnvoyStorageItem} from storage.
+   *
    * Wrapper for single pipeline get.
    */
   get(key: string): Promise<EnvoyStorageItem | null> {
@@ -35,6 +37,8 @@ export default class EnvoyPluginStorage {
   }
 
   /**
+   * Sets a single {@link EnvoyStorageItem} from storage.
+   *
    * Wrapper for single pipeline set.
    */
   set(key: string, value: unknown): Promise<EnvoyStorageItem | null> {
@@ -42,6 +46,8 @@ export default class EnvoyPluginStorage {
   }
 
   /**
+   * Sets a single unique string {@link EnvoyStorageItem} from storage.
+   *
    * Wrapper for single pipeline setUnique.
    */
   setUnique(key: string, options: EnvoyStorageSetUniqueOptions = {}): Promise<EnvoyStorageItem | null> {
@@ -49,6 +55,8 @@ export default class EnvoyPluginStorage {
   }
 
   /**
+   * Sets a single unique number {@link EnvoyStorageItem} from storage.
+   *
    * Wrapper for single pipeline setUnique.
    */
   setUniqueNum(key: string, options: EnvoyStorageSetUniqueNumOptions = {}): Promise<EnvoyStorageItem | null> {
@@ -56,8 +64,9 @@ export default class EnvoyPluginStorage {
   }
 
   /**
+   * Unsets an {@link EnvoyStorageItem} from storage. Returns null if the item did not previously exist.
+   *
    * Wrapper for single pipeline unset.
-   * Returns null if the item did not previously exist.
    */
   unset(key: string): Promise<EnvoyStorageItem | null> {
     return this.pipeline().unset(key).executeSingle();

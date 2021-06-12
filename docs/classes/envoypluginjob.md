@@ -23,7 +23,6 @@ as well as attach extra data to the event's subject
 
 - [attach](envoypluginjob.md#attach)
 - [complete](envoypluginjob.md#complete)
-- [execute](envoypluginjob.md#execute)
 - [fail](envoypluginjob.md#fail)
 - [ignore](envoypluginjob.md#ignore)
 - [update](envoypluginjob.md#update)
@@ -43,7 +42,7 @@ as well as attach extra data to the event's subject
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L17)
+[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L17)
 
 ## Properties
 
@@ -53,7 +52,7 @@ as well as attach extra data to the event's subject
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L15)
+[sdk/EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L15)
 
 ___
 
@@ -63,7 +62,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L17)
+[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L17)
 
 ## Methods
 
@@ -71,6 +70,8 @@ ___
 
 ▸ **attach**(...`attachments`): `Promise`<void\>
 
+Add attachments to this job.
+
 #### Parameters
 
 | Name | Type |
@@ -83,7 +84,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L45)
+[sdk/EnvoyPluginJob.ts:48](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L48)
 
 ___
 
@@ -91,6 +92,11 @@ ___
 
 ▸ **complete**(`message`, ...`attachments`): `Promise`<void\>
 
+Reports that the job is complete.
+
+Instead of calling this directly, you can return a 200 response from the job's event handler,
+using {@link EnvoyRequest.send}.
+
 #### Parameters
 
 | Name | Type |
@@ -104,30 +110,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:49](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L49)
-
-___
-
-### execute
-
-▸ **execute**(`status`, `message`, `reason`, `attachments?`): `Promise`<void\>
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `status` | ``null`` \| `string` | `undefined` |
-| `message` | ``null`` \| `string` | `undefined` |
-| `reason` | ``null`` \| `string` | `undefined` |
-| `attachments` | `EnvoyPluginJobAttachment`[] | [] |
-
-#### Returns
-
-`Promise`<void\>
-
-#### Defined in
-
-[sdk/EnvoyPluginJob.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L24)
+[sdk/EnvoyPluginJob.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L58)
 
 ___
 
@@ -135,6 +118,11 @@ ___
 
 ▸ **fail**(`message`, `reason`): `Promise`<void\>
 
+Reports that the job is ignored.
+
+Instead of calling this directly, you can return a 400 response from the job's event handler,
+using {@link EnvoyRequest.sendFailed}.
+
 #### Parameters
 
 | Name | Type |
@@ -148,7 +136,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:57](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L57)
+[sdk/EnvoyPluginJob.ts:78](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L78)
 
 ___
 
@@ -156,6 +144,11 @@ ___
 
 ▸ **ignore**(`message`, `reason`): `Promise`<void\>
 
+Reports that the job is ignored.
+
+Instead of calling this directly, you can return a 400 response from the job's event handler,
+using {@link EnvoyRequest.sendIgnored}.
+
 #### Parameters
 
 | Name | Type |
@@ -169,13 +162,17 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L53)
+[sdk/EnvoyPluginJob.ts:68](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L68)
 
 ___
 
 ### update
 
 ▸ **update**(`message`, ...`attachments`): `Promise`<void\>
+
+Updates the job with a new message and attachments.
+
+Can be used to periodically update long-running jobs.
 
 #### Parameters
 
@@ -190,4 +187,4 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyPluginJob.ts#L61)
+[sdk/EnvoyPluginJob.ts:87](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyPluginJob.ts#L87)

@@ -15,8 +15,8 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
 export type EnvoyMiddleware = (req: EnvoyRequest, res: EnvoyResponse, next: NextFunction) => void;
 
 /**
- * Sets up an `EnvoyPluginSDK` object in the path `req.envoy`.
- * Modifies the `res` object to include Envoy's helpers, per `EnvoyResponse`.
+ * Sets up an {@link EnvoyPluginSDK} object in the path `req.envoy`.
+ * Modifies the `res` object to include Envoy's helpers, per {@link EnvoyResponse}.
  *
  * Also verifies that the request is coming from Envoy,
  * as well as managing the plugin access token lifecycle.
@@ -50,10 +50,10 @@ export default function middleware(options?: EnvoySignatureVerifierOptions): Env
         /**
          * Respond with "ongoing" for long jobs.
          */
-        res.sendOngoing = (debugInfo: unknown = {}) => {
+        res.sendOngoing = (message = '', debugInfo: unknown = {}) => {
           res.statusCode = HttpStatus.ONGOING;
           res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ debugInfo }));
+          res.end(JSON.stringify({ message, debugInfo }));
         };
 
         /**

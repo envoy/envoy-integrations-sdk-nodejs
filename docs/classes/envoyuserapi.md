@@ -42,6 +42,7 @@ To access Envoy resources, this is the API you'd want.
 - [partialUpdateInvite](envoyuserapi.md#partialupdateinvite)
 - [removeInvite](envoyuserapi.md#removeinvite)
 - [updateInvite](envoyuserapi.md#updateinvite)
+- [getAuthorizeURL](envoyuserapi.md#getauthorizeurl)
 - [loginAsPluginInstaller](envoyuserapi.md#loginasplugininstaller)
 - [loginAsUserWithCode](envoyuserapi.md#loginasuserwithcode)
 - [loginAsUserWithPassword](envoyuserapi.md#loginasuserwithpassword)
@@ -64,7 +65,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/base/EnvoyAPI.ts#L59)
+[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/base/EnvoyAPI.ts#L59)
 
 ## Properties
 
@@ -80,13 +81,16 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/base/EnvoyAPI.ts#L32)
+[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/base/EnvoyAPI.ts#L32)
 
 ## Methods
 
 ### createInvite
 
 ▸ **createInvite**(`invite`): `Promise`<InviteModel\>
+
+Requires `invites.write` scope.
+May also require `invites.attest` scope if setting `attested: true`.
 
 #### Parameters
 
@@ -100,13 +104,15 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:114](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L114)
+[sdk/EnvoyUserAPI.ts:188](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L188)
 
 ___
 
 ### getAgreement
 
 ▸ **getAgreement**(`id`, `include?`): `Promise`<AgreementModel\>
+
+Requires `agreements.read` scope.
 
 #### Parameters
 
@@ -121,13 +127,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:31](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L31)
+[sdk/EnvoyUserAPI.ts:65](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L65)
 
 ___
 
 ### getAgreementPage
 
 ▸ **getAgreementPage**(`id`, `include?`): `Promise`<AgreementPageModel\>
+
+{@link AgreementPageModel}
 
 #### Parameters
 
@@ -142,13 +150,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L27)
+[sdk/EnvoyUserAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L58)
 
 ___
 
 ### getCompany
 
 ▸ **getCompany**(`id`, `include?`): `Promise`<CompanyModel\>
+
+Requires `companies.read` scope.
 
 #### Parameters
 
@@ -163,13 +173,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:35](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L35)
+[sdk/EnvoyUserAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L72)
 
 ___
 
 ### getEmployee
 
 ▸ **getEmployee**(`id`, `include?`): `Promise`<EmployeeModel\>
+
+Requires `employees.read` scope.
 
 #### Parameters
 
@@ -184,13 +196,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:39](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L39)
+[sdk/EnvoyUserAPI.ts:79](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L79)
 
 ___
 
 ### getEmployeeByEmail
 
 ▸ **getEmployeeByEmail**(`email`, `include?`): `Promise`<EmployeeModel\>
+
+Requires `employees.read` scope.
 
 #### Parameters
 
@@ -205,13 +219,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L59)
+[sdk/EnvoyUserAPI.ts:114](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L114)
 
 ___
 
 ### getEmployees
 
 ▸ **getEmployees**(`params?`): `Promise`<EmployeeModel[]\>
+
+Requires `employees.read` scope.
 
 #### Parameters
 
@@ -225,13 +241,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:78](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L78)
+[sdk/EnvoyUserAPI.ts:136](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L136)
 
 ___
 
 ### getFlow
 
 ▸ **getFlow**(`id`, `include?`): `Promise`<FlowModel\>
+
+Requires `flows.read` scope.
 
 #### Parameters
 
@@ -246,13 +264,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:43](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L43)
+[sdk/EnvoyUserAPI.ts:86](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L86)
 
 ___
 
 ### getFlows
 
 ▸ **getFlows**(`params?`): `Promise`<FlowModel[]\>
+
+Requires `flows.read` scope.
 
 #### Parameters
 
@@ -266,13 +286,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:85](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L85)
+[sdk/EnvoyUserAPI.ts:146](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L146)
 
 ___
 
 ### getInvites
 
 ▸ **getInvites**(`params?`): `Promise`<InviteModel[]\>
+
+Requires `invites.read` scope.
 
 #### Parameters
 
@@ -286,13 +308,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:102](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L102)
+[sdk/EnvoyUserAPI.ts:172](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L172)
 
 ___
 
 ### getLocation
 
 ▸ **getLocation**(`id`, `include?`): `Promise`<LocationModel\>
+
+Requires `locations.read` scope.
 
 #### Parameters
 
@@ -307,13 +331,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:47](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L47)
+[sdk/EnvoyUserAPI.ts:93](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L93)
 
 ___
 
 ### getLocations
 
 ▸ **getLocations**(`params?`): `Promise`<LocationModel[]\>
+
+Requires `locations.read` scope.
 
 #### Parameters
 
@@ -327,13 +353,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:90](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L90)
+[sdk/EnvoyUserAPI.ts:154](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L154)
 
 ___
 
 ### getSignInField
 
 ▸ **getSignInField**(`id`, `include?`): `Promise`<SignInFieldModel\>
+
+Requires `sign-in-fields.read` scope.
 
 #### Parameters
 
@@ -348,13 +376,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:55](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L55)
+[sdk/EnvoyUserAPI.ts:107](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L107)
 
 ___
 
 ### getSignInFieldPage
 
 ▸ **getSignInFieldPage**(`id`, `include?`): `Promise`<SignInFieldPageModel\>
+
+Requires `sign-in-field-pages.read` scope.
 
 #### Parameters
 
@@ -369,13 +399,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:51](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L51)
+[sdk/EnvoyUserAPI.ts:100](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L100)
 
 ___
 
 ### getSignInFields
 
 ▸ **getSignInFields**(`signInFieldPageId`): `Promise`<SignInFieldModel[]\>
+
+Requires `sign-in-fields.read` scope.
 
 #### Parameters
 
@@ -389,7 +421,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:97](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L97)
+[sdk/EnvoyUserAPI.ts:164](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L164)
 
 ___
 
@@ -403,13 +435,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:109](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L109)
+[sdk/EnvoyUserAPI.ts:179](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L179)
 
 ___
 
 ### partialUpdateInvite
 
 ▸ **partialUpdateInvite**(`inviteId`, `invite`): `Promise`<InviteModel\>
+
+Requires `invites.write` scope.
 
 #### Parameters
 
@@ -424,13 +458,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:133](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L133)
+[sdk/EnvoyUserAPI.ts:213](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L213)
 
 ___
 
 ### removeInvite
 
 ▸ **removeInvite**(`inviteId`): `Promise`<void\>
+
+Requires `invites.write` scope.
 
 #### Parameters
 
@@ -444,13 +480,15 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:143](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L143)
+[sdk/EnvoyUserAPI.ts:226](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L226)
 
 ___
 
 ### updateInvite
 
 ▸ **updateInvite**(`inviteId`, `invite`): `Promise`<InviteModel\>
+
+Requires `invites.write` scope.
 
 #### Parameters
 
@@ -465,13 +503,41 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:123](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L123)
+[sdk/EnvoyUserAPI.ts:200](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L200)
+
+___
+
+### getAuthorizeURL
+
+▸ `Static` **getAuthorizeURL**(`redirectURL`, `scope`, `clientId?`): `string`
+
+Builds the authorize URL to redirect a user to initiate the auth code oauth2 flow.
+
+Upon completion, they will be redirected to `redirectURL`, with a `code` query param in the url.
+
+Use the [loginAsUserWithCode](envoyuserapi.md#loginasuserwithcode) method to exchange that code for an access token.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `redirectURL` | `string` |
+| `scope` | `string`[] |
+| `clientId` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[sdk/EnvoyUserAPI.ts:240](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L240)
 
 ___
 
 ### loginAsPluginInstaller
 
-▸ `Static` **loginAsPluginInstaller**(`installId`, `id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
+▸ `Static` **loginAsPluginInstaller**(`installId`, `clientId?`, `clientSecret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
 
 Gets a user access token using `plugin_install` as the grant type.
 
@@ -480,8 +546,8 @@ Gets a user access token using `plugin_install` as the grant type.
 | Name | Type |
 | :------ | :------ |
 | `installId` | `string` |
-| `id` | `string` |
-| `secret` | `string` |
+| `clientId` | `string` |
+| `clientSecret` | `string` |
 
 #### Returns
 
@@ -489,24 +555,24 @@ Gets a user access token using `plugin_install` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:207](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L207)
+[sdk/EnvoyUserAPI.ts:306](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L306)
 
 ___
 
 ### loginAsUserWithCode
 
-▸ `Static` **loginAsUserWithCode**(`code`, `scope?`, `id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
+▸ `Static` **loginAsUserWithCode**(`code`, `scope`, `clientId?`, `clientSecret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
 
 Gets a user access token using `code` as the grant type.
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `code` | `string` | `undefined` |
-| `scope` | `string`[] | [] |
-| `id` | `string` | `undefined` |
-| `secret` | `string` | `undefined` |
+| Name | Type |
+| :------ | :------ |
+| `code` | `string` |
+| `scope` | `string`[] |
+| `clientId` | `string` |
+| `clientSecret` | `string` |
 
 #### Returns
 
@@ -514,25 +580,25 @@ Gets a user access token using `code` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:181](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L181)
+[sdk/EnvoyUserAPI.ts:280](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L280)
 
 ___
 
 ### loginAsUserWithPassword
 
-▸ `Static` **loginAsUserWithPassword**(`username`, `password`, `scope?`, `id?`, `secret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
+▸ `Static` **loginAsUserWithPassword**(`username`, `password`, `scope`, `clientId?`, `clientSecret?`): `Promise`<[EnvoyMetaAuth](../README.md#envoymetaauth)\>
 
-Gets a user access token using `password` as the grant type (discouraged).
+Gets a user access token using `password` as the grant type (discouraged - use [loginAsUserWithCode](envoyuserapi.md#loginasuserwithcode) below).
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `username` | `string` | `undefined` |
-| `password` | `string` | `undefined` |
-| `scope` | `string`[] | [] |
-| `id` | `string` | `undefined` |
-| `secret` | `string` | `undefined` |
+| Name | Type |
+| :------ | :------ |
+| `username` | `string` |
+| `password` | `string` |
+| `scope` | `string`[] |
+| `clientId` | `string` |
+| `clientSecret` | `string` |
 
 #### Returns
 
@@ -540,4 +606,4 @@ Gets a user access token using `password` as the grant type (discouraged).
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:153](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyUserAPI.ts#L153)
+[sdk/EnvoyUserAPI.ts:252](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L252)

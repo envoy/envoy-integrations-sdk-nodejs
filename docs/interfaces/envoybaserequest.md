@@ -4,8 +4,8 @@
 
 Base type for Envoy requests.
 You probably won't need to use this type directly.
-For routes, use `EnvoyRouteRequest`,
-and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
+For routes, use [EnvoyRouteRequest](../README.md#envoyrouterequest),
+and for events, use [EnvoyEntryEventRequest](../README.md#envoyentryeventrequest) or [EnvoyInviteEventRequest](../README.md#envoyinviteeventrequest).
 
 ## Type parameters
 
@@ -35,11 +35,11 @@ and for events, use `EnvoyEntryEventRequest` or `EnvoyInviteEventRequest`.
 
 #### Inherited from
 
-VerifiedRequest.\_\_@VERIFIED@1237
+VerifiedRequest.\_\_@VERIFIED@1256
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyRequest.ts#L16)
+[sdk/EnvoyRequest.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyRequest.ts#L16)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/11f594b/src/sdk/EnvoyRequest.ts#L28)
+[sdk/EnvoyRequest.ts:28](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyRequest.ts#L28)

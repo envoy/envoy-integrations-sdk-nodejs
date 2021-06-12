@@ -3,7 +3,7 @@ import JSONAPIModel from '../util/json-api/JSONAPIModel';
 /**
  * @category API Resource
  */
-export type SignInFieldPageAttributes = {
+export type AgreementPageAttributes = {
   enabled?: boolean;
   position?: number;
 };
@@ -16,4 +16,4 @@ export type AgreementPageRelationships = 'flow' | 'agreements';
 /**
  * @category API Resource
  */
-export type AgreementPageModel = JSONAPIModel<SignInFieldPageAttributes, AgreementPageRelationships>;
+export type AgreementPageModel = JSONAPIModel<AgreementPageAttributes, AgreementPageRelationships>;

@@ -40,6 +40,14 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
    */
   private readonly pluginAccessToken: string | null = null;
 
+  /**
+   * Don't create an instance of this class directly.
+   *
+   * Instead, use {@link middleware} to automatically attach an instance to `req` on every request.
+   * @param body - Request body
+   * @param isVerified - If the request has been verified via {@link EnvoySignatureVerifier}
+   * @param pluginAccessToken - An access token from {@link EnvoyPluginAPI.loginAsPlugin}
+   */
   constructor(body: EnvoyRequestBody<Meta, Payload>, isVerified = false, pluginAccessToken: string | null = null) {
     this.body = body;
     this.isVerified = isVerified;
@@ -48,7 +56,7 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
 
   /**
    * The metadata for the request.
-   * Either an EnvoyEventMeta or EnvoyRouteMeta.
+   * Either an {@link EnvoyEventMeta}} or {@link EnvoyRouteMeta}.
    */
   get meta(): Meta {
     if (!this.isVerified) {
@@ -59,7 +67,7 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
 
   /**
    * The payload for the request.
-   * For events, it's some Envoy resource, like an Entry or Invite.
+   * For events, it's some Envoy event payload, like an {@link EntryPayload} or {@link InvitePayload}.
    * For setup step validation URLs, it's the form submitted values for a validation URL.
    */
   get payload(): Payload {
@@ -102,7 +110,7 @@ export default class EnvoyPluginSDK<Meta extends EnvoyMeta = EnvoyMeta, Payload 
    * A function that returns an instance of EnvoyPluginStorage,
    * optionally scoped to an install ID.
    *
-   * Use `installStorage` or `globalStorage` instead of this directly.
+   * Use {@link installStorage} or {@link globalStorage} instead of this directly.
    */
   private get getStorage(): (installId?: string) => EnvoyPluginStorage {
     return (installId?) => new EnvoyPluginStorage(this.pluginAPI, installId);
