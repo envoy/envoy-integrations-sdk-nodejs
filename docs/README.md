@@ -129,7 +129,7 @@
 
 #### Defined in
 
-[payloads/EntryPayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/payloads/EntryPayload.ts#L6)
+[payloads/EntryPayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/payloads/EntryPayload.ts#L6)
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 #### Defined in
 
-[payloads/InvitePayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/payloads/InvitePayload.ts#L6)
+[payloads/InvitePayload.ts:6](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/payloads/InvitePayload.ts#L6)
 
 ___
 
@@ -209,7 +209,7 @@ ___
 
 #### Defined in
 
-[sdk/middleware.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/middleware.ts#L15)
+[sdk/middleware.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/middleware.ts#L15)
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 #### Defined in
 
-[util/EnvoySignatureVerifier.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/util/EnvoySignatureVerifier.ts#L8)
+[util/EnvoySignatureVerifier.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/util/EnvoySignatureVerifier.ts#L8)
 
 ___
 
@@ -255,7 +255,7 @@ Metadata that will be included in the request body for events.
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:66](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyMeta.ts#L66)
+[sdk/EnvoyMeta.ts:66](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L66)
 
 ___
 
@@ -278,7 +278,7 @@ Will be used to construct the `userAPI` property found in `req.envoy.userAPI`.
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyMeta.ts#L53)
+[sdk/EnvoyMeta.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L53)
 
 ___
 
@@ -299,7 +299,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyMeta.ts#L37)
+[sdk/EnvoyMeta.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L37)
 
 ___
 
@@ -317,7 +317,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyMeta.ts#L4)
+[sdk/EnvoyMeta.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L4)
 
 ___
 
@@ -349,7 +349,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyMeta.ts#L13)
+[sdk/EnvoyMeta.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L13)
 
 ___
 
@@ -376,7 +376,7 @@ like validation URLs or options URLs.
 
 #### Defined in
 
-[sdk/EnvoyMeta.ts:83](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyMeta.ts#L83)
+[sdk/EnvoyMeta.ts:83](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyMeta.ts#L83)
 
 ___
 
@@ -391,7 +391,7 @@ such as handlers for `entry_sign_in`.
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyRequest.ts#L53)
+[sdk/EnvoyRequest.ts:53](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L53)
 
 ___
 
@@ -410,7 +410,7 @@ You should use [EnvoyEntryEventRequest](README.md#envoyentryeventrequest) or [En
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyRequest.ts#L45)
+[sdk/EnvoyRequest.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L45)
 
 ___
 
@@ -423,7 +423,7 @@ such as handlers for `invite_created` or `upcoming_visit`.
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyRequest.ts#L61)
+[sdk/EnvoyRequest.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L61)
 
 ___
 
@@ -443,7 +443,7 @@ and for events, use [EnvoyEntryEventRequest](README.md#envoyentryeventrequest) o
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyRequest.ts#L70)
+[sdk/EnvoyRequest.ts:70](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L70)
 
 ___
 
@@ -462,7 +462,7 @@ such as validation URLS or options URLs.
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyRequest.ts#L37)
+[sdk/EnvoyRequest.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyRequest.ts#L37)
 
 ___
 
@@ -481,7 +481,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyStorageItem.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyStorageItem.ts#L4)
+[sdk/EnvoyStorageItem.ts:4](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyStorageItem.ts#L4)
 
 ## Helper Functions
 
@@ -518,7 +518,7 @@ to catch Promise-based errors.
 
 #### Defined in
 
-[sdk/asyncHandler.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/asyncHandler.ts#L13)
+[sdk/asyncHandler.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/asyncHandler.ts#L13)
 
 ___
 
@@ -557,7 +557,7 @@ Catches errors and sets the proper status code.
 
 #### Defined in
 
-[sdk/errorMiddleware.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/errorMiddleware.ts#L11)
+[sdk/errorMiddleware.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/errorMiddleware.ts#L11)
 
 ___
 
@@ -583,4 +583,4 @@ as well as managing the plugin access token lifecycle.
 
 #### Defined in
 
-[sdk/middleware.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/middleware.ts#L26)
+[sdk/middleware.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/middleware.ts#L26)

@@ -16,7 +16,7 @@ export interface EnvoyRequestBody<Meta, Payload> {
 
 /**
  * Sets up all relevant Envoy functions.
- * Attaches itself to every request object using our `middleware`,
+ * Attaches itself to every request object using our {@link middleware},
  * to allow for easy access to Envoy functions.
  *
  * @category SDK

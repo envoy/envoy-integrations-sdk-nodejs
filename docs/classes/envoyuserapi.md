@@ -65,7 +65,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/base/EnvoyAPI.ts#L59)
+[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/base/EnvoyAPI.ts#L59)
 
 ## Properties
 
@@ -81,7 +81,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/base/EnvoyAPI.ts#L32)
+[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/base/EnvoyAPI.ts#L32)
 
 ## Methods
 
@@ -104,7 +104,7 @@ May also require `invites.attest` scope if setting `attested: true`.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:188](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L188)
+[sdk/EnvoyUserAPI.ts:188](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L188)
 
 ___
 
@@ -127,7 +127,7 @@ Requires `agreements.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:65](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L65)
+[sdk/EnvoyUserAPI.ts:65](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L65)
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L58)
+[sdk/EnvoyUserAPI.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L58)
 
 ___
 
@@ -173,7 +173,7 @@ Requires `companies.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L72)
+[sdk/EnvoyUserAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L72)
 
 ___
 
@@ -196,7 +196,7 @@ Requires `employees.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:79](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L79)
+[sdk/EnvoyUserAPI.ts:79](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L79)
 
 ___
 
@@ -219,7 +219,7 @@ Requires `employees.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:114](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L114)
+[sdk/EnvoyUserAPI.ts:114](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L114)
 
 ___
 
@@ -241,7 +241,7 @@ Requires `employees.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:136](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L136)
+[sdk/EnvoyUserAPI.ts:136](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L136)
 
 ___
 
@@ -264,7 +264,7 @@ Requires `flows.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:86](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L86)
+[sdk/EnvoyUserAPI.ts:86](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L86)
 
 ___
 
@@ -286,7 +286,7 @@ Requires `flows.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:146](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L146)
+[sdk/EnvoyUserAPI.ts:146](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L146)
 
 ___
 
@@ -308,7 +308,7 @@ Requires `invites.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:172](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L172)
+[sdk/EnvoyUserAPI.ts:172](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L172)
 
 ___
 
@@ -331,7 +331,7 @@ Requires `locations.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:93](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L93)
+[sdk/EnvoyUserAPI.ts:93](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L93)
 
 ___
 
@@ -353,7 +353,7 @@ Requires `locations.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:154](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L154)
+[sdk/EnvoyUserAPI.ts:154](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L154)
 
 ___
 
@@ -376,7 +376,7 @@ Requires `sign-in-fields.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:107](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L107)
+[sdk/EnvoyUserAPI.ts:107](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L107)
 
 ___
 
@@ -399,7 +399,7 @@ Requires `sign-in-field-pages.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:100](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L100)
+[sdk/EnvoyUserAPI.ts:100](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L100)
 
 ___
 
@@ -421,7 +421,7 @@ Requires `sign-in-fields.read` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:164](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L164)
+[sdk/EnvoyUserAPI.ts:164](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L164)
 
 ___
 
@@ -435,7 +435,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:179](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L179)
+[sdk/EnvoyUserAPI.ts:179](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L179)
 
 ___
 
@@ -458,7 +458,7 @@ Requires `invites.write` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:213](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L213)
+[sdk/EnvoyUserAPI.ts:213](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L213)
 
 ___
 
@@ -480,7 +480,7 @@ Requires `invites.write` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:226](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L226)
+[sdk/EnvoyUserAPI.ts:226](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L226)
 
 ___
 
@@ -503,7 +503,7 @@ Requires `invites.write` scope.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:200](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L200)
+[sdk/EnvoyUserAPI.ts:200](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L200)
 
 ___
 
@@ -531,7 +531,7 @@ Use the [loginAsUserWithCode](envoyuserapi.md#loginasuserwithcode) method to exc
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:240](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L240)
+[sdk/EnvoyUserAPI.ts:240](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L240)
 
 ___
 
@@ -555,7 +555,7 @@ Gets a user access token using `plugin_install` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:306](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L306)
+[sdk/EnvoyUserAPI.ts:306](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L306)
 
 ___
 
@@ -580,7 +580,7 @@ Gets a user access token using `code` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:280](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L280)
+[sdk/EnvoyUserAPI.ts:280](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L280)
 
 ___
 
@@ -606,4 +606,4 @@ Gets a user access token using `password` as the grant type (discouraged - use [
 
 #### Defined in
 
-[sdk/EnvoyUserAPI.ts:252](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/7f53677/src/sdk/EnvoyUserAPI.ts#L252)
+[sdk/EnvoyUserAPI.ts:252](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/48073ad/src/sdk/EnvoyUserAPI.ts#L252)
