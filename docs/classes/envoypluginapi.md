@@ -47,7 +47,7 @@ EnvoyAPI.constructor
 
 #### Defined in
 
-[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/base/EnvoyAPI.ts#L59)
+[base/EnvoyAPI.ts:59](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/base/EnvoyAPI.ts#L59)
 
 ## Properties
 
@@ -63,7 +63,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/base/EnvoyAPI.ts#L32)
+[base/EnvoyAPI.ts:32](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/base/EnvoyAPI.ts#L32)
 
 ## Methods
 
@@ -84,7 +84,7 @@ EnvoyAPI.axios
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyPluginAPI.ts#L61)
+[sdk/EnvoyPluginAPI.ts:61](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyPluginAPI.ts#L61)
 
 ___
 
@@ -106,7 +106,7 @@ Fetches the current `config` saved for this install during setup by the customer
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyPluginAPI.ts#L27)
+[sdk/EnvoyPluginAPI.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyPluginAPI.ts#L27)
 
 ___
 
@@ -131,13 +131,13 @@ To remove an item from the saved `config`, set the item's key to `null`.
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyPluginAPI.ts#L37)
+[sdk/EnvoyPluginAPI.ts:37](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyPluginAPI.ts#L37)
 
 ___
 
 ### storagePipeline
 
-▸ **storagePipeline**(`commands`, `installId?`): `Promise`<(``null`` \| [EnvoyStorageItem](../README.md#envoystorageitem))[]\>
+▸ **storagePipeline**(`commands`, `installId?`): `Promise`<(``null`` \| [EnvoyStorageItem](../README.md#envoystorageitem)<unknown\>)[]\>
 
 #### Parameters
 
@@ -148,11 +148,11 @@ ___
 
 #### Returns
 
-`Promise`<(``null`` \| [EnvoyStorageItem](../README.md#envoystorageitem))[]\>
+`Promise`<(``null`` \| [EnvoyStorageItem](../README.md#envoystorageitem)<unknown\>)[]\>
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyPluginAPI.ts#L45)
+[sdk/EnvoyPluginAPI.ts:45](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyPluginAPI.ts#L45)
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyPluginAPI.ts#L16)
+[sdk/EnvoyPluginAPI.ts:16](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyPluginAPI.ts#L16)
 
 ___
 
@@ -196,4 +196,4 @@ Gets a plugin access token using `client_credentials` as the grant type.
 
 #### Defined in
 
-[sdk/EnvoyPluginAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyPluginAPI.ts#L72)
+[sdk/EnvoyPluginAPI.ts:72](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyPluginAPI.ts#L72)

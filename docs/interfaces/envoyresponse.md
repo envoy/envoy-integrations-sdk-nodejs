@@ -51,7 +51,7 @@ Response.send
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L11)
+[sdk/EnvoyResponse.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyResponse.ts#L12)
 
 ___
 
@@ -79,7 +79,7 @@ Marks the job as "failed". The message will be communicated to the Envoy Dashboa
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:26](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L26)
+[sdk/EnvoyResponse.ts:27](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyResponse.ts#L27)
 
 ___
 
@@ -107,7 +107,7 @@ Marks the job as "ignored". Useful when you explicitly do not want to handle the
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:21](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L21)
+[sdk/EnvoyResponse.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyResponse.ts#L22)
 
 ___
 
@@ -135,4 +135,4 @@ Later on, you should update the job using
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyResponse.ts#L17)
+[sdk/EnvoyResponse.ts:18](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyResponse.ts#L18)

@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[util/json-api/JSONAPIData.ts:2](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/util/json-api/JSONAPIData.ts#L2)
+[util/json-api/JSONAPIData.ts:2](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/util/json-api/JSONAPIData.ts#L2)
 
 ___
 
@@ -34,4 +34,4 @@ ___
 
 #### Defined in
 
-[util/json-api/JSONAPIData.ts:3](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/util/json-api/JSONAPIData.ts#L3)
+[util/json-api/JSONAPIData.ts:3](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/util/json-api/JSONAPIData.ts#L3)

@@ -1,8 +1,7 @@
+import './constants';
 import EntryPayload from './payloads/EntryPayload';
 import InvitePayload from './payloads/InvitePayload';
 
-import asyncHandler from './sdk/asyncHandler';
-import errorMiddleware from './sdk/errorMiddleware';
 import EnvoyPluginJob from './sdk/EnvoyPluginJob';
 import EnvoyPluginSDK from './sdk/EnvoyPluginSDK';
 import EnvoyPluginStorage from './sdk/EnvoyPluginStorage';
@@ -11,7 +10,6 @@ import EnvoyResponse from './sdk/EnvoyResponse';
 import EnvoyStorageItem from './sdk/EnvoyStorageItem';
 import EnvoyUserAPI from './sdk/EnvoyUserAPI';
 import EnvoyPluginAPI from './sdk/EnvoyPluginAPI';
-import middleware, { EnvoyMiddleware } from './sdk/middleware';
 
 import EnvoyJWT from './util/EnvoyJWT';
 import JSONAPIData from './util/json-api/JSONAPIData';
@@ -30,16 +28,16 @@ export * from './resources/UserResource';
 export * from './sdk/EnvoyMeta';
 export * from './sdk/EnvoyRequest';
 export * from './sdk/EnvoyResponse';
+export * from './sdk/filters';
+export * from './sdk/handlers';
+export * from './sdk/middleware';
 
 export * from './util/EnvoySignatureVerifier';
 
 export {
-  asyncHandler,
-  errorMiddleware,
   EntryPayload,
   InvitePayload,
   EnvoyJWT,
-  EnvoyMiddleware,
   EnvoyPluginJob,
   EnvoyPluginSDK,
   EnvoyPluginStorage,
@@ -49,5 +47,4 @@ export {
   EnvoyPluginAPI,
   EnvoyUserAPI,
   JSONAPIData,
-  middleware,
 };

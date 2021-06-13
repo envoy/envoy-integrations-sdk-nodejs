@@ -2,6 +2,7 @@ import { Response } from 'express';
 import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
 import EnvoyOptionsRouteResponseBody from '../internal/EnvoyOptionsRouteResponseBody';
 import EnvoySelectedValuesRouteResponseBody from '../internal/EnvoySelectedValuesRouteResponseBody';
+import EnvoyRemoteValueRouteResponseBody from '../internal/EnvoyRemoteValueRouteResponseBody';
 
 /**
  * Use to type your `res` object in Envoy event handlers.
@@ -31,6 +32,12 @@ export default interface EnvoyResponse<Body = unknown> extends Response {
  * @category Response
  */
 export type EnvoyOptionsRouteResponse = EnvoyResponse<EnvoyOptionsRouteResponseBody>;
+
+/**
+ * Use to type your `res` object in Envoy "remote value URL" route handlers.
+ * @category Response
+ */
+export type EnvoyRemoteValueRouteResponse = EnvoyResponse<EnvoyRemoteValueRouteResponseBody>;
 
 /**
  * Use to type your `res` object in Envoy "selected values URL" route handlers.

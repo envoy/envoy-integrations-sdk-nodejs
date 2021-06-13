@@ -1,9 +1,9 @@
 /**
  * @category Storage
  */
-type EnvoyStorageItem = {
+type EnvoyStorageItem<Value = unknown> = {
   key: string,
-  value: unknown,
+  value: Value,
 };
 
 export default EnvoyStorageItem;

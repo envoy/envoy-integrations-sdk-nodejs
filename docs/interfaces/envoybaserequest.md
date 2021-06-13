@@ -35,11 +35,11 @@ and for events, use [EnvoyEntryEventRequest](../README.md#envoyentryeventrequest
 
 #### Inherited from
 
-VerifiedRequest.\_\_@VERIFIED@1305
+VerifiedRequest.\_\_@VERIFIED@1313
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyRequest.ts#L23)
+[sdk/EnvoyRequest.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyRequest.ts#L23)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:35](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/sdk/EnvoyRequest.ts#L35)
+[sdk/EnvoyRequest.ts:35](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/sdk/EnvoyRequest.ts#L35)

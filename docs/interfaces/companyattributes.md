@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[resources/CompanyResource.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/CompanyResource.ts#L8)
+[resources/CompanyResource.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/CompanyResource.ts#L8)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[resources/CompanyResource.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/CompanyResource.ts#L8)
+[resources/CompanyResource.ts:8](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/CompanyResource.ts#L8)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[resources/CompanyResource.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/CompanyResource.ts#L7)
+[resources/CompanyResource.ts:7](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/CompanyResource.ts#L7)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[resources/CompanyResource.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/CompanyResource.ts#L9)
+[resources/CompanyResource.ts:9](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/CompanyResource.ts#L9)

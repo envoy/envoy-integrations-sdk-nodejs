@@ -11,7 +11,7 @@ module.exports = {
   rules: {
     'no-param-reassign': 'off',
     'no-void': 'off',
-    'max-len': ["error", { "code": 120 }],
+    'max-len': ["error", { "code": 150 }],
     'consistent-return': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
@@ -20,6 +20,7 @@ module.exports = {
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/no-unused-expressions': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off'
   },
   overrides: [
     {

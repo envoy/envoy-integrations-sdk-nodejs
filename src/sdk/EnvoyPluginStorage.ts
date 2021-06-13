@@ -32,8 +32,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline get.
    */
-  get(key: string): Promise<EnvoyStorageItem | null> {
-    return this.pipeline().get(key).executeSingle();
+  get<Value = unknown>(key: string): Promise<EnvoyStorageItem<Value> | null> {
+    return this.pipeline().get(key).executeSingle() as Promise<EnvoyStorageItem<Value> | null>;
   }
 
   /**
@@ -41,8 +41,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline set.
    */
-  set(key: string, value: unknown): Promise<EnvoyStorageItem | null> {
-    return this.pipeline().set(key, value).executeSingle();
+  set<Value = unknown>(key: string, value: Value): Promise<EnvoyStorageItem<Value>> {
+    return this.pipeline().set(key, value).executeSingle() as Promise<EnvoyStorageItem<Value>>;
   }
 
   /**
@@ -50,8 +50,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline setUnique.
    */
-  setUnique(key: string, options: EnvoyStorageSetUniqueOptions = {}): Promise<EnvoyStorageItem | null> {
-    return this.pipeline().setUnique(key, options).executeSingle();
+  setUnique(key: string, options: EnvoyStorageSetUniqueOptions = {}): Promise<EnvoyStorageItem<string> | null> {
+    return this.pipeline().setUnique(key, options).executeSingle() as Promise<EnvoyStorageItem<string> | null>;
   }
 
   /**
@@ -59,8 +59,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline setUnique.
    */
-  setUniqueNum(key: string, options: EnvoyStorageSetUniqueNumOptions = {}): Promise<EnvoyStorageItem | null> {
-    return this.pipeline().setUniqueNum(key, options).executeSingle();
+  setUniqueNum(key: string, options: EnvoyStorageSetUniqueNumOptions = {}): Promise<EnvoyStorageItem<number> | null> {
+    return this.pipeline().setUniqueNum(key, options).executeSingle() as Promise<EnvoyStorageItem<number> | null>;
   }
 
   /**

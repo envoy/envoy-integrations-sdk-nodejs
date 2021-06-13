@@ -47,6 +47,14 @@ export type EnvoyRouteRequest<
   > = EnvoyBaseRequest<EnvoyRouteMeta<Config, Params>, Payload>;
 
 /**
+ * Use to type your `req` object in Envoy "migration" route handlers.
+ *
+ * @category Request
+ */
+export type EnvoyMigrationRouteRequest<OldConfig = Record<string, unknown>> =
+  EnvoyRouteRequest<never, OldConfig, never>;
+
+/**
  * Use to type your `req` object in Envoy "options URL" route handlers.
  *
  * @category Request
@@ -71,13 +79,21 @@ export type EnvoyRemoteValueRouteRequest<Config = Record<string, unknown>> =
   EnvoyRouteRequest<EnvoyRemoteValueRouteResponseBody, Config, never>;
 
 /**
+ * Use to type your `req` object in Envoy "validation URL" route handlers.
+ *
+ * @category Request
+ */
+export type EnvoyValidationRouteRequest<Payload = Record<string, unknown>, Config = Record<string, unknown>> =
+  EnvoyRouteRequest<Payload, Config, never>;
+
+/**
  * Base type for event requests.
  * You should use {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
  *
  * @category Request
  */
-export type EnvoyEventRequest<Event extends string = string, Payload = unknown> =
-  EnvoyBaseRequest<EnvoyEventMeta<Event>, Payload>;
+export type EnvoyEventRequest<Event extends string = string, Payload = unknown, Config = Record<string, unknown>> =
+  EnvoyBaseRequest<EnvoyEventMeta<Event, Config>, Payload>;
 
 /**
  * Use to type your `req` object in entry event handlers,
@@ -85,7 +101,8 @@ export type EnvoyEventRequest<Event extends string = string, Payload = unknown> 
  *
  * @category Request
  */
-export type EnvoyEntryEventRequest = EnvoyEventRequest<EnvoyEntryEvent, EntryPayload>;
+export type EnvoyEntryEventRequest<Config = Record<string, unknown>> =
+  EnvoyEventRequest<EnvoyEntryEvent, EntryPayload, Config>;
 
 /**
  * Use to type your `req` object in invite event handlers,
@@ -93,7 +110,8 @@ export type EnvoyEntryEventRequest = EnvoyEventRequest<EnvoyEntryEvent, EntryPay
  *
  * @category Request
  */
-export type EnvoyInviteEventRequest = EnvoyEventRequest<EnvoyInviteEvent, InvitePayload>;
+export type EnvoyInviteEventRequest<Config = Record<string, unknown>> =
+  EnvoyEventRequest<EnvoyInviteEvent, InvitePayload, Config>;
 
 /**
  * You probably won't need to use this type directly.
@@ -102,5 +120,6 @@ export type EnvoyInviteEventRequest = EnvoyEventRequest<EnvoyInviteEvent, Invite
  *
  * @category Base
  */
-type EnvoyRequest<Payload = unknown> = EnvoyBaseRequest<EnvoyRouteMeta | EnvoyEventMeta, Payload>;
+type EnvoyRequest<Payload = unknown, Config = Record<string, unknown>> =
+  EnvoyBaseRequest<EnvoyRouteMeta<Config> | EnvoyEventMeta<string, Config>, Payload>;
 export default EnvoyRequest;

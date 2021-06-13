@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[resources/LocationResource.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/LocationResource.ts#L13)
+[resources/LocationResource.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/LocationResource.ts#L13)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[resources/LocationResource.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/LocationResource.ts#L12)
+[resources/LocationResource.ts:12](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/LocationResource.ts#L12)

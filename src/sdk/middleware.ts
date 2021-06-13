@@ -1,5 +1,11 @@
 import bodyParser from 'body-parser';
-import { Response, NextFunction } from 'express';
+import {
+  Request,
+  Response,
+  NextFunction,
+  ErrorRequestHandler,
+  RequestHandler,
+} from 'express';
 
 import HttpStatus from '../internal/HttpStatus';
 import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from '../util/EnvoySignatureVerifier';
@@ -10,20 +16,15 @@ import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 
 /**
- * @category Helper
- */
-export type EnvoyMiddleware = (req: EnvoyRequest, res: EnvoyResponse, next: NextFunction) => void;
-
-/**
  * Sets up an {@link EnvoyPluginSDK} object in the path `req.envoy`.
  * Modifies the `res` object to include Envoy's helpers, per {@link EnvoyResponse}.
  *
  * Also verifies that the request is coming from Envoy,
  * as well as managing the plugin access token lifecycle.
  *
- * @category SDK
+ * @category Middleware
  */
-export default function middleware(options?: EnvoySignatureVerifierOptions): EnvoyMiddleware {
+export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): RequestHandler {
   const signatureVerifier = new EnvoySignatureVerifier(options);
   const verify = (req: VerifiedRequest, res: Response, rawBody: Buffer) => {
     req[VERIFIED] = signatureVerifier.verify(req, rawBody);
@@ -32,7 +33,7 @@ export default function middleware(options?: EnvoySignatureVerifierOptions): Env
   let accessToken: string | null = null;
   let threshold = 0;
 
-  return (req: EnvoyRequest, res: EnvoyResponse, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     json(req, res, async (err) => {
       if (err) {
         return next(err);
@@ -44,39 +45,57 @@ export default function middleware(options?: EnvoySignatureVerifierOptions): Env
           accessToken = rawAccessToken;
           threshold = now + (expiresIn * 1000) - (1000 * 60 * 10);
         }
-
-        req.envoy = new EnvoyPluginSDK(req.body, req[VERIFIED], accessToken);
+        const envoyRequest = req as EnvoyRequest;
+        const envoyResponse = res as EnvoyResponse;
+        envoyRequest.envoy = new EnvoyPluginSDK(envoyRequest.body, envoyRequest[VERIFIED], accessToken);
 
         /**
          * Respond with "ongoing" for long jobs.
          */
-        res.sendOngoing = (message = '', debugInfo: unknown = {}) => {
-          res.statusCode = HttpStatus.ONGOING;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ message, debugInfo }));
+        envoyResponse.sendOngoing = (message = '', debugInfo: unknown = {}) => {
+          envoyResponse.statusCode = HttpStatus.ONGOING;
+          envoyResponse.setHeader('Content-Type', 'application/json');
+          envoyResponse.end(JSON.stringify({ message, debugInfo }));
         };
 
         /**
          * Respond with "ignored" if no action will be performed.
          */
-        res.sendIgnored = (message = '', debugInfo: unknown = {}, ...attachments: Array<EnvoyPluginJobAttachment>) => {
-          res.statusCode = HttpStatus.IGNORED;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ message, debugInfo, attachments }));
+        envoyResponse.sendIgnored = (message = '', debugInfo: unknown = {}, ...attachments: Array<EnvoyPluginJobAttachment>) => {
+          envoyResponse.statusCode = HttpStatus.IGNORED;
+          envoyResponse.setHeader('Content-Type', 'application/json');
+          envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
         };
 
         /**
          * Respond with "failed" in case of errors.
          */
-        res.sendFailed = (message = '', debugInfo: unknown = {}, ...attachments: Array<EnvoyPluginJobAttachment>) => {
-          res.statusCode = HttpStatus.FAILED;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ message, debugInfo, attachments }));
+        envoyResponse.sendFailed = (message = '', debugInfo: unknown = {}, ...attachments: Array<EnvoyPluginJobAttachment>) => {
+          envoyResponse.statusCode = HttpStatus.FAILED;
+          envoyResponse.setHeader('Content-Type', 'application/json');
+          envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
         };
         next();
       } catch (error) {
         next(error);
       }
     });
+  };
+}
+
+/**
+ * Catches errors and sets the proper status code.
+ *
+ * @category Middleware
+ */
+export function errorMiddleware(onError: (err: Error) => void = () => {}): ErrorRequestHandler {
+  return (err: Error, req: Request, res: Response, next: NextFunction): void => {
+    onError(err);
+    if (res.headersSent) {
+      return next(err);
+    }
+    res.statusCode = HttpStatus.UNEXPECTED_FAILURE;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ message: err.message }));
   };
 }

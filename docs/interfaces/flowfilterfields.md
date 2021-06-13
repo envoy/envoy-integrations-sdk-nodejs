@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[resources/FlowResource.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/FlowResource.ts#L11)
+[resources/FlowResource.ts:11](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/FlowResource.ts#L11)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[resources/FlowResource.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/c0e2fd5/src/resources/FlowResource.ts#L13)
+[resources/FlowResource.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/883a970/src/resources/FlowResource.ts#L13)
