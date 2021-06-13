@@ -77,8 +77,8 @@ export type SelectedValuesRouteHandler<Config = SomeObject, Additions = SomeObje
  * Handle a "validation" route.
  * @category Handler
  */
-export type ValidationRouteHandler<Config = SomeObject, Payload = SomeObject, Body = SomeObject, Additions = SomeObject> =
-  (req: EnvoyValidationRouteRequest<Payload, Config> & Additions, res: EnvoyResponse<Body>) => Result;
+export type ValidationRouteHandler<Config = SomeObject, Payload = SomeObject, Additions = SomeObject> =
+  (req: EnvoyValidationRouteRequest<Payload, Config> & Additions, res: EnvoyResponse<Partial<Config>>) => Result;
 
 /**
  * Wraps any express.js-based handlers
@@ -188,8 +188,7 @@ export function selectedValuesRouteHandler<
 export function validationRouteHandler<
   Config = SomeObject,
   Payload = SomeObject,
-  ToSave = SomeObject,
   Additions = SomeObject,
-  >(handler: ValidationRouteHandler<Config, Payload, ToSave, Additions>) {
+  >(handler: ValidationRouteHandler<Config, Payload, Additions>) {
   return asyncHandler(handler);
 }
