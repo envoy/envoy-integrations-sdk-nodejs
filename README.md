@@ -29,6 +29,7 @@ View our Node.js [quickstart guide](https://developers.envoy.com/hub/docs/nodejs
 When customers go through your integration's setup steps, that info is saved in a `config` object that is sent along with every request Envoy makes to your integration.
 
 Defining this object as a specific type allows us to safely type the various handlers that will use those values.
+
 ```typescript
 // defs/Config.ts
 type Config = {
@@ -45,7 +46,7 @@ As customers go through the setup steps of your integration, they may trigger se
 
 Below, we'll implement a route that will load a list of greetings into a dropdown in our setup steps.
  
-View the other types of handlers.
+View the other types of handlers [here](docs#handler-functions).
 
 ```typescript
 // greetingOptions.ts
@@ -73,6 +74,9 @@ export default optionsRouteHandler((req, res) => {
 Your integration can respond to several Envoy events. Below, we'll implement a simple event handler for an `entry_sign_in` event.
 
 All it does is to take the greeting that the customer chose during setup, and displays it in the Envoy Dashboard when a visitor signs in.
+
+View the other types of handlers [here](docs#handler-functions).
+
 ```typescript
 // entrySignIn.ts
 import { entryEventHandler } from '@envoy/envoy-integrations-sdk';
@@ -89,7 +93,9 @@ export default entryEventHandler<Config>(async (req, res) => {
 
 
 #### Setup your `express.js` app
+Use the `envoyMiddleware` to get an instance of [EnvoyPluginSDK](docs/classes/envoypluginsdk.md) attached to every request.
 
+View the other types of middleware [here](docs#middleware-functions).
 ```typescript
 // index.ts
 import express from 'express';
