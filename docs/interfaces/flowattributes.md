@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[resources/FlowResource.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/resources/FlowResource.ts#L22)
+[resources/FlowResource.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/resources/FlowResource.ts#L22)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[resources/FlowResource.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/resources/FlowResource.ts#L20)
+[resources/FlowResource.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/resources/FlowResource.ts#L20)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 #### Defined in
 
-[resources/FlowResource.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/resources/FlowResource.ts#L22)
+[resources/FlowResource.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/resources/FlowResource.ts#L22)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[resources/FlowResource.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/resources/FlowResource.ts#L20)
+[resources/FlowResource.ts:20](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/resources/FlowResource.ts#L20)
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 #### Defined in
 
-[resources/FlowResource.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/resources/FlowResource.ts#L23)
+[resources/FlowResource.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/resources/FlowResource.ts#L23)

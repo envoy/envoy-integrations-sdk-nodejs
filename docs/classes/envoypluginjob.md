@@ -42,7 +42,7 @@ as well as attach extra data to the event's subject
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L17)
+[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L17)
 
 ## Properties
 
@@ -52,7 +52,7 @@ as well as attach extra data to the event's subject
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L15)
+[sdk/EnvoyPluginJob.ts:15](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L15)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L17)
+[sdk/EnvoyPluginJob.ts:17](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L17)
 
 ## Methods
 
@@ -84,7 +84,7 @@ Add attachments to this job.
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:48](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L48)
+[sdk/EnvoyPluginJob.ts:48](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L48)
 
 ___
 
@@ -110,7 +110,7 @@ using {@link EnvoyRequest.send}.
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L58)
+[sdk/EnvoyPluginJob.ts:58](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L58)
 
 ___
 
@@ -136,7 +136,7 @@ using {@link EnvoyRequest.sendFailed}.
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:78](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L78)
+[sdk/EnvoyPluginJob.ts:78](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L78)
 
 ___
 
@@ -162,7 +162,7 @@ using {@link EnvoyRequest.sendIgnored}.
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:68](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L68)
+[sdk/EnvoyPluginJob.ts:68](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L68)
 
 ___
 
@@ -187,4 +187,4 @@ Can be used to periodically update long-running jobs.
 
 #### Defined in
 
-[sdk/EnvoyPluginJob.ts:87](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyPluginJob.ts#L87)
+[sdk/EnvoyPluginJob.ts:87](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyPluginJob.ts#L87)

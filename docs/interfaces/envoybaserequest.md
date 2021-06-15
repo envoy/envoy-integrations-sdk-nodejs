@@ -39,7 +39,7 @@ VerifiedRequest.\_\_@VERIFIED@1313
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyRequest.ts#L23)
+[sdk/EnvoyRequest.ts:23](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyRequest.ts#L23)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[sdk/EnvoyRequest.ts:35](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/6f08a82/src/sdk/EnvoyRequest.ts#L35)
+[sdk/EnvoyRequest.ts:35](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyRequest.ts#L35)

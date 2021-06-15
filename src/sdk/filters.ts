@@ -27,7 +27,7 @@ export function booleanFilterMiddleware<Config>(key: keyof Config, message: stri
  * @category Filter
  * @category Middleware
  */
-export function employeeSignInEnabledMiddleware<Config>(
+export function employeeSignInEnabledFilterMiddleware<Config>(
   employeeSignInEnabledKey: keyof Config,
   message = 'Envoy Protect is disabled.',
 ): RequestHandler {
@@ -40,7 +40,7 @@ export function employeeSignInEnabledMiddleware<Config>(
  * @category Filter
  * @category Middleware
  */
-export function excludeEmployeesMiddleware<Config>(
+export function excludedEmployeesFilterMiddleware<Config>(
   excludeEmployeesKey: keyof Config,
   message = 'Employee excluded from integration.',
 ): RequestHandler {
