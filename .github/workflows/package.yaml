@@ -29,7 +29,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ENVOYBOT_PERSONAL_ACCESS_TOKEN }}
 
-      - run: npm publish --access public
+      - run: npm publish --tag beta --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ENVOY_NPM_AUTOMATION_TOKEN }}
 
@@ -38,6 +38,6 @@ jobs:
         with:
           registry-url: "https://npm.pkg.github.com"
 
-      - run: npm publish
+      - run: npm publish --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

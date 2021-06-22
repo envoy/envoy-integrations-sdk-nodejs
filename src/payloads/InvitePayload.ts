@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import JSONAPIData from '../util/json-api/JSONAPIData';
 
 /**
@@ -59,5 +60,17 @@ type InvitePayload = {
     }
   }
 };
+
+export function normalizeInvitePayload(payload: InvitePayload): InvitePayload {
+  const { 'legal-docs': legalDocs } = payload.attributes;
+  const normalized = { ...payload };
+  if (Array.isArray(legalDocs) && legalDocs.length) {
+    normalized.attributes['legal-docs'] = legalDocs.map((doc) => ({
+      ...doc,
+      'signed-at': DateTime.fromSQL(doc['signed-at'], { zone: 'UTC' }).toISO(),
+    }));
+  }
+  return normalized;
+}
 
 export default InvitePayload;

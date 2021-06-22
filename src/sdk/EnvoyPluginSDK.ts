@@ -4,6 +4,9 @@ import EnvoyPluginJob from './EnvoyPluginJob';
 import EnvoyJWT from '../util/EnvoyJWT';
 import EnvoyUserAPI from './EnvoyUserAPI';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
+import JSONAPIData from '../util/json-api/JSONAPIData';
+import EntryPayload, { normalizeEntryPayload } from '../payloads/EntryPayload';
+import InvitePayload, { normalizeInvitePayload } from '../payloads/InvitePayload';
 
 /**
  * Every Envoy request has a `meta` and `payload`.
@@ -74,7 +77,15 @@ export default class EnvoyPluginSDK<Meta = unknown, Payload = unknown> {
     if (!this.isVerified) {
       throw new Error('Could not verify payload.');
     }
-    return this.body.payload;
+    const payload = this.body.payload as unknown as JSONAPIData;
+    switch (payload.type) {
+      case 'entries':
+        return normalizeEntryPayload(payload as unknown as EntryPayload) as unknown as Payload;
+      case 'invites':
+        return normalizeInvitePayload(payload as unknown as InvitePayload) as unknown as Payload;
+      default:
+        return payload as unknown as Payload;
+    }
   }
 
   /**
