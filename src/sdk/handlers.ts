@@ -8,6 +8,7 @@ import {
   EnvoyEntryEventRequest,
   EnvoyEventRequest,
   EnvoyInviteEventRequest,
+  EnvoyLocationEventRequest,
   EnvoyMigrationRouteRequest,
   EnvoyOptionsRouteRequest,
   EnvoyRemoteValueRouteRequest,
@@ -37,6 +38,13 @@ export type EntryEventHandler<Config = SomeObject, Additions = SomeObject> =
  */
 export type InviteEventHandler<Config = SomeObject, Additions = SomeObject> =
   (req: EnvoyInviteEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+
+/**
+ * Handle an location event, such as `location_capacity_updated`.
+ * @category Handler
+ */
+export type LocationEventHandler<Config = SomeObject, Additions = SomeObject> =
+  (req: EnvoyLocationEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
 
 /**
  * Handle a `plugin_uninstalled` event for cleaning up.
@@ -116,6 +124,18 @@ export function inviteEventHandler<
   Config = SomeObject,
   Additions = SomeObject,
   >(handler: InviteEventHandler<Config, Additions>) {
+  return asyncHandler(handler);
+}
+
+/**
+ * Handler for location events.
+ *
+ * @category Handler
+ */
+export function locationEventHandler<
+  Config = SomeObject,
+  Additions = SomeObject,
+  >(handler: LocationEventHandler<Config, Additions>) {
   return asyncHandler(handler);
 }
 

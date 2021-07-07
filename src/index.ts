@@ -12,6 +12,7 @@ import EnvoyUserAPI from './sdk/EnvoyUserAPI';
 import EnvoyPluginAPI from './sdk/EnvoyPluginAPI';
 
 import EnvoyJWT from './util/EnvoyJWT';
+import EnvoySignatureVerifier from './util/EnvoySignatureVerifier';
 import JSONAPIData from './util/json-api/JSONAPIData';
 
 export * from './resources/AgreementPageResource';
@@ -43,6 +44,7 @@ export {
   EnvoyPluginStorage,
   EnvoyRequest,
   EnvoyResponse,
+  EnvoySignatureVerifier,
   EnvoyStorageItem,
   EnvoyPluginAPI,
   EnvoyUserAPI,
