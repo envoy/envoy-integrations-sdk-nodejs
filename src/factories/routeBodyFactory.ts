@@ -6,19 +6,25 @@ export const defaultIds = {
   companyId: '1',
 };
 
-export default function routeBodyFactory<Payload extends Record<string, unknown> = Record<string, never>>(
-  options: {
-    config: Record<string, unknown>,
-    params: Record<string, unknown>,
-    payload: Payload,
-    scope?: Array<EnvoyUserAPIScope>,
-    locationId?: string,
-    companyId?: string,
-    route?: string,
-  },
+export type RouteBodyFactoryOptions<Config, Params, Payload> = {
+  config: Config,
+  params: Params,
+  payload: Payload,
+  scope?: Array<EnvoyUserAPIScope>,
+  locationId?: string,
+  companyId?: string,
+  route?: string,
+};
+
+export default function routeBodyFactory<
+  Config extends Record<string, unknown> = Record<string, never>,
+  Params extends Record<string, unknown> = Record<string, never>,
+  Payload extends Record<string, unknown> = Record<string, never>,
+  >(
+  options: RouteBodyFactoryOptions<Config, Params, Payload>,
 ) {
   return {
-    meta: routeMetaFactory(
+    meta: routeMetaFactory<Config, Params>(
       options.route || '',
       options.config,
       options.params,

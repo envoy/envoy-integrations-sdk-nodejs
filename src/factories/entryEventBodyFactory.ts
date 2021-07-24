@@ -91,17 +91,19 @@ export function entryPayloadFactory(options: EntryPayloadFactoryOptions, ids: Pa
   });
 }
 
-export default function entryEventBodyFactory(
-  options: {
-    event: EnvoyEntryEvent,
-    config: Record<string, unknown>,
-    payloadOptions: EntryPayloadFactoryOptions,
-    scope?: Array<EnvoyUserAPIScope>,
-    ids?: Partial<typeof defaultIds>,
-  },
+export type EntryEventBodyFactoryOptions<Config extends Record<string, unknown> = Record<string, never>> = {
+  event: EnvoyEntryEvent,
+  config: Config,
+  payloadOptions: EntryPayloadFactoryOptions,
+  scope?: Array<EnvoyUserAPIScope>,
+  ids?: Partial<typeof defaultIds>,
+};
+
+export default function entryEventBodyFactory<Config extends Record<string, unknown> = Record<string, never>>(
+  options: EntryEventBodyFactoryOptions<Config>,
 ) {
   const ids = options.ids || defaultIds;
-  return eventBodyFactory<EnvoyEntryEvent, EntryPayload>({
+  return eventBodyFactory<EnvoyEntryEvent, Config, EntryPayload>({
     event: options.event,
     config: options.config,
     scope: options.scope || [],

@@ -6,21 +6,24 @@ export const defaultIds = {
   companyId: '1',
 };
 
+export type EventBodyFactoryOptions<Event, Config, Payload> = {
+  event: Event,
+  config: Config,
+  payload: Payload,
+  scope: Array<EnvoyUserAPIScope>,
+  locationId?: string,
+  companyId?: string,
+};
+
 export default function eventBodyFactory<
   Event extends string = string,
+  Config extends Record<string, unknown> = Record<string, never>,
   Payload extends Record<string, unknown> = Record<string, never>,
   >(
-  options: {
-    event: Event,
-    config: Record<string, unknown>,
-    payload: Payload,
-    scope: Array<EnvoyUserAPIScope>,
-    locationId?: string,
-    companyId?: string,
-  },
+  options: EventBodyFactoryOptions<Event, Config, Payload>,
 ) {
   return {
-    meta: eventMetaFactory(
+    meta: eventMetaFactory<Config>(
       options.event,
       options.config,
       options.scope,

@@ -65,10 +65,13 @@ export function authFactory(): Sync.Factory<EnvoyMetaAuth> {
   });
 }
 
-export function routeMetaFactory(
+export function routeMetaFactory<
+  Config extends Record<string, unknown> = Record<string, never>,
+  Params extends Record<string, unknown> = Record<string, never>,
+  >(
   route: string,
-  config: Record<string, unknown>,
-  params: Record<string, unknown>,
+  config: Config,
+  params: Params,
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
   companyId: string,
@@ -86,9 +89,9 @@ export function routeMetaFactory(
   });
 }
 
-export function eventMetaFactory(
+export function eventMetaFactory<Config extends Record<string, unknown> = Record<string, never>>(
   event: string,
-  config: Record<string, unknown>,
+  config: Config,
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
   companyId: string,
