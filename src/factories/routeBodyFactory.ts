@@ -1,7 +1,7 @@
 import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
 import { routeMetaFactory } from './metaFactory';
 
-export const defaultIds = {
+export const routeBodyFactoryDefaultIds = {
   locationId: '1',
   companyId: '1',
 };
@@ -29,8 +29,8 @@ export default function routeBodyFactory<
       options.config,
       options.params,
       options.scope || [],
-      options.locationId || defaultIds.locationId,
-      options.companyId || defaultIds.companyId,
+      options.locationId || routeBodyFactoryDefaultIds.locationId,
+      options.companyId || routeBodyFactoryDefaultIds.companyId,
     ).build(),
     payload: options.payload,
   };

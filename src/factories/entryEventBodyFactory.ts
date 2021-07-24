@@ -19,7 +19,7 @@ export type EntryPayloadFactoryOptions = {
   }
 };
 
-export const defaultIds = {
+export const entryEventBodyFactoryDefaultIds = {
   location: '1',
   company: '1',
   flow: '1',
@@ -28,9 +28,12 @@ export const defaultIds = {
   employee: '1',
 };
 
-export function entryPayloadFactory(options: EntryPayloadFactoryOptions, ids: Partial<typeof defaultIds> = defaultIds): Sync.Factory<EntryPayload> {
+export function entryPayloadFactory(
+  options: EntryPayloadFactoryOptions,
+  ids: Partial<typeof entryEventBodyFactoryDefaultIds> = entryEventBodyFactoryDefaultIds,
+): Sync.Factory<EntryPayload> {
   const signedInDate = faker.date.past();
-  const allIds = { ...defaultIds, ...ids };
+  const allIds = { ...entryEventBodyFactoryDefaultIds, ...ids };
   return Sync.makeFactory<EntryPayload>({
     id: each((i) => `${i}`),
     type: 'entries',
@@ -96,19 +99,19 @@ export type EntryEventBodyFactoryOptions<Config extends Record<string, unknown> 
   config: Config,
   payloadOptions: EntryPayloadFactoryOptions,
   scope?: Array<EnvoyUserAPIScope>,
-  ids?: Partial<typeof defaultIds>,
+  ids?: Partial<typeof entryEventBodyFactoryDefaultIds>,
 };
 
 export default function entryEventBodyFactory<Config extends Record<string, unknown> = Record<string, never>>(
   options: EntryEventBodyFactoryOptions<Config>,
 ) {
-  const ids = options.ids || defaultIds;
+  const ids = options.ids || entryEventBodyFactoryDefaultIds;
   return eventBodyFactory<EnvoyEntryEvent, Config, EntryPayload>({
     event: options.event,
     config: options.config,
     scope: options.scope || [],
-    locationId: options.ids?.location || defaultIds.location,
-    companyId: options.ids?.company || defaultIds.company,
+    locationId: options.ids?.location || entryEventBodyFactoryDefaultIds.location,
+    companyId: options.ids?.company || entryEventBodyFactoryDefaultIds.company,
     payload: entryPayloadFactory(options.payloadOptions, ids).build(),
   });
 }

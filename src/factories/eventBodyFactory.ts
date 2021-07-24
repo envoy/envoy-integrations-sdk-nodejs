@@ -1,7 +1,7 @@
 import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
 import { eventMetaFactory } from './metaFactory';
 
-export const defaultIds = {
+export const eventBodyFactoryDefaultIds = {
   locationId: '1',
   companyId: '1',
 };
@@ -27,8 +27,8 @@ export default function eventBodyFactory<
       options.event,
       options.config,
       options.scope,
-      options.locationId || defaultIds.locationId,
-      options.companyId || defaultIds.companyId,
+      options.locationId || eventBodyFactoryDefaultIds.locationId,
+      options.companyId || eventBodyFactoryDefaultIds.companyId,
     ).build(),
     payload: options.payload,
   };

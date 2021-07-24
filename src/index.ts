@@ -28,6 +28,11 @@ import EnvoyJWT from './util/EnvoyJWT';
 import EnvoySignatureVerifier from './util/EnvoySignatureVerifier';
 import JSONAPIData from './util/json-api/JSONAPIData';
 
+export * from './factories/entryEventBodyFactory';
+export * from './factories/eventBodyFactory';
+export * from './factories/metaFactory';
+export * from './factories/routeBodyFactory';
+
 export * from './resources/AgreementPageResource';
 export * from './resources/AgreementResource';
 export * from './resources/CompanyResource';
