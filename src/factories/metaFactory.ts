@@ -86,7 +86,7 @@ export function routeMetaFactory(
   });
 }
 
-export default function eventMetaFactory(
+export function eventMetaFactory(
   event: string,
   config: Record<string, unknown>,
   scope: Array<EnvoyUserAPIScope>,
