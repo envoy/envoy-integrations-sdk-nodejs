@@ -1,3 +1,11 @@
+export const UNIQUE_OPTIONS_DEFAULT_CHARS = '0123456789';
+
+export const UNIQUE_OPTIONS_DEFAULT_SIZE = 12;
+
+export const UNIQUE_NUM_OPTIONS_DEFAULT_MIN = 0;
+
+export const UNIQUE_NUM_OPTIONS_DEFAULT_MAX = 9_007_199_254_740_991;
+
 export interface EnvoyStorageSetUniqueOptions {
   chars?: string,
   size?: number,

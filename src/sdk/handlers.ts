@@ -10,6 +10,7 @@ import {
   EnvoyInviteEventRequest,
   EnvoyLocationEventRequest,
   EnvoyMigrationRouteRequest,
+  EnvoyNotificationEventRequest,
   EnvoyOptionsRouteRequest,
   EnvoyRemoteValueRouteRequest,
   EnvoySelectedValuesRouteRequest,
@@ -45,6 +46,13 @@ export type InviteEventHandler<Config = SomeObject, Additions = SomeObject> =
  */
 export type LocationEventHandler<Config = SomeObject, Additions = SomeObject> =
   (req: EnvoyLocationEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+
+/**
+ * Handle an notification event.
+ * @category Handler
+ */
+export type NotificationEventHandler<Config = SomeObject, Additions = SomeObject> =
+  (req: EnvoyNotificationEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
 
 /**
  * Handle a `plugin_uninstalled` event for cleaning up.
@@ -140,18 +148,6 @@ export function locationEventHandler<
 }
 
 /**
- * Handler for `plugin_uninstalled` events.
- *
- * @category Handler
- */
-export function pluginUninstalledEventHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: PluginUninstalledEventHandler<Config, Additions>) {
-  return asyncHandler(handler);
-}
-
-/**
  * Handler for a migration route.
  *
  * @category Handler
@@ -165,6 +161,18 @@ export function migrationRouteHandler<
 }
 
 /**
+ * Handler for notification events.
+ *
+ * @category Handler
+ */
+export function notificationEventHandler<
+  Config = SomeObject,
+  Additions = SomeObject,
+  >(handler: NotificationEventHandler<Config, Additions>) {
+  return asyncHandler(handler);
+}
+
+/**
  * Handler for options URL routes.
  *
  * @category Handler
@@ -173,6 +181,18 @@ export function optionsRouteHandler<
   Config = SomeObject,
   Additions = SomeObject,
   >(handler: OptionsRouteHandler<Config, Additions>) {
+  return asyncHandler(handler);
+}
+
+/**
+ * Handler for `plugin_uninstalled` events.
+ *
+ * @category Handler
+ */
+export function pluginUninstalledEventHandler<
+  Config = SomeObject,
+  Additions = SomeObject,
+  >(handler: PluginUninstalledEventHandler<Config, Additions>) {
   return asyncHandler(handler);
 }
 

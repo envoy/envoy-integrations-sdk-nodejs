@@ -1,7 +1,21 @@
 import './constants';
+
+import EnvoyPluginStoragePipeline from './base/EnvoyPluginStoragePipeline';
+
+import entryEventBodyFactory from './factories/entryEventBodyFactory';
+import eventBodyFactory from './factories/eventBodyFactory';
+import metaFactory from './factories/metaFactory';
+import routeBodyFactory from './factories/routeBodyFactory';
+
+import HttpStatus from './internal/HttpStatus';
+
+import EnvoyPluginJobMock from './mocks/EnvoyPluginJobMock';
+import EnvoyPluginStoragePipelineMock from './mocks/EnvoyPluginStoragePipelineMock';
+
 import EntryPayload from './payloads/EntryPayload';
 import InvitePayload from './payloads/InvitePayload';
 
+import EnvoyMeta from './sdk/EnvoyMeta';
 import EnvoyPluginJob from './sdk/EnvoyPluginJob';
 import EnvoyPluginSDK from './sdk/EnvoyPluginSDK';
 import EnvoyPluginStorage from './sdk/EnvoyPluginStorage';
@@ -39,9 +53,13 @@ export {
   EntryPayload,
   InvitePayload,
   EnvoyJWT,
+  EnvoyMeta,
   EnvoyPluginJob,
+  EnvoyPluginJobMock,
   EnvoyPluginSDK,
   EnvoyPluginStorage,
+  EnvoyPluginStoragePipeline,
+  EnvoyPluginStoragePipelineMock,
   EnvoyRequest,
   EnvoyResponse,
   EnvoySignatureVerifier,
@@ -49,4 +67,9 @@ export {
   EnvoyPluginAPI,
   EnvoyUserAPI,
   JSONAPIData,
+  HttpStatus,
+  entryEventBodyFactory,
+  eventBodyFactory,
+  metaFactory,
+  routeBodyFactory,
 };

@@ -4,8 +4,7 @@ import faker from 'faker';
 import EntryPayload from '../payloads/EntryPayload';
 import EnvoyEntryEvent from '../internal/EnvoyEntryEvent';
 import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
-import EnvoyRequest, { EnvoyEntryEventRequest } from '../sdk/EnvoyRequest';
-import eventRequestFactory from './eventRequestFactory';
+import eventBodyFactory from './eventBodyFactory';
 
 export type EntryPayloadFactoryOptions = {
   isSignedIn: boolean,
@@ -22,20 +21,23 @@ export type EntryPayloadFactoryOptions = {
 
 export const defaultIds = {
   location: '1',
+  company: '1',
   flow: '1',
   invite: '1',
   device: '1',
+  employee: '1',
 };
 
-export function entryPayloadFactory(options: EntryPayloadFactoryOptions, ids = defaultIds): Sync.Factory<EntryPayload> {
+export function entryPayloadFactory(options: EntryPayloadFactoryOptions, ids: Partial<typeof defaultIds> = defaultIds): Sync.Factory<EntryPayload> {
   const signedInDate = faker.date.past();
+  const allIds = { ...defaultIds, ...ids };
   return Sync.makeFactory<EntryPayload>({
     id: each((i) => `${i}`),
     type: 'entries',
     attributes: {
       'full-name': faker.name.findName(),
       'phone-number': options.hasPhoneNumber ? faker.phone.phoneNumber() : undefined,
-      email: options.hasEmail ? faker.internet.email() : null,
+      email: (options.hasEmail || options.isProtectFlow) ? faker.internet.email() : null,
       'employee-screening-flow': options.isProtectFlow,
       host: (!options.isProtectFlow && options.nonProtectFlowOptions.hasHost) ? faker.name.findName() : null,
       'host-email': (!options.isProtectFlow && options.nonProtectFlowOptions.hasHost) ? faker.internet.email() : null,
@@ -57,52 +59,54 @@ export function entryPayloadFactory(options: EntryPayloadFactoryOptions, ids = d
     relationships: {
       location: {
         data: {
-          id: ids.location,
+          id: allIds.location,
           type: 'locations',
         },
       },
       flow: {
         data: {
-          id: ids.flow,
+          id: allIds.flow,
           type: 'flows',
         },
       },
       invite: (options.isProtectFlow || options.nonProtectFlowOptions.hasInvite) ? {
         data: {
-          id: ids.invite,
+          id: allIds.invite,
           type: 'invites',
         },
       } : undefined,
       device: (!options.isProtectFlow && options.nonProtectFlowOptions.hasInvite) ? {
         data: {
-          id: ids.device,
+          id: allIds.device,
           type: 'devices',
+        },
+      } : undefined,
+      employee: (options.isProtectFlow || options.nonProtectFlowOptions.hasHost) ? {
+        data: {
+          id: allIds.employee,
+          type: 'employees',
         },
       } : undefined,
     },
   });
 }
 
-export default function entryEventRequestFactory(
-  req: EnvoyRequest,
+export default function entryEventBodyFactory(
   options: {
     event: EnvoyEntryEvent,
     config: Record<string, unknown>,
-    scope: Array<EnvoyUserAPIScope>,
     payloadOptions: EntryPayloadFactoryOptions,
-    ids?: typeof defaultIds,
-    isVerified?: boolean,
-    pluginAccessToken?: string,
+    scope?: Array<EnvoyUserAPIScope>,
+    ids?: Partial<typeof defaultIds>,
   },
-): EnvoyEntryEventRequest {
+) {
   const ids = options.ids || defaultIds;
-  return eventRequestFactory<EnvoyEntryEvent, EntryPayload>(req, {
+  return eventBodyFactory<EnvoyEntryEvent, EntryPayload>({
     event: options.event,
     config: options.config,
-    scope: options.scope,
-    locationId: ids.location,
-    isVerified: options.isVerified,
-    pluginAccessToken: options.pluginAccessToken,
+    scope: options.scope || [],
+    locationId: options.ids?.location || defaultIds.location,
+    companyId: options.ids?.company || defaultIds.company,
     payload: entryPayloadFactory(options.payloadOptions, ids).build(),
-  }) as EnvoyEntryEventRequest;
+  });
 }

@@ -11,7 +11,7 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
  * @category Request Object
  */
 export default class EnvoyPluginStorage {
-  readonly api: EnvoyPluginAPI;
+  protected readonly api: EnvoyPluginAPI;
 
   readonly installId: string | undefined;
 

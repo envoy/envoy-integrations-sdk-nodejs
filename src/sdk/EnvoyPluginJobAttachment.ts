@@ -4,7 +4,7 @@
  * @category Attachment
  */
 export interface EnvoyPluginTextJobAttachment {
-  type?: 'text' | 'password' | 'link' | 'credential_image',
+  type?: 'text' | 'password' | string,
   label: string,
   value: string,
 }

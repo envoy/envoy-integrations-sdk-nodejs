@@ -4,6 +4,7 @@ import EnvoyMeta, { EnvoyEventMeta, EnvoyRouteMeta } from './EnvoyMeta';
 import EntryPayload from '../payloads/EntryPayload';
 import InvitePayload from '../payloads/InvitePayload';
 import LocationPayload from '../payloads/LocationPayload';
+import NotificationPayload from '../payloads/NotificationPayload';
 import EnvoyEntryEvent from '../internal/EnvoyEntryEvent';
 import EnvoyInviteEvent from '../internal/EnvoyInviteEvent';
 import EnvoyLocationEvent from '../internal/EnvoyLocationEvent';
@@ -123,6 +124,14 @@ export type EnvoyInviteEventRequest<Config = Record<string, unknown>> =
  */
 export type EnvoyLocationEventRequest<Config = Record<string, unknown>> =
   EnvoyEventRequest<EnvoyLocationEvent, LocationPayload, Config>;
+
+/**
+ * Use to type your `req` object in your notification event handler.
+ *
+ * @category Request
+ */
+export type EnvoyNotificationEventRequest<Config = Record<string, unknown>> =
+  EnvoyEventRequest<string, NotificationPayload, Config>;
 
 /**
  * You probably won't need to use this type directly.

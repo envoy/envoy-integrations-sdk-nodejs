@@ -12,7 +12,7 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
  * @category Request Object
  */
 export default class EnvoyPluginJob {
-  readonly api: EnvoyPluginAPI;
+  protected readonly api: EnvoyPluginAPI;
 
   readonly id: string;
 

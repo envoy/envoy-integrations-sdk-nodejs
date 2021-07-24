@@ -11,11 +11,11 @@ import EnvoyPluginAPI from '../sdk/EnvoyPluginAPI';
  * @category Base
  */
 export default class EnvoyPluginStoragePipeline {
-  readonly api: EnvoyPluginAPI;
+  protected readonly api: EnvoyPluginAPI;
 
   readonly installId: string | undefined;
 
-  private readonly commands: Array<EnvoyStorageCommand>;
+  protected readonly commands: Array<EnvoyStorageCommand>;
 
   constructor(pluginAPI: EnvoyPluginAPI, installId?: string) {
     this.api = pluginAPI;

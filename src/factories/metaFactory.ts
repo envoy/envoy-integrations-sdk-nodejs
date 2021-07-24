@@ -1,7 +1,12 @@
 import { Sync } from 'factory.ts';
 import faker from 'faker';
 import {
-  EnvoyEventMeta, EnvoyMetaAuth, EnvoyMetaCompany, EnvoyMetaJob, EnvoyMetaLocation, EnvoyRouteMeta,
+  EnvoyEventMeta,
+  EnvoyMetaAuth,
+  EnvoyMetaCompany,
+  EnvoyMetaJob,
+  EnvoyMetaLocation,
+  EnvoyRouteMeta,
 } from '../sdk/EnvoyMeta';
 import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
 
@@ -38,9 +43,9 @@ export function locationFactory(id: string): Sync.Factory<EnvoyMetaLocation> {
   });
 }
 
-export function companyFactory(): Sync.Factory<EnvoyMetaCompany> {
+export function companyFactory(id: string): Sync.Factory<EnvoyMetaCompany> {
   return Sync.makeFactory<EnvoyMetaCompany>({
-    id: faker.datatype.number().toString(),
+    id,
     type: 'companies',
     attributes: {
       name: faker.company.companyName(),
@@ -66,12 +71,13 @@ export function routeMetaFactory(
   params: Record<string, unknown>,
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
+  companyId: string,
 ): Sync.Factory<EnvoyRouteMeta> {
   return Sync.makeFactory<EnvoyRouteMeta>({
     plugin_id: faker.datatype.uuid(),
     install_id: faker.datatype.number().toString(),
     location: locationFactory(locationId).build(),
-    company: companyFactory().build(),
+    company: companyFactory(companyId).build(),
     auth: scope.length ? authFactory().build() : null,
     forwarded_bearer_token: faker.random.alphaNumeric(),
     route,
@@ -80,18 +86,19 @@ export function routeMetaFactory(
   });
 }
 
-export function eventMetaFactory(
+export default function eventMetaFactory(
   event: string,
   config: Record<string, unknown>,
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
+  companyId: string,
 ): Sync.Factory<EnvoyEventMeta> {
   return Sync.makeFactory<EnvoyEventMeta>({
     plugin_id: faker.datatype.uuid(),
     install_id: faker.datatype.number().toString(),
     job: jobFactory(event).build(),
     location: locationFactory(locationId).build(),
-    company: companyFactory().build(),
+    company: companyFactory(companyId).build(),
     auth: scope.length ? authFactory().build() : null,
     event,
     config,
