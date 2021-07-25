@@ -18,7 +18,7 @@ export default class EnvoyPluginJobMock extends EnvoyPluginJob {
   static attachmentLike(partialAttachment: Partial<EnvoyPluginJobAttachment>) {
     return EnvoyPluginJobMock.updates.find(
       ({ attachments }) => attachments.find(
-        (attachment) => isMatch(partialAttachment, attachment),
+        (attachment) => isMatch(attachment, partialAttachment),
       ),
     );
   }
