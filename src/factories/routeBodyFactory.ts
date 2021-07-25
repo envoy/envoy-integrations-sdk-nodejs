@@ -7,7 +7,7 @@ export const routeBodyFactoryDefaultIds = {
 };
 
 export type RouteBodyFactoryOptions<Config, Params, Payload> = {
-  config: Config,
+  config: Partial<Config>,
   params: Params,
   payload: Payload,
   scope?: Array<EnvoyUserAPIScope>,

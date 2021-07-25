@@ -70,7 +70,7 @@ export function routeMetaFactory<
   Params extends Record<string, unknown> = Record<string, never>,
   >(
   route: string,
-  config: Config,
+  config: Partial<Config>,
   params: Params,
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
@@ -91,7 +91,7 @@ export function routeMetaFactory<
 
 export function eventMetaFactory<Config extends Record<string, unknown> = Record<string, never>>(
   event: string,
-  config: Config,
+  config: Partial<Config>,
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
   companyId: string,

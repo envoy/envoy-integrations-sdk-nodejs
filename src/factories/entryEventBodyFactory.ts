@@ -99,7 +99,7 @@ export function entryPayloadFactory(
 
 export type EntryEventBodyFactoryOptions<Config extends Record<string, unknown> = Record<string, never>> = {
   event: EnvoyEntryEvent,
-  config: Config,
+  config: Partial<Config>,
   payloadOptions: EntryPayloadFactoryOptions,
   scope?: Array<EnvoyUserAPIScope>,
   ids?: Partial<typeof entryEventBodyFactoryDefaultIds>,

@@ -8,7 +8,7 @@ export const eventBodyFactoryDefaultIds = {
 
 export type EventBodyFactoryOptions<Event, Config, Payload> = {
   event: Event,
-  config: Config,
+  config: Partial<Config>,
   payload: Payload,
   scope: Array<EnvoyUserAPIScope>,
   locationId?: string,
