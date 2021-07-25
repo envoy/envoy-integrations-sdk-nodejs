@@ -7,16 +7,19 @@ import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
 import eventBodyFactory from './eventBodyFactory';
 
 export type EntryPayloadFactoryOptions = {
+  isProtectFlow: false,
   isSignedIn: boolean,
   hasEmail: boolean,
-  hasPhoneNumber: boolean,
-  hasPhoto: boolean,
-  isProtectFlow: boolean,
-  nonProtectFlowOptions: {
-    hasHost: boolean,
-    hasInvite: boolean,
-    hasDevice: boolean,
-  }
+  hasHost: boolean,
+  hasInvite: boolean,
+  hasDevice: boolean,
+  hasPhoneNumber?: boolean,
+  hasPhoto?: boolean,
+} | {
+  isProtectFlow: true,
+  isSignedIn: boolean,
+  hasPhoneNumber?: boolean,
+  hasPhoto?: boolean,
 };
 
 export const entryEventBodyFactoryDefaultIds = {
@@ -40,10 +43,10 @@ export function entryPayloadFactory(
     attributes: {
       'full-name': faker.name.findName(),
       'phone-number': options.hasPhoneNumber ? faker.phone.phoneNumber() : undefined,
-      email: (options.hasEmail || options.isProtectFlow) ? faker.internet.email() : null,
+      email: (options.isProtectFlow || options.hasEmail) ? faker.internet.email() : null,
       'employee-screening-flow': options.isProtectFlow,
-      host: (!options.isProtectFlow && options.nonProtectFlowOptions.hasHost) ? faker.name.findName() : null,
-      'host-email': (!options.isProtectFlow && options.nonProtectFlowOptions.hasHost) ? faker.internet.email() : null,
+      host: (!options.isProtectFlow && options.hasHost) ? faker.name.findName() : null,
+      'host-email': (!options.isProtectFlow && options.hasHost) ? faker.internet.email() : null,
       'private-notes': null,
       'signed-in-at': signedInDate.toUTCString(),
       'signed-out-at': options.isSignedIn ? undefined : faker.date.between(signedInDate, new Date()).toUTCString(),
@@ -72,19 +75,19 @@ export function entryPayloadFactory(
           type: 'flows',
         },
       },
-      invite: (options.isProtectFlow || options.nonProtectFlowOptions.hasInvite) ? {
+      invite: (options.isProtectFlow || options.hasInvite) ? {
         data: {
           id: allIds.invite,
           type: 'invites',
         },
       } : undefined,
-      device: (!options.isProtectFlow && options.nonProtectFlowOptions.hasInvite) ? {
+      device: (!options.isProtectFlow && options.hasDevice) ? {
         data: {
           id: allIds.device,
           type: 'devices',
         },
       } : undefined,
-      employee: (options.isProtectFlow || options.nonProtectFlowOptions.hasHost) ? {
+      employee: (options.isProtectFlow || options.hasHost) ? {
         data: {
           id: allIds.employee,
           type: 'employees',
