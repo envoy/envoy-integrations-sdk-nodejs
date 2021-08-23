@@ -38,7 +38,7 @@ export function locationFactory(id: string): Sync.Factory<EnvoyMetaLocation> {
       zip: faker.address.zipCode(),
       longitude: null,
       latitude: null,
-      'created-at': faker.date.past().toUTCString(),
+      'created-at': faker.date.past().toISOString(),
     },
   });
 }
@@ -50,7 +50,7 @@ export function companyFactory(id: string): Sync.Factory<EnvoyMetaCompany> {
     attributes: {
       name: faker.company.companyName(),
       active: true,
-      'created-at': faker.date.past().toUTCString(),
+      'created-at': faker.date.past().toISOString(),
     },
   });
 }
@@ -78,7 +78,7 @@ export function routeMetaFactory<
 ): Sync.Factory<EnvoyRouteMeta> {
   return Sync.makeFactory<EnvoyRouteMeta>({
     plugin_id: faker.datatype.uuid(),
-    install_id: faker.datatype.number().toString(),
+    install_id: Math.ceil(Math.abs(faker.datatype.number())).toString(),
     location: locationFactory(locationId).build(),
     company: companyFactory(companyId).build(),
     auth: scope.length ? authFactory().build() : null,
@@ -98,7 +98,7 @@ export function eventMetaFactory<Config extends Record<string, unknown> = Record
 ): Sync.Factory<EnvoyEventMeta> {
   return Sync.makeFactory<EnvoyEventMeta>({
     plugin_id: faker.datatype.uuid(),
-    install_id: faker.datatype.number().toString(),
+    install_id: Math.ceil(Math.abs(faker.datatype.number())).toString(),
     job: jobFactory(event).build(),
     location: locationFactory(locationId).build(),
     company: companyFactory(companyId).build(),

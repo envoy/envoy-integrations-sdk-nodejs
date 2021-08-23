@@ -56,7 +56,7 @@ export function excludedEmployeesFilterMiddleware<Config>(
     if (!payload.attributes['employee-screening-flow']) {
       return next();
     }
-    const excludedEmployees = config[excludeEmployeesKey];
+    const excludedEmployees = config[excludeEmployeesKey] as unknown as Array<string> || [];
     if (!Array.isArray(excludedEmployees)) {
       return next(new Error(`${excludeEmployeesKey} is not an array.`));
     }

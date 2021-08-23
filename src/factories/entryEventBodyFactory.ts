@@ -6,7 +6,7 @@ import EnvoyEntryEvent from '../internal/EnvoyEntryEvent';
 import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
 import eventBodyFactory from './eventBodyFactory';
 
-export type EntryPayloadFactoryOptions = {
+export type EntryPayloadFactoryVisitorOptions = {
   isProtectFlow: false,
   isSignedIn: boolean,
   hasEmail: boolean,
@@ -15,12 +15,16 @@ export type EntryPayloadFactoryOptions = {
   hasDevice: boolean,
   hasPhoneNumber?: boolean,
   hasPhoto?: boolean,
-} | {
+};
+
+export type EntryPayloadFactoryProtectOptions = {
   isProtectFlow: true,
   isSignedIn: boolean,
   hasPhoneNumber?: boolean,
   hasPhoto?: boolean,
 };
+
+export type EntryPayloadFactoryOptions = EntryPayloadFactoryVisitorOptions | EntryPayloadFactoryProtectOptions;
 
 export const entryEventBodyFactoryDefaultIds = {
   location: '1',
@@ -38,7 +42,7 @@ export function entryPayloadFactory(
   const signedInDate = faker.date.past();
   const allIds = { ...entryEventBodyFactoryDefaultIds, ...ids };
   return Sync.makeFactory<EntryPayload>({
-    id: each((i) => `${i}`),
+    id: each((i) => `${i + 1}`),
     type: 'entries',
     attributes: {
       'full-name': faker.name.findName(),
@@ -48,8 +52,8 @@ export function entryPayloadFactory(
       host: (!options.isProtectFlow && options.hasHost) ? faker.name.findName() : null,
       'host-email': (!options.isProtectFlow && options.hasHost) ? faker.internet.email() : null,
       'private-notes': null,
-      'signed-in-at': signedInDate.toUTCString(),
-      'signed-out-at': options.isSignedIn ? undefined : faker.date.between(signedInDate, new Date()).toUTCString(),
+      'signed-in-at': signedInDate.toISOString(),
+      'signed-out-at': options.isSignedIn ? undefined : faker.date.between(signedInDate, new Date()).toISOString(),
       thumbnails: options.hasPhoto ? {
         large: faker.image.avatar(),
         original: faker.image.avatar(),
