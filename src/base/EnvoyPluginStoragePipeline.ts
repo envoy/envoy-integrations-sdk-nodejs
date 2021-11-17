@@ -71,6 +71,12 @@ export default class EnvoyPluginStoragePipeline {
    * and returns that item.
    */
   setUniqueNum(key: string, options: EnvoyStorageSetUniqueNumOptions = {}): EnvoyPluginStoragePipeline {
+    if (options.min) {
+      options.min = Number(options.min);
+    }
+    if (options.max) {
+      options.max = Number(options.max);
+    }
     return this.addCommand({ action: 'set_unique_num', key, ...options });
   }
 
