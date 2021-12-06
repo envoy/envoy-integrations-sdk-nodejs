@@ -4,6 +4,7 @@ import EnvoyPluginStoragePipeline from './base/EnvoyPluginStoragePipeline';
 
 import entryEventBodyFactory from './factories/entryEventBodyFactory';
 import eventBodyFactory from './factories/eventBodyFactory';
+import inviteEventBodyFactory from './factories/inviteEventBodyFactory';
 import routeBodyFactory from './factories/routeBodyFactory';
 
 import HttpStatus from './internal/HttpStatus';
@@ -74,5 +75,6 @@ export {
   HttpStatus,
   entryEventBodyFactory,
   eventBodyFactory,
+  inviteEventBodyFactory,
   routeBodyFactory,
 };
