@@ -31,6 +31,7 @@ import JSONAPIData from './util/json-api/JSONAPIData';
 
 export * from './factories/entryEventBodyFactory';
 export * from './factories/eventBodyFactory';
+export * from './factories/inviteEventBodyFactory';
 export * from './factories/metaFactory';
 export * from './factories/routeBodyFactory';
 
