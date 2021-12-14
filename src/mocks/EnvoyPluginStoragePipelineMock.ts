@@ -8,6 +8,7 @@ import {
   UNIQUE_OPTIONS_DEFAULT_CHARS,
   UNIQUE_OPTIONS_DEFAULT_SIZE,
 } from '../internal/EnvoyStorageCommand';
+import EnvoyStorageResult from '../internal/EnvoyStorageResult';
 
 const DEFAULT_UNIQUE_OPTIONS: EnvoyStorageSetUniqueOptions = {
   chars: UNIQUE_OPTIONS_DEFAULT_CHARS,
@@ -20,48 +21,50 @@ const DEFAULT_UNIQUE_NUM_OPTIONS: EnvoyStorageSetUniqueNumOptions = {
 };
 
 export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePipeline {
-  execute(): Promise<Array<EnvoyStorageItem | null>> {
+  execute<Result extends EnvoyStorageResult = EnvoyStorageResult>(): Promise<Array<Result>> {
     return Promise.resolve(
       this.commands.map((command) => {
-        const { key } = command;
-        const item: EnvoyStorageItem<undefined | unknown> = { key, value: undefined };
         const isGlobal = !this.installId;
         switch (command.action) {
-          case 'get':
-            item.value = EnvoyPluginStoragePipelineMock.get(key, isGlobal);
-            if (item.value === null) {
+          case 'get': {
+            const value = EnvoyPluginStoragePipelineMock.get(command.key, isGlobal);
+            if (value === null) {
               return null;
             }
-            break;
-          case 'set':
-            item.value = EnvoyPluginStoragePipelineMock.set(key, command.value, isGlobal);
-            break;
+            return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
+          }
+          case 'set': {
+            const value = EnvoyPluginStoragePipelineMock.set(command.key, command.value, isGlobal);
+            return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
+          }
           case 'set_unique':
             try {
-              item.value = EnvoyPluginStoragePipelineMock.setUnique(key, command as EnvoyStorageSetUniqueOptions, isGlobal);
+              const value = EnvoyPluginStoragePipelineMock.setUnique(command.key, command as EnvoyStorageSetUniqueOptions, isGlobal);
+              return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
             } catch (err) {
               return null;
             }
-            break;
           case 'set_unique_num': {
             try {
-              item.value = EnvoyPluginStoragePipelineMock.setUniqueNum(key, command as EnvoyStorageSetUniqueNumOptions, isGlobal);
+              const value = EnvoyPluginStoragePipelineMock.setUniqueNum(command.key, command as EnvoyStorageSetUniqueNumOptions, isGlobal);
+              return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
             } catch (err) {
               return null;
             }
-            break;
           }
-          case 'unset':
-            item.value = EnvoyPluginStoragePipelineMock.unset(key, isGlobal);
-            if (item.value === null) {
+          case 'unset': {
+            const value = EnvoyPluginStoragePipelineMock.unset(command.key, isGlobal);
+            if (value === null) {
               return null;
             }
-            break;
+            return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
+          }
+          case 'list':
+            return EnvoyPluginStoragePipelineMock.list(command.page);
           default:
             return null;
         }
-        return item;
-      }),
+      }) as Array<Result>,
     );
   }
 
@@ -77,6 +80,10 @@ export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePi
 
   private static normalizeKey(key: string, isGlobal: boolean) {
     return isGlobal ? `global_${key}` : `install_${key}`;
+  }
+
+  private static itemFromKeyValue<Value = unknown>(key: string, value: Value) {
+    return { key, value } as EnvoyStorageItem<Value>;
   }
 
   static get<Value = unknown>(key: string, isGlobal = false): Value | null {
@@ -156,6 +163,22 @@ export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePi
     }
     delete EnvoyPluginStoragePipelineMock.storage[key];
     return value as Value;
+  }
+
+  static list(page = 1, isGlobal = false) {
+    const limit = 100;
+    const offset = (page - 1) * limit;
+    return Object.keys(EnvoyPluginStoragePipelineMock.storage)
+      .filter((key) => (key.startsWith('global_') && isGlobal) || (key.startsWith('install_') && !isGlobal))
+      .sort()
+      .slice(offset, limit)
+      .map((key) => {
+        const value = EnvoyPluginStoragePipelineMock.storage[key];
+        const pieces = key.split('_');
+        pieces.shift();
+        const normalizedKey = pieces.join();
+        return { key: normalizedKey, value } as EnvoyStorageItem;
+      });
   }
 
   static reset() {

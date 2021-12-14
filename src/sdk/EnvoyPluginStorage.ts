@@ -32,8 +32,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline get.
    */
-  get<Value = unknown>(key: string): Promise<EnvoyStorageItem<Value> | null> {
-    return this.pipeline().get(key).executeSingle() as Promise<EnvoyStorageItem<Value> | null>;
+  get<Value = unknown>(key: string) {
+    return this.pipeline().get(key).executeSingle<EnvoyStorageItem<Value> | null>();
   }
 
   /**
@@ -41,8 +41,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline set.
    */
-  set<Value = unknown>(key: string, value: Value): Promise<EnvoyStorageItem<Value>> {
-    return this.pipeline().set(key, value).executeSingle() as Promise<EnvoyStorageItem<Value>>;
+  set<Value = unknown>(key: string, value: Value) {
+    return this.pipeline().set(key, value).executeSingle<EnvoyStorageItem<Value>>();
   }
 
   /**
@@ -50,8 +50,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline setUnique.
    */
-  setUnique(key: string, options: EnvoyStorageSetUniqueOptions = {}): Promise<EnvoyStorageItem<string> | null> {
-    return this.pipeline().setUnique(key, options).executeSingle() as Promise<EnvoyStorageItem<string> | null>;
+  setUnique(key: string, options: EnvoyStorageSetUniqueOptions = {}) {
+    return this.pipeline().setUnique(key, options).executeSingle<EnvoyStorageItem<string> | null>();
   }
 
   /**
@@ -59,8 +59,8 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline setUnique.
    */
-  setUniqueNum(key: string, options: EnvoyStorageSetUniqueNumOptions = {}): Promise<EnvoyStorageItem<number> | null> {
-    return this.pipeline().setUniqueNum(key, options).executeSingle() as Promise<EnvoyStorageItem<number> | null>;
+  setUniqueNum(key: string, options: EnvoyStorageSetUniqueNumOptions = {}) {
+    return this.pipeline().setUniqueNum(key, options).executeSingle<EnvoyStorageItem<number> | null>();
   }
 
   /**
@@ -68,7 +68,16 @@ export default class EnvoyPluginStorage {
    *
    * Wrapper for single pipeline unset.
    */
-  unset(key: string): Promise<EnvoyStorageItem | null> {
-    return this.pipeline().unset(key).executeSingle();
+  unset<Value = unknown>(key: string) {
+    return this.pipeline().unset(key).executeSingle<EnvoyStorageItem<Value> | null>();
+  }
+
+  /**
+   * Returns an array of {@link EnvoyStorageItem} from storage.
+   *
+   * Wrapper for single pipeline list.
+   */
+  list<Value = unknown>(page = 1) {
+    return this.pipeline().list(page).executeSingle<Array<EnvoyStorageItem<Value>>>();
   }
 }

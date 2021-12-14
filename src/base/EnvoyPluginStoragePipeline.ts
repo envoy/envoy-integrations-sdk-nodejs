@@ -2,7 +2,7 @@ import EnvoyStorageCommand, {
   EnvoyStorageSetUniqueNumOptions,
   EnvoyStorageSetUniqueOptions,
 } from '../internal/EnvoyStorageCommand';
-import EnvoyStorageItem from '../sdk/EnvoyStorageItem';
+import EnvoyStorageResult from '../internal/EnvoyStorageResult';
 import EnvoyPluginAPI from '../sdk/EnvoyPluginAPI';
 
 /**
@@ -26,15 +26,15 @@ export default class EnvoyPluginStoragePipeline {
   /**
    * Executes all the commands in the pipeline.
    */
-  execute(): Promise<Array<EnvoyStorageItem | null>> {
-    return this.api.storagePipeline(this.commands, this.installId);
+  execute<Result extends EnvoyStorageResult = EnvoyStorageResult>(): Promise<Array<Result>> {
+    return this.api.storagePipeline<Result>(this.commands, this.installId);
   }
 
   /**
    * Executes the pipeline and returns the first result.
    */
-  async executeSingle(): Promise<EnvoyStorageItem | null> {
-    const [result] = await this.execute();
+  async executeSingle<Result extends EnvoyStorageResult = EnvoyStorageResult>(): Promise<Result> {
+    const [result] = await this.execute<Result>();
     return result;
   }
 
@@ -85,5 +85,15 @@ export default class EnvoyPluginStoragePipeline {
    */
   unset(key: string): EnvoyPluginStoragePipeline {
     return this.addCommand({ action: 'unset', key });
+  }
+
+  /**
+   * Lists storage items.
+   */
+  list(page = 1): EnvoyPluginStoragePipeline {
+    if (!page) {
+      page = 1;
+    }
+    return this.addCommand({ action: 'list', page });
   }
 }

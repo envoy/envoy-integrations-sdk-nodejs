@@ -2,7 +2,7 @@ import axios from 'axios';
 import EnvoyAPI from '../base/EnvoyAPI';
 import EnvoyPluginJobUpdate from '../internal/EnvoyPluginJobUpdate';
 import EnvoyStorageCommand from '../internal/EnvoyStorageCommand';
-import EnvoyStorageItem from './EnvoyStorageItem';
+import EnvoyStorageResult from '../internal/EnvoyStorageResult';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 
@@ -42,10 +42,10 @@ export default class EnvoyPluginAPI extends EnvoyAPI {
     });
   }
 
-  async storagePipeline(
+  async storagePipeline<Result extends EnvoyStorageResult = EnvoyStorageResult>(
     commands: Array<EnvoyStorageCommand>,
     installId?: string,
-  ): Promise<Array<EnvoyStorageItem | null>> {
+  ): Promise<Array<Result>> {
     const request: Record<string, unknown> = { commands };
     if (installId) {
       request.install_id = installId;

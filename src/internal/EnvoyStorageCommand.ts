@@ -42,6 +42,11 @@ export interface EnvoyUnsetStorageCommand extends EnvoyBaseStorageCommand {
   action: 'unset',
 }
 
+export interface EnvoyListStorageCommand {
+  action: 'list',
+  page: number,
+}
+
 /**
  * @internal
  */
@@ -49,6 +54,7 @@ type EnvoyStorageCommand = EnvoyGetStorageCommand
 | EnvoySetStorageCommand
 | EnvoySetUniqueStorageCommand
 | EnvoySetUniqueNumStorageCommand
-| EnvoyUnsetStorageCommand;
+| EnvoyUnsetStorageCommand
+| EnvoyListStorageCommand;
 
 export default EnvoyStorageCommand;
