@@ -18,10 +18,10 @@ export interface FlowFilterFields {
  */
 export interface FlowAttributes {
   name: string;
-  'employee-centric'?: boolean;
-  enabled?: boolean;
-  'created-at'?: string;
-  'updated-at'?: string;
+  'employee-centric': boolean;
+  enabled: boolean;
+  'created-at': string;
+  'updated-at': string;
 }
 
 /**
