@@ -51,7 +51,7 @@ type EntryPayload = {
         }>,
       }>,
       blacklistReportUUID?: string,
-    }
+    },
   },
   relationships: {
     location: {
