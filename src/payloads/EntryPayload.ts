@@ -35,7 +35,23 @@ type EntryPayload = {
     'user-data': Array<{
       field: string,
       value: string | null,
-    }>
+    }>,
+    'approval-status'?: {
+      status: string,
+      'auto-approved': boolean,
+      report: Array<{
+        reason?: string,
+        result: string,
+        source: string,
+        messages: Array<{
+          failure: {
+            text: string,
+            header: string,
+          },
+        }>,
+      }>,
+      blacklistReportUUID?: string,
+    },
   },
   relationships: {
     location: {
