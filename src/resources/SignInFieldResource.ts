@@ -14,6 +14,10 @@ export interface SignInFieldAttributes {
     'region-code'?: string;
     'display-name': string;
   }>;
+  options?: Array<{
+    value: string,
+    position: number,
+  }>,
   position?: number;
   'store-response'?: boolean;
   'created-at'?: string;
