@@ -57,7 +57,10 @@ type InvitePayload = {
     },
     'agreeable-ndas'?: {
       data: Array<JSONAPIData<'agreeable-ndas'>>,
-    }
+    },
+    'tenant'?: {
+      data: JSONAPIData<'tenants'>,
+    },
   }
 };
 
