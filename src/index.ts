@@ -54,6 +54,7 @@ export * from './sdk/EnvoyRequest';
 export * from './sdk/EnvoyResponse';
 export * from './sdk/filters';
 export * from './sdk/handlers';
+export * from './sdk/loggers';
 export * from './sdk/middleware';
 
 export * from './util/EnvoySignatureVerifier';
