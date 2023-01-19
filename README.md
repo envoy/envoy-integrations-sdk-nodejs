@@ -200,7 +200,16 @@ res.sendOngoing("We're still working on it.", { hello: 'world' }); // the job is
 res.sendIgnored("We're not gonna do this one, sorry.", { hello: 'world' }); // doesnt meet the requirements to continue.
 // or
 res.sendFailed('We tried, but failed.', { hello: 'world' }); // we cant continue with this job.
+
+/**
+* Implement Axios Loggers
+*/
+this.axios.interceptors.request.use(envoyAxiosRequestLogger, envoyAxiosErrorLogger); // Request interceptor
+
+this.axios.interceptors.response.use(envoyAxiosResponseLogger, envoyAxiosErrorLogger); // Response interceptor
+
 ```
+
 
 ## SDK Reference
 
