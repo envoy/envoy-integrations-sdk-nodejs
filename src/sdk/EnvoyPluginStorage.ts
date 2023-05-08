@@ -33,7 +33,7 @@ export default class EnvoyPluginStorage {
    * Wrapper for single pipeline get.
    */
   get<Value = unknown>(key: string) {
-    return this.pipeline().get(key).executeSingle<EnvoyStorageItem<Value> | []>();
+    return this.pipeline().get(key).executeSingle<EnvoyStorageItem<Value> | { key: string, 'value': undefined }>();
   }
 
   /**
@@ -51,7 +51,7 @@ export default class EnvoyPluginStorage {
    * Wrapper for single pipeline setUnique.
    */
   setUnique(key: string, options: EnvoyStorageSetUniqueOptions = {}) {
-    return this.pipeline().setUnique(key, options).executeSingle<EnvoyStorageItem<string> | []>();
+    return this.pipeline().setUnique(key, options).executeSingle<EnvoyStorageItem<string> | { key: string, 'value': undefined }>();
   }
 
   /**
@@ -60,7 +60,7 @@ export default class EnvoyPluginStorage {
    * Wrapper for single pipeline setUnique.
    */
   setUniqueNum(key: string, options: EnvoyStorageSetUniqueNumOptions = {}) {
-    return this.pipeline().setUniqueNum(key, options).executeSingle<EnvoyStorageItem<number> | []>();
+    return this.pipeline().setUniqueNum(key, options).executeSingle<EnvoyStorageItem<number> | { key: string, 'value': undefined }>();
   }
 
   /**
@@ -69,7 +69,7 @@ export default class EnvoyPluginStorage {
    * Wrapper for single pipeline unset.
    */
   unset<Value = unknown>(key: string) {
-    return this.pipeline().unset(key).executeSingle<EnvoyStorageItem<Value> | []>();
+    return this.pipeline().unset(key).executeSingle<EnvoyStorageItem<Value> | { key: string, 'value': undefined }>();
   }
 
   /**
