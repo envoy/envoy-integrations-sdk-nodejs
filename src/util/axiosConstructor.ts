@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export function createAxiosClient(config?: CreateAxiosDefaults<any> | undefined): AxiosInstance {
+export function createAxiosClient(config?: AxiosRequestConfig | undefined): AxiosInstance {
     const client = axios.create(config);
     client.interceptors.response.use((response) => {
         return response;

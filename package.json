@@ -1,6 +1,6 @@
 {
   "name": "@envoy/envoy-integrations-sdk",
-  "version": "2.0.0-beta.23",
+  "version": "2.0.0-beta.25",
   "description": "SDK for building Envoy integrations.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:generate": "typedoc",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc",
+    "compile": "tsc"
   },
   "repository": {
     "type": "git",
