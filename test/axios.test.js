@@ -1,5 +1,5 @@
 const axios = require('axios');
-const createClient = require('../lib/axios')
+const createClient = require('../lib/axios');
 
 describe('axios', () => {
     it('default client should leak credentials in AxiosError', async () => {
@@ -18,8 +18,7 @@ describe('axios', () => {
         try {
             await client.get('http://localhost:3000/axios-error');
         } catch (error) {
-            expect(error.config.headers).toBeDefined();
-            expect(error.config.proxy).toBeDefined();
+            expect(error.config).toBeDefined();
             const errorStr = JSON.stringify(error);
             expect(errorStr).toContain('Bearer 1234');
             expect(errorStr).toContain('myWhackyUsername');
@@ -43,8 +42,12 @@ describe('axios', () => {
         try {
             await client.get('http://localhost:3000/axios-error');
         } catch (error) {
-            expect(error.config.headers).toBeUndefined();
-            expect(error.config.proxy).toBeUndefined();
+            expect(error.config).toBeUndefined();
+            expect(error.code).toBe('ECONNREFUSED');
+            expect(error.message).toBe('connect ECONNREFUSED 127.0.0.1:80');
+            expect(error.name).toBe('Error');
+            expect(error.url).toBe('http://localhost:3000/axios-error');
+            expect(error.method).toBe('get');
             const errorStr = JSON.stringify(error);
             expect(errorStr).not.toContain('Bearer 1234');
             expect(errorStr).not.toContain('myWhackyUsername');
