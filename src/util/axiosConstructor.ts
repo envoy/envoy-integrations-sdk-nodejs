@@ -5,9 +5,15 @@ export function createAxiosClient(config?: AxiosRequestConfig | undefined): Axio
     client.interceptors.response.use((response) => {
         return response;
     }, (error) => {
-        delete error.config?.headers;
-        delete error.config?.proxy;
-        return Promise.reject(error);
+        const safeError = {
+            code: error.code,
+            message: error.message,
+            name: error.name,
+            baseURL: error.request?.baseURL ?? error.config?.baseURL,
+            url: error.request?.url ?? error.config?.url,
+            method: error.request?.method ?? error.config?.method,
+        }
+        return Promise.reject(safeError);
     });
 
     return client;
