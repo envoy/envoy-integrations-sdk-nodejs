@@ -11,6 +11,7 @@ const HttpStatus = require('./lib/HttpStatus');
 const middleware = require('./lib/middleware');
 const errorMiddleware = require('./lib/errorMiddleware');
 const asyncHandler = require('./lib/asyncHandler');
+const createAxiosClient = require('./lib/axios');
 
 /**
  * @typedef {Object} Envoy
@@ -44,4 +45,5 @@ module.exports = {
   middleware,
   errorMiddleware,
   asyncHandler,
+  createAxiosClient,
 };
