@@ -1,0 +1,82 @@
+const request = require('request-promise-native');
+const EnvoyAPI = require('../lib/EnvoyAPI');
+
+describe('request-promise-native', () => {
+    it('default client should leak credentials in error', async () => {
+        const client = request.defaults({
+            headers: {
+                Authorization: 'Bearer 1234',
+            },
+        });
+        try {
+            await client('http://localhost:3000/axios-error');
+        } catch (error) {
+            expect(error.options).toBeDefined();
+            const errorStr = JSON.stringify(error);
+            expect(errorStr).toContain('Bearer 1234');
+        }
+    });
+
+    it('should sanitize requests error response', async () => {
+        const client = request.defaults({
+            headers: {
+                Authorization: 'Bearer 1234',
+            },
+        });
+        try {
+            await client('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
+        } catch (error) {
+            expect(error.options).toBeUndefined();
+            expect(error.message).toBe('Error: connect ECONNREFUSED 127.0.0.1:3000');
+            expect(error.name).toBe('RequestError');
+            const errorStr = JSON.stringify(error);
+            expect(errorStr).not.toContain('Bearer 1234');
+        }
+    });
+
+    it('should return rejected promise and leak credentials', () => {
+        const client = request.defaults({
+            headers: {
+                Authorization: 'Bearer 1234',
+            },
+        });
+        const response = client('http://localhost:3000/axios-error');
+        response.then((data) => {
+            expect(false).toBe(true);
+        }).catch((error) => {
+            expect(error.options).toBeDefined();
+            const errorStr = JSON.stringify(error);
+            expect(errorStr).toContain('Bearer 1234');
+        });
+    });
+
+    it('should return rejected promise', () => {
+        const client = request.defaults({
+            headers: {
+                Authorization: 'Bearer 1234',
+            },
+        });
+        const response = client('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
+        response.then((data) => {
+            expect(false).toBe(true);
+        }).catch((error) => {
+            expect(error.message).toBe('Error: connect ECONNREFUSED 127.0.0.1:3000');
+            expect(error.name).toBe('RequestError');
+            const errorStr = JSON.stringify(error);
+            expect(errorStr).not.toContain('Bearer 1234');
+        });
+    });
+
+    it('should make a successful request', async () => {
+        const response = await request('https://httpstat.us/200').catch(EnvoyAPI.safeRequestsError);
+        expect(response).toBe('200 OK');
+    });
+
+    it('should throw an error', async () => {
+        try {
+            await request('https://httpstat.us/500').catch(EnvoyAPI.safeRequestsError);
+        } catch (error) {
+            expect(error.message).toBe('500 - "500 Internal Server Error"');
+        }
+    });
+});
