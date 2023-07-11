@@ -7,6 +7,11 @@ export function createAxiosClient(config?: AxiosRequestConfig | undefined): Axio
     }, (error) => {
         const safeError = {
             code: error.code,
+            request: {
+                baseURL: error.request?.baseURL,
+                url: error.request?.url,
+                method: error.request?.method,
+            },
             response: {
                 code: error.response?.code,
                 status: error.response?.status,
