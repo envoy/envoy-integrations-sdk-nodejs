@@ -28,12 +28,12 @@ class KafkaClient {
     this.topic = topic;
   }
 
-  consumer(groupId: string, consumeFunction: ConsumeFunction) {
+  consumer(groupId: string, consumeFunction: ConsumeFunction): KafkaConsumer {
     const kafka = new Kafka(this.config);
     return new KafkaConsumer(kafka, this.topic, groupId, consumeFunction);
   }
 
-  producer() {
+  producer(): KafkaProducer {
     const kafka = new Kafka(this.config);
     return new KafkaProducer(kafka, this.topic);
   }
@@ -77,7 +77,7 @@ class KafkaProducer {
   async produce(key: string, message: string) {
     const producer = this.kafka.producer({ allowAutoTopicCreation: true });
     await producer.connect();
-    await producer.send({
+    return await producer.send({
       topic: this.topic,
       messages: [{ key: key, value: message }],
     });
