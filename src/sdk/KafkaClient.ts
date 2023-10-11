@@ -45,7 +45,7 @@ class KafkaConsumer {
   protected readonly groupId: string;
   protected readonly consumeFunction: ConsumeFunction;
 
-  constructor(kafka: any, topic: string, groupId: string, consumeFunction: ConsumeFunction) {
+  constructor(kafka: Kafka, topic: string, groupId: string, consumeFunction: ConsumeFunction) {
     this.kafka = kafka;
     this.topic = topic;
     this.groupId = groupId;
@@ -69,7 +69,7 @@ class KafkaProducer {
   protected readonly kafka: Kafka;
   protected readonly topic: string;
 
-  constructor(kafka: any, topic: string) {
+  constructor(kafka: Kafka, topic: string) {
     this.kafka = kafka;
     this.topic = topic;
   }
