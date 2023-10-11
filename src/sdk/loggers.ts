@@ -159,7 +159,7 @@ function envoyAxiosErrorLogger(error: AxiosError) {
 
   log('------------ End Of Axios Error ------------\n');
 
-  return error;
+  throw error;
 }
 
 export { envoyAxiosRequestLogger, envoyAxiosResponseLogger, envoyAxiosErrorLogger };
