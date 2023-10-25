@@ -1,8 +1,8 @@
+import axios from 'axios';
 import qs from 'qs';
 import DataLoader from 'dataloader';
 import JSONAPIData from '../util/json-api/JSONAPIData';
 import { envoyBaseURL } from '../constants';
-import { createAxiosClient } from '../util/axiosConstructor';
 
 interface EnvoyWebDataLoaderKey extends JSONAPIData {
   include?: string;
@@ -29,7 +29,7 @@ export default class EnvoyAPI {
   /**
    * HTTP Client with Envoy's defaults.
    */
-  readonly axios = createAxiosClient({
+  readonly axios = axios.create({
     baseURL: envoyBaseURL,
     headers: {
       'Content-Type': 'application/vnd.api+json',

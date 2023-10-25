@@ -12,6 +12,7 @@ import HttpStatus from './internal/HttpStatus';
 import EnvoyPluginJobMock from './mocks/EnvoyPluginJobMock';
 import EnvoyPluginStoragePipelineMock from './mocks/EnvoyPluginStoragePipelineMock';
 
+import EmployeePayload from './payloads/EmployeePayload';
 import EntryPayload from './payloads/EntryPayload';
 import InvitePayload from './payloads/InvitePayload';
 
@@ -54,13 +55,12 @@ export * from './sdk/EnvoyRequest';
 export * from './sdk/EnvoyResponse';
 export * from './sdk/filters';
 export * from './sdk/handlers';
-export * from './sdk/loggers';
 export * from './sdk/middleware';
 
 export * from './util/EnvoySignatureVerifier';
-export * from './util/axiosConstructor';
 
 export {
+  EmployeePayload,
   EntryPayload,
   InvitePayload,
   EnvoyJWT,

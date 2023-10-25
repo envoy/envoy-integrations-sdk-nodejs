@@ -5,7 +5,6 @@ import EnvoyStorageCommand from '../internal/EnvoyStorageCommand';
 import EnvoyStorageResult from '../internal/EnvoyStorageResult';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
-import { sanitizeAxiosError } from '../util/axiosConstructor';
 
 /**
  * API endpoints for *plugin-scoped* tokens.
@@ -71,25 +70,21 @@ export default class EnvoyPluginAPI extends EnvoyAPI {
    * Gets a plugin access token using `client_credentials` as the grant type.
    */
   static async loginAsPlugin(id = envoyClientId, secret = envoyClientSecret): Promise<EnvoyMetaAuth> {
-    try {
-      const { data } = await axios({
-        auth: {
-          username: id,
-          password: secret,
-        },
-        method: 'POST',
-        data: {
-          grant_type: 'client_credentials',
-          client_id: id,
-          client_secret: secret,
-          scope: 'plugin,token.refresh',
-        },
-        url: '/a/auth/v0/token',
-        baseURL: envoyBaseURL,
-      });
-      return data;
-    } catch (error) {
-      throw sanitizeAxiosError(error);
-    }
+    const { data } = await axios({
+      auth: {
+        username: id,
+        password: secret,
+      },
+      method: 'POST',
+      data: {
+        grant_type: 'client_credentials',
+        client_id: id,
+        client_secret: secret,
+        scope: 'plugin,token.refresh',
+      },
+      url: '/a/auth/v0/token',
+      baseURL: envoyBaseURL,
+    });
+    return data;
   }
 }

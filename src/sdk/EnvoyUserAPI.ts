@@ -16,7 +16,6 @@ import {
 import { UserModel } from '../resources/UserResource';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
-import { sanitizeAxiosError } from '../util/axiosConstructor';
 
 export type EnvoyUserAPIScope =
   'flows.read' |
@@ -257,26 +256,22 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     clientId = envoyClientId,
     clientSecret = envoyClientSecret,
   ): Promise<EnvoyMetaAuth> {
-    try {
-      const { data } = await axios({
-        auth: {
-          username: clientId,
-          password: clientSecret,
-        },
-        method: 'POST',
-        data: {
-          grant_type: 'password',
-          scope,
-          username,
-          password,
-        },
-        url: '/a/auth/v0/token',
-        baseURL: envoyBaseURL,
-      });
-      return data;
-    } catch (error) {
-      throw sanitizeAxiosError(error);
-    }
+    const { data } = await axios({
+      auth: {
+        username: clientId,
+        password: clientSecret,
+      },
+      method: 'POST',
+      data: {
+        grant_type: 'password',
+        scope,
+        username,
+        password,
+      },
+      url: '/a/auth/v0/token',
+      baseURL: envoyBaseURL,
+    });
+    return data;
   }
 
   /**
@@ -288,25 +283,21 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     clientId = envoyClientId,
     clientSecret = envoyClientSecret,
   ): Promise<EnvoyMetaAuth> {
-    try {
-      const { data } = await axios({
-        auth: {
-          username: clientId,
-          password: clientSecret,
-        },
-        method: 'POST',
-        data: {
-          grant_type: 'authorization_code',
-          scope,
-          code,
-        },
-        url: '/a/auth/v0/token',
-        baseURL: envoyBaseURL,
-      });
-      return data;
-    } catch (error) {
-      throw sanitizeAxiosError(error); 
-    }
+    const { data } = await axios({
+      auth: {
+        username: clientId,
+        password: clientSecret,
+      },
+      method: 'POST',
+      data: {
+        grant_type: 'authorization_code',
+        scope,
+        code,
+      },
+      url: '/a/auth/v0/token',
+      baseURL: envoyBaseURL,
+    });
+    return data;
   }
 
   /**
@@ -317,23 +308,19 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     clientId = envoyClientId,
     clientSecret = envoyClientSecret,
   ): Promise<EnvoyMetaAuth> {
-    try {
-      const { data } = await axios({
-        auth: {
-          username: clientId,
-          password: clientSecret,
-        },
-        method: 'POST',
-        data: {
-          grant_type: 'plugin_install',
-          install_id: installId,
-        },
-        url: '/a/auth/v0/token',
-        baseURL: envoyBaseURL,
-      });
-      return data;
-    } catch (error) {
-      throw sanitizeAxiosError(error); 
-    }
+    const { data } = await axios({
+      auth: {
+        username: clientId,
+        password: clientSecret,
+      },
+      method: 'POST',
+      data: {
+        grant_type: 'plugin_install',
+        install_id: installId,
+      },
+      url: '/a/auth/v0/token',
+      baseURL: envoyBaseURL,
+    });
+    return data;
   }
 }
