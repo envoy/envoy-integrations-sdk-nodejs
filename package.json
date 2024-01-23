@@ -1,6 +1,6 @@
 {
   "name": "@envoy/envoy-integrations-sdk",
-  "version": "beta-plugin-install-1.0",
+  "version": "2.0.1-beta.1",
   "description": "",
   "main": "index.js",
   "scripts": {
