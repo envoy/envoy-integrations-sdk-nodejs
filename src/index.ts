@@ -14,6 +14,8 @@ import EnvoyPluginStoragePipelineMock from './mocks/EnvoyPluginStoragePipelineMo
 
 import EntryPayload from './payloads/EntryPayload';
 import InvitePayload from './payloads/InvitePayload';
+import EmployeePayload from './payloads/EmployeePayload';
+import { ConnectEmployeePayload } from './payloads/ConnectEmployee';
 
 import EnvoyMeta from './sdk/EnvoyMeta';
 import EnvoyPluginJob from './sdk/EnvoyPluginJob';
@@ -63,6 +65,8 @@ export * from './util/axiosConstructor';
 export {
   EntryPayload,
   InvitePayload,
+  EmployeePayload,
+  ConnectEmployeePayload,
   EnvoyJWT,
   EnvoyMeta,
   EnvoyPluginJob,
