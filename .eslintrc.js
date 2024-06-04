@@ -13,6 +13,8 @@ module.exports = {
     'no-void': 'off',
     'max-len': ["error", { "code": 150 }],
     'consistent-return': 'off',
+    'object-curly-newline': 'off',
+    'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
