@@ -1,37 +1,46 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { ensureError } from './errorHandling';
 
-export function createAxiosClient(config?: AxiosRequestConfig | undefined): AxiosInstance {
-    const client = axios.create(config);
-    client.interceptors.response.use((response) => {
-        return response;
-    }, (error) => {
-        return Promise.reject(sanitizeAxiosError(error));
-    });
+export function sanitizeAxiosError(error: unknown): Error {
+  if (!axios.isAxiosError(error)) {
+    return ensureError(error);
+  }
 
-    return client;
+  const safeError = new AxiosError(
+    error.message,
+    error.code,
+    {
+      url: error.config?.url,
+      method: error.config?.method,
+      baseURL: error.config?.baseURL,
+      headers: new AxiosHeaders(),
+    },
+    {
+      url: error.request?.url,
+      method: error.request?.method,
+      baseURL: error.request?.baseURL,
+      data: error.request?.data,
+    },
+    {
+      data: error.response?.data,
+      status: error.response?.status ?? 0,
+      statusText: error.response?.statusText ?? '',
+      headers: new AxiosHeaders(),
+      config: {
+        headers: new AxiosHeaders(),
+      },
+    },
+  );
+  safeError.stack = error.stack;
+  return safeError;
 }
 
-export function sanitizeAxiosError(error: any) {
-    const safeError = {
-        code: error.code,
-        request: {
-            baseURL: error.request?.baseURL,
-            url: error.request?.url,
-            method: error.request?.method,
-        },
-        response: {
-            code: error.response?.code,
-            status: error.response?.status,
-            statusText: error.response?.statusText,
-            data: error.response?.data,
-        },
-        message: error.message,
-        name: error.name,
-        baseURL: error.request?.baseURL ?? error.config?.baseURL,
-        url: error.request?.url ?? error.config?.url,
-        method: error.request?.method ?? error.config?.method,
-        stack: error.stack,
-        data: error.data,
-    };
-    return safeError;
+export function createAxiosClient(config?: AxiosRequestConfig | undefined): AxiosInstance {
+  const client = axios.create(config);
+  client.interceptors.response.use(
+    (response) => response,
+    (error) => Promise.reject(sanitizeAxiosError(error)),
+  );
+
+  return client;
 }
