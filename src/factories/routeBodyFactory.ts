@@ -4,6 +4,7 @@ import { routeMetaFactory } from './metaFactory';
 export const routeBodyFactoryDefaultIds = {
   locationId: '1',
   companyId: '1',
+  zoneId: '1',
 };
 
 export type RouteBodyFactoryOptions<Config, Params, Payload> = {
@@ -13,6 +14,7 @@ export type RouteBodyFactoryOptions<Config, Params, Payload> = {
   scope?: Array<EnvoyUserAPIScope>,
   locationId?: string,
   companyId?: string,
+  zoneId?: string,
   route?: string,
 };
 
@@ -31,6 +33,7 @@ export default function routeBodyFactory<
       options.scope || [],
       options.locationId || routeBodyFactoryDefaultIds.locationId,
       options.companyId || routeBodyFactoryDefaultIds.companyId,
+      options.zoneId || routeBodyFactoryDefaultIds.zoneId,
     ).build(),
     payload: options.payload,
   };

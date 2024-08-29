@@ -45,6 +45,20 @@ export type EnvoyMetaCompany = {
 };
 
 /**
+ * @category Meta
+ */
+export type EnvoyMetaZone = {
+  id: string,
+  type: 'zones',
+  attributes: {
+    address: string | null,
+    'logo-url': string | null,
+    name: string,
+    'time-zone': string,
+  }
+};
+
+/**
  * A short-lived `userAPI` token.
  * Will be used to construct the `userAPI` property found in `req.envoy.userAPI`.
  *
@@ -71,6 +85,7 @@ export type EnvoyEventMeta<Event extends string = string, Config = Record<string
   job: EnvoyMetaJob<Event>,
   location: EnvoyMetaLocation,
   company: EnvoyMetaCompany,
+  zone: EnvoyMetaZone,
   auth: EnvoyMetaAuth | null,
 };
 
@@ -88,6 +103,7 @@ export type EnvoyRouteMeta<Config = Record<string, unknown>, Params = Record<str
   params: Params,
   location: EnvoyMetaLocation,
   company: EnvoyMetaCompany,
+  zone: EnvoyMetaZone,
   auth: EnvoyMetaAuth | null,
   forwarded_bearer_token?: string,
 };
