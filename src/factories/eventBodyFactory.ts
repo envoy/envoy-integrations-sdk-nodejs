@@ -4,6 +4,7 @@ import { eventMetaFactory } from './metaFactory';
 export const eventBodyFactoryDefaultIds = {
   locationId: '1',
   companyId: '1',
+  zoneId: '1',
 };
 
 export type EventBodyFactoryOptions<Event, Config, Payload> = {
@@ -13,6 +14,7 @@ export type EventBodyFactoryOptions<Event, Config, Payload> = {
   scope: Array<EnvoyUserAPIScope>,
   locationId?: string,
   companyId?: string,
+  zoneId?: string,
 };
 
 export default function eventBodyFactory<
@@ -29,6 +31,7 @@ export default function eventBodyFactory<
       options.scope,
       options.locationId || eventBodyFactoryDefaultIds.locationId,
       options.companyId || eventBodyFactoryDefaultIds.companyId,
+      options.zoneId || eventBodyFactoryDefaultIds.zoneId,
     ).build(),
     payload: options.payload,
   };

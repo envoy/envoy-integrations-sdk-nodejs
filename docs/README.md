@@ -117,6 +117,7 @@
 - [EnvoyMetaCompany](README.md#envoymetacompany)
 - [EnvoyMetaJob](README.md#envoymetajob)
 - [EnvoyMetaLocation](README.md#envoymetalocation)
+- [EnvoyMetaZone](README.md#envoymetazone)
 - [EnvoyRouteMeta](README.md#envoyroutemeta)
 
 ### Request Type aliases
@@ -910,6 +911,7 @@ Metadata that will be included in the request body for events.
 | `install_id` | `string` |
 | `job` | [EnvoyMetaJob](README.md#envoymetajob)<Event\> |
 | `location` | [EnvoyMetaLocation](README.md#envoymetalocation) |
+| `zone` | [EnvoyMetaZone](README.md#envoymetazone) |
 | `plugin_id` | `string` |
 
 #### Defined in
@@ -1016,6 +1018,22 @@ ___
 
 [sdk/EnvoyMeta.ts:13](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyMeta.ts#L13)
 
+### EnvoyMetaZone
+
+Ƭ **EnvoyMetaZone**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `attributes` | `Object` |
+| `attributes.address` | `string` \| ``null`` |
+| `attributes.logo-url` | `string` \| ``null`` |
+| `attributes.name` | `string` |
+| `attributes.time-zone` | `string` |
+| `id` | `string` |
+| `type` | ``"zones"`` |
+
 ___
 
 ### EnvoyRouteMeta
@@ -1042,6 +1060,7 @@ like validation URLs or options URLs.
 | `forwarded_bearer_token?` | `string` |
 | `install_id` | `string` |
 | `location` | [EnvoyMetaLocation](README.md#envoymetalocation) |
+| `zone` | [EnvoyMetaZone](README.md#envoymetazone) |
 | `params` | `Params` |
 | `plugin_id` | `string` |
 | `route` | `string` |

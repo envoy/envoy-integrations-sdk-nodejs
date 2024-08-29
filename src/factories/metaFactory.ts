@@ -6,6 +6,7 @@ import {
   EnvoyMetaCompany,
   EnvoyMetaJob,
   EnvoyMetaLocation,
+  EnvoyMetaZone,
   EnvoyRouteMeta,
 } from '../sdk/EnvoyMeta';
 import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
@@ -55,6 +56,20 @@ export function companyFactory(id: string): Sync.Factory<EnvoyMetaCompany> {
   });
 }
 
+export function zoneFactory(id: string): Sync.Factory<EnvoyMetaZone> {
+  const street = faker.address.streetAddress();
+  return Sync.makeFactory<EnvoyMetaZone>({
+    id,
+    type: 'zones',
+    attributes: {
+      address: street,
+      'logo-url': null,
+      name: faker.company.companyName(),
+      'time-zone': faker.address.timeZone(),
+    },
+  });
+}
+
 export function authFactory(): Sync.Factory<EnvoyMetaAuth> {
   return Sync.makeFactory<EnvoyMetaAuth>({
     token_type: 'Bearer',
@@ -75,12 +90,14 @@ export function routeMetaFactory<
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
   companyId: string,
+  zoneId: string,
 ): Sync.Factory<EnvoyRouteMeta> {
   return Sync.makeFactory<EnvoyRouteMeta>({
     plugin_id: faker.datatype.uuid(),
     install_id: Math.ceil(Math.abs(faker.datatype.number())).toString(),
     location: locationFactory(locationId).build(),
     company: companyFactory(companyId).build(),
+    zone: zoneFactory(zoneId).build(),
     auth: scope.length ? authFactory().build() : null,
     forwarded_bearer_token: faker.random.alphaNumeric(),
     route,
@@ -95,6 +112,7 @@ export function eventMetaFactory<Config extends Record<string, unknown> = Record
   scope: Array<EnvoyUserAPIScope>,
   locationId: string,
   companyId: string,
+  zoneId: string,
 ): Sync.Factory<EnvoyEventMeta> {
   return Sync.makeFactory<EnvoyEventMeta>({
     plugin_id: faker.datatype.uuid(),
@@ -102,6 +120,7 @@ export function eventMetaFactory<Config extends Record<string, unknown> = Record
     job: jobFactory(event).build(),
     location: locationFactory(locationId).build(),
     company: companyFactory(companyId).build(),
+    zone: zoneFactory(zoneId).build(),
     auth: scope.length ? authFactory().build() : null,
     event,
     config,
