@@ -10,6 +10,7 @@ export type FlowSortFields = 'name' | 'created_at' | '-name' | '-created_at';
  */
 export interface FlowFilterFields {
   'employee-centric'?: boolean;
+  enabled?: boolean;
   location?: string;
 }
 
