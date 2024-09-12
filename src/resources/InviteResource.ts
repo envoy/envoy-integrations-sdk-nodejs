@@ -1,3 +1,4 @@
+import JSONAPIData from '../util/json-api/JSONAPIData';
 import JSONAPIModel from '../util/json-api/JSONAPIModel';
 
 /**
@@ -32,15 +33,15 @@ export interface InviteAttributes {
     auto_approved: boolean;
     report: Array<{
       reason: string;
-      result: 'pass' | 'fail' | 'pending',
-      source: string,
+      result: 'pass' | 'fail' | 'pending';
+      source: string;
       messages: {
         failure?: {
-          text: string,
-          header: string,
-        }
-      }
-    }>
+          text: string;
+          header: string;
+        };
+      };
+    }>;
   };
   email?: string;
   'expected-arrival-time'?: string;
@@ -89,4 +90,30 @@ export type InviteModel = JSONAPIModel<InviteAttributes, InviteRelationships, 'i
 /**
  * @category API Resource
  */
-export type InviteCreationModel = JSONAPIModel<InviteCreationAttributes, InviteRelationships, 'invites', undefined>;
+type InviteCreationRequiredRelationships = 'location'; // surprising, but flow is not required. if not provided, it will be defaulted
+type InviteCreationProhibitedRelationships = 'creator';
+type InviteCreationOptionalRelationships = Exclude<
+  InviteRelationships,
+  InviteCreationRequiredRelationships | InviteCreationProhibitedRelationships
+>;
+
+/**
+ * Here we are going to do a little surgery on JSONAPIModel to allow us to specify required and optional relationships.
+ * We do this by first omitting the relationships field from JSONAPIModel, then adding it back in with modified type.
+ */
+export type InviteCreationModel = Omit<
+  JSONAPIModel<InviteCreationAttributes, InviteRelationships, 'invites', undefined>,
+  'relationships'
+> & {
+  relationships: {
+    [key in InviteCreationRequiredRelationships]: {
+      data: JSONAPIData | Array<JSONAPIData>;
+    };
+  } & {
+    [key in InviteCreationOptionalRelationships]?: {
+      data: JSONAPIData | Array<JSONAPIData> | null;
+    };
+  } & {
+    [key in InviteCreationProhibitedRelationships]?: never;
+  };
+};
