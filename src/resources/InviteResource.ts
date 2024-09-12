@@ -32,15 +32,15 @@ export interface InviteAttributes {
     auto_approved: boolean;
     report: Array<{
       reason: string;
-      result: 'pass' | 'fail' | 'pending',
-      source: string,
+      result: 'pass' | 'fail' | 'pending';
+      source: string;
       messages: {
         failure?: {
-          text: string,
-          header: string,
-        }
-      }
-    }>
+          text: string;
+          header: string;
+        };
+      };
+    }>;
   };
   email?: string;
   'expected-arrival-time'?: string;
@@ -89,4 +89,4 @@ export type InviteModel = JSONAPIModel<InviteAttributes, InviteRelationships, 'i
 /**
  * @category API Resource
  */
-export type InviteCreationModel = JSONAPIModel<InviteCreationAttributes, InviteRelationships, 'invites', undefined>;
+export type InviteCreationModel = JSONAPIModel<InviteCreationAttributes, Exclude<InviteRelationships, 'creator'>, 'invites', undefined>;
