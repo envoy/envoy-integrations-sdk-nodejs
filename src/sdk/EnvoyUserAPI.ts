@@ -17,6 +17,7 @@ import { UserModel } from '../resources/UserResource';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 import { sanitizeAxiosError } from '../util/axiosConstructor';
+import { ReservationCreationAttributes, ReservationModel } from "../resources/ReservationResource";
 
 export type EnvoyUserAPIScope =
   'flows.read' |
@@ -195,6 +196,42 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
+  async createReservation(reservationDetails: ReservationCreationAttributes): Promise<ReservationModel> {
+    let createReservationBody = {
+      data: {
+        relationships: {
+          user: {
+            data: {
+              type: 'users',
+              id: reservationDetails['user-id']
+            }},
+          ...(reservationDetails['location-id'] && {
+              location: {
+                data: {
+                  type: 'locations',
+                  id: reservationDetails['location-id']
+                }
+              }
+            }
+          )
+        },
+        attributes: {
+            'start-time': reservationDetails['start-time'],
+            ...(reservationDetails['end-time'] && {
+                'end-time': reservationDetails['end-time']
+            }),
+            'booking-source': 'WORKFLOWS'
+        }
+      }
+    }
+    const { data } = await this.axios({
+      method: 'POST',
+      url: '/a/rms/reservations',
+      data: { data: createReservationBody },
+    });
+    return data.data;
+  }
+
   /**
    * Requires `invites.write` scope.
    */
@@ -305,7 +342,7 @@ export default class EnvoyUserAPI extends EnvoyAPI {
       });
       return data;
     } catch (error) {
-      throw sanitizeAxiosError(error); 
+      throw sanitizeAxiosError(error);
     }
   }
 
@@ -333,7 +370,7 @@ export default class EnvoyUserAPI extends EnvoyAPI {
       });
       return data;
     } catch (error) {
-      throw sanitizeAxiosError(error); 
+      throw sanitizeAxiosError(error);
     }
   }
 }
