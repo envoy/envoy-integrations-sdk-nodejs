@@ -27,7 +27,6 @@ export interface ReservationCreationAttributes {
   'entry-id'?: number | null;
   'start-time'?: number | null;  // Unix timestamp
   'end-time'?: number | null;    // Unix timestamp
-  'booking-source': 'WORKFLOWS'
 
   meta?: {
     'auto-assign-desk'?: boolean;
