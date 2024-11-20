@@ -227,7 +227,7 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     const { data } = await this.axios({
       method: 'POST',
       url: '/a/rms/reservations',
-      data: { createReservationBody },
+      data: createReservationBody,
     });
     return data.data;
   }
