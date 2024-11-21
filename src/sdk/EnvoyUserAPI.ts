@@ -220,7 +220,7 @@ export default class EnvoyUserAPI extends EnvoyAPI {
             ...(reservationDetails['end-time'] && {
                 'end-time': reservationDetails['end-time']
             }),
-            'booking-source': 'WORKFLOWS'
+            'booking-source': 'EXTERNAL_API'
         }
       }
     }
