@@ -1,6 +1,6 @@
 {
   "name": "@envoy/envoy-integrations-sdk",
-  "version": "2.2.1",
+  "version": "2.2.3",
   "description": "SDK for building Envoy integrations.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
