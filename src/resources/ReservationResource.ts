@@ -18,18 +18,18 @@ export interface ReservationAttributes {
 
 export interface ReservationCreationAttributes {
   // Required fields
-  'user-id': number;
+  userId: number;
 
   // Optional fields
-  'desk-id'?: number | null;
-  'location-id'?: number | null;
-  'invite-id'?: number | null;
-  'entry-id'?: number | null;
-  'start-time'?: number | null;  // Unix timestamp
-  'end-time'?: number | null;    // Unix timestamp
+  deskId?: number | null;
+  locationId?: number | null;
+  inviteId?: number | null;
+  entryId?: number | null;
+  startTime?: number | null;  // Unix timestamp
+  endTime?: number | null;    // Unix timestamp
 
   meta?: {
-    'auto-assign-desk'?: boolean;
+    autoAssignDesk?: boolean;
   };
 }
 

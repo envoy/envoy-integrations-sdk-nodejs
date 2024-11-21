@@ -203,22 +203,22 @@ export default class EnvoyUserAPI extends EnvoyAPI {
           user: {
             data: {
               type: 'users',
-              id: reservationDetails['user-id']
+              id: reservationDetails.userId
             }},
-          ...(reservationDetails['location-id'] && {
+          ...(reservationDetails.locationId && {
               location: {
                 data: {
                   type: 'locations',
-                  id: reservationDetails['location-id']
+                  id: reservationDetails.locationId
                 }
               }
             }
           )
         },
         attributes: {
-            'start-time': reservationDetails['start-time'],
-            ...(reservationDetails['end-time'] && {
-                'end-time': reservationDetails['end-time']
+            'start-time': reservationDetails.startTime,
+            ...(reservationDetails.endTime && {
+                'end-time': reservationDetails.endTime
             }),
             'booking-source': 'EXTERNAL_API',
             'booking-type': 'visitor'
