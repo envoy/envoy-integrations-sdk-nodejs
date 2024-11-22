@@ -196,35 +196,47 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     return data.data;
   }
 
-  async createReservation(reservationDetails: ReservationCreationAttributes): Promise<ReservationModel> {
-    let createReservationBody = {
+  async createReservation(
+    reservationDetails: ReservationCreationAttributes
+  ): Promise<ReservationModel> {
+    const createReservationBody = {
       data: {
         relationships: {
           user: {
             data: {
               type: 'users',
-              id: reservationDetails.userId
-            }},
+              id: reservationDetails.userId,
+            },
+          },
           ...(reservationDetails.locationId && {
-              location: {
-                data: {
-                  type: 'locations',
-                  id: reservationDetails.locationId
-                }
-              }
-            }
-          )
+            location: {
+              data: {
+                type: 'locations',
+                id: reservationDetails.locationId,
+              },
+            },
+          }),
+          ...(reservationDetails.entryId && {
+            entry: {
+              data: {
+                type: 'entries',
+                id: reservationDetails.entryId,
+              },
+            },
+          }),
         },
         attributes: {
+          ...(reservationDetails.startTime && {
             'start-time': reservationDetails.startTime,
-            ...(reservationDetails.endTime && {
-                'end-time': reservationDetails.endTime
-            }),
-            'booking-source': 'EXTERNAL_API',
-            'booking-type': 'visitor'
-        }
-      }
-    }
+          }),
+          ...(reservationDetails.endTime && {
+            'end-time': reservationDetails.endTime,
+          }),
+          'booking-source': 'EXTERNAL_API',
+          'booking-type': 'visitor',
+        },
+      },
+    };
     const { data } = await this.axios({
       method: 'POST',
       url: '/a/rms/reservations',
@@ -232,6 +244,7 @@ export default class EnvoyUserAPI extends EnvoyAPI {
     });
     return data.data;
   }
+
 
   /**
    * Requires `invites.write` scope.
