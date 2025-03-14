@@ -3,6 +3,7 @@ import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
 import EnvoyOptionsRouteResponseBody from '../internal/EnvoyOptionsRouteResponseBody';
 import EnvoySelectedValuesRouteResponseBody from '../internal/EnvoySelectedValuesRouteResponseBody';
 import EnvoyRemoteValueRouteResponseBody from '../internal/EnvoyRemoteValueRouteResponseBody';
+import EnvoyValidationRouteResponseBody from './EnvoyValidationRouteResponseBody';
 
 /**
  * Use to type your `res` object in Envoy event handlers.
@@ -44,3 +45,11 @@ export type EnvoyRemoteValueRouteResponse = EnvoyResponse<EnvoyRemoteValueRouteR
  * @category Response
  */
 export type EnvoySelectedValuesRouteResponse = EnvoyResponse<EnvoySelectedValuesRouteResponseBody>;
+
+/**
+ * Use to type your `res` object in Envoy "validation URL" route handlers.
+ * The response body should likely include validated values from the request payload
+ * and optionally additional config values.
+ * @category Response
+ */
+export type EnvoyValidationRouteResponse<Config> = EnvoyResponse<EnvoyValidationRouteResponseBody<Config>>;

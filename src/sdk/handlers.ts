@@ -20,13 +20,10 @@ import EnvoyResponse, {
   EnvoyOptionsRouteResponse,
   EnvoyRemoteValueRouteResponse,
   EnvoySelectedValuesRouteResponse,
+  EnvoyValidationRouteResponse,
 } from './EnvoyResponse';
 
 type SomeObject = Record<string, unknown>;
-
-type Nullable<T> = {
-  [P in keyof T]: T[P] | null;
-};
 
 type Result = Promise<void> | void;
 
@@ -98,7 +95,7 @@ export type SelectedValuesRouteHandler<Config = SomeObject, Additions = SomeObje
  * @category Handler
  */
 export type ValidationRouteHandler<Config = SomeObject, Payload = SomeObject, Additions = SomeObject> =
-  (req: EnvoyValidationRouteRequest<Payload, Config> & Additions, res: EnvoyResponse<Nullable<Partial<Config>>>) => Result;
+  (req: EnvoyValidationRouteRequest<Payload, Config> & Additions, res: EnvoyValidationRouteResponse<Config>) => Result;
 
 /**
  * Wraps any express.js-based handlers

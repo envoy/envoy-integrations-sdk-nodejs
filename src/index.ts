@@ -24,6 +24,7 @@ import EnvoyResponse from './sdk/EnvoyResponse';
 import EnvoyStorageItem from './sdk/EnvoyStorageItem';
 import EnvoyUserAPI from './sdk/EnvoyUserAPI';
 import EnvoyPluginAPI from './sdk/EnvoyPluginAPI';
+import EnvoyValidationRouteResponseBody from './sdk/EnvoyValidationRouteResponseBody';
 
 import EnvoyJWT from './util/EnvoyJWT';
 import EnvoySignatureVerifier from './util/EnvoySignatureVerifier';
@@ -77,6 +78,7 @@ export {
   EnvoyStorageItem,
   EnvoyPluginAPI,
   EnvoyUserAPI,
+  EnvoyValidationRouteResponseBody,
   JSONAPIData,
   HttpStatus,
   entryEventBodyFactory,
