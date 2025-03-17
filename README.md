@@ -183,6 +183,8 @@ const { sub: visitorId } = await jwt.decode(token);
  */
 res.send({ foo: 'bar' }); // will save foo in the installation config.
 // or
+res.send({ foo: null }); // will remove foo from the installation config.
+// or
 res.sendFailed('This step has failed validation.'); // prevent the installer from progressing.
 
 /**
