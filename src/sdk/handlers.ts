@@ -14,6 +14,7 @@ import {
   EnvoyOptionsRouteRequest,
   EnvoyRemoteValueRouteRequest,
   EnvoySelectedValuesRouteRequest,
+  EnvoyTakeoverEventRequest,
   EnvoyValidationRouteRequest,
 } from './EnvoyRequest';
 import EnvoyResponse, {
@@ -54,6 +55,13 @@ export type LocationEventHandler<Config = SomeObject, Additions = SomeObject> =
  */
 export type NotificationEventHandler<Config = SomeObject, Additions = SomeObject> =
   (req: EnvoyNotificationEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+
+/**
+ * Handle a takeover event.
+ * @category Handler
+ */
+export type TakeoverEventHandler<Config = SomeObject, Additions = SomeObject> =
+  (req: EnvoyTakeoverEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
 
 /**
  * Handle a `plugin_uninstalled` event for cleaning up.
@@ -170,6 +178,18 @@ export function notificationEventHandler<
   Config = SomeObject,
   Additions = SomeObject,
   >(handler: NotificationEventHandler<Config, Additions>) {
+  return asyncHandler(handler);
+}
+
+/**
+ * Handler for takeover events.
+ *
+ * @category Handler
+ */
+export function takeoverEventHandler<
+  Config = SomeObject,
+  Additions = SomeObject,
+  >(handler: TakeoverEventHandler<Config, Additions>) {
   return asyncHandler(handler);
 }
 

@@ -5,6 +5,7 @@ import EntryPayload from '../payloads/EntryPayload';
 import InvitePayload from '../payloads/InvitePayload';
 import LocationPayload from '../payloads/LocationPayload';
 import NotificationPayload from '../payloads/NotificationPayload';
+import TakeoverPayload from '../payloads/TakeoverPayload';
 import EnvoyEntryEvent from '../internal/EnvoyEntryEvent';
 import EnvoyInviteEvent from '../internal/EnvoyInviteEvent';
 import EnvoyLocationEvent from '../internal/EnvoyLocationEvent';
@@ -91,7 +92,7 @@ export type EnvoyValidationRouteRequest<Payload = Record<string, unknown>, Confi
 
 /**
  * Base type for event requests.
- * You should use {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
+ * You should prefer specific types such as {@link EnvoyEntryEventRequest} or {@link EnvoyInviteEventRequest}.
  *
  * @category Request
  */
@@ -132,6 +133,14 @@ export type EnvoyLocationEventRequest<Config = Record<string, unknown>> =
  */
 export type EnvoyNotificationEventRequest<Config = Record<string, unknown>> =
   EnvoyEventRequest<string, NotificationPayload, Config>;
+
+/**
+ * Use to type your `req` object in your takeover event handler.
+ *
+ * @category Request
+ */
+export type EnvoyTakeoverEventRequest<Config = Record<string, unknown>> =
+  EnvoyEventRequest<string, TakeoverPayload, Config>;
 
 /**
  * You probably won't need to use this type directly.
