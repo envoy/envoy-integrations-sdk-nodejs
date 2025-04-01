@@ -1,46 +1,42 @@
 module.exports = {
-  env: {
-    commonjs: true,
-    es6: true,
-    node: true,
-  },
-  extends: 'airbnb-base',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
+  extends: [
+    'airbnb-typescript/base',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+  ],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2018,
+    project: './tsconfig.json',
   },
   rules: {
-    'no-trailing-spaces': 'off',
-    'padded-blocks': 'off',
-    'no-console': 'off',
-    'arrow-parens': 'off',
-    'no-return-assign': 'off',
-    'no-empty': 'off',
+    'no-param-reassign': 'off',
+    'no-void': 'off',
+    'max-len': ["error", { "code": 150 }],
     'consistent-return': 'off',
-    'no-shadow': 'off',
-    'no-plusplus': 'off',
-    'no-case-declarations': 'off',
-    'class-methods-use-this': 'off'
+    'object-curly-newline': 'off',
+    'import/prefer-default-export': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/no-unused-expressions': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off'
   },
   overrides: [
     {
       files: [
-        'tests/**/*.test.js'
+        'test/**/*.ts'
       ],
       env: {
         mocha: true
       },
       rules: {
         'prefer-arrow-callback': 'off',
-        'func-names': 'off',
-        'no-loop-func': 'off',
-        'no-await-in-loop': 'off',
-        'no-restricted-syntax': 'off',
-        'max-len': 'off'
+        'func-names': 'off'
       }
     }
-  ]
+  ],
+  ignorePatterns: ["*.js"]
 };
