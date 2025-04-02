@@ -4,9 +4,9 @@
  * @category Attachment
  */
 export interface EnvoyPluginTextJobAttachment {
-  type?: 'text' | 'password' | string,
-  label: string,
-  value: string,
+  type?: 'text' | 'password' | string;
+  label: string;
+  value: string;
 }
 
 /**
@@ -15,8 +15,8 @@ export interface EnvoyPluginTextJobAttachment {
  * @category Attachment
  */
 export interface EnvoyPluginLinkJobAttachment extends EnvoyPluginTextJobAttachment {
-  type: 'link',
-  url: string,
+  type: 'link';
+  url: string;
 }
 
 /**
@@ -26,12 +26,12 @@ export interface EnvoyPluginLinkJobAttachment extends EnvoyPluginTextJobAttachme
  * @category Attachment
  */
 export interface EnvoyPluginCredentialJobAttachment extends EnvoyPluginTextJobAttachment {
-  type: 'credential_image',
-  title: string,
+  type: 'credential_image';
+  title: string;
   image: {
-    type: 's3',
-    link: string,
-  },
+    type: 's3';
+    link: string;
+  };
 }
 
 /**
@@ -41,8 +41,9 @@ export interface EnvoyPluginCredentialJobAttachment extends EnvoyPluginTextJobAt
  *
  * @category Attachment
  */
-type EnvoyPluginJobAttachment = EnvoyPluginTextJobAttachment
-| EnvoyPluginLinkJobAttachment
-| EnvoyPluginCredentialJobAttachment;
+type EnvoyPluginJobAttachment =
+  | EnvoyPluginTextJobAttachment
+  | EnvoyPluginLinkJobAttachment
+  | EnvoyPluginCredentialJobAttachment;
 
 export default EnvoyPluginJobAttachment;

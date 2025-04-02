@@ -2,60 +2,60 @@
  * @category Meta
  */
 export type EnvoyMetaJob<Event extends string = string> = {
-  id: string,
-  name: Event,
-  identifier: string,
+  id: string;
+  name: Event;
+  identifier: string;
 };
 
 /**
  * @category Meta
  */
 export type EnvoyMetaLocation = {
-  id: string,
-  type: 'locations',
+  id: string;
+  type: 'locations';
   attributes: {
-    name: string,
-    'company-name-override': string | null,
-    timezone: string,
-    locale: string | null,
-    address: string,
-    'address-line-one': string | null,
-    'address-line-two': string | null,
-    city: string | null,
-    state: string | null,
-    country: string | null,
-    zip: string | null,
-    longitude: number | null,
-    latitude: number | null,
-    'created-at': string,
-  }
+    name: string;
+    'company-name-override': string | null;
+    timezone: string;
+    locale: string | null;
+    address: string;
+    'address-line-one': string | null;
+    'address-line-two': string | null;
+    city: string | null;
+    state: string | null;
+    country: string | null;
+    zip: string | null;
+    longitude: number | null;
+    latitude: number | null;
+    'created-at': string;
+  };
 };
 
 /**
  * @category Meta
  */
 export type EnvoyMetaCompany = {
-  id: string,
-  type: 'companies',
+  id: string;
+  type: 'companies';
   attributes: {
-    name: string,
-    active: boolean,
-    'created-at': string,
-  }
+    name: string;
+    active: boolean;
+    'created-at': string;
+  };
 };
 
 /**
  * @category Meta
  */
 export type EnvoyMetaZone = {
-  id: string,
-  type: 'zones',
+  id: string;
+  type: 'zones';
   attributes: {
-    address: string | null,
-    'logo-url': string | null,
-    name: string,
-    'time-zone': string,
-  }
+    address: string | null;
+    'logo-url': string | null;
+    name: string;
+    'time-zone': string;
+  };
 };
 
 /**
@@ -65,11 +65,11 @@ export type EnvoyMetaZone = {
  * @category Meta
  */
 export type EnvoyMetaAuth = {
-  token_type: 'Bearer',
-  access_token: string,
-  expires_in: number,
-  refresh_token: string | null,
-  refresh_token_expires_in: number | null,
+  token_type: 'Bearer';
+  access_token: string;
+  expires_in: number;
+  refresh_token: string | null;
+  refresh_token_expires_in: number | null;
 };
 
 /**
@@ -78,15 +78,15 @@ export type EnvoyMetaAuth = {
  * @category Meta
  */
 export type EnvoyEventMeta<Event extends string = string, Config = Record<string, unknown>> = {
-  event: Event,
-  plugin_id: string,
-  install_id: string,
-  config: Config,
-  job: EnvoyMetaJob<Event>,
-  location: EnvoyMetaLocation,
-  company: EnvoyMetaCompany,
-  zone: EnvoyMetaZone,
-  auth: EnvoyMetaAuth | null,
+  event: Event;
+  plugin_id: string;
+  install_id: string;
+  config: Config;
+  job: EnvoyMetaJob<Event>;
+  location: EnvoyMetaLocation;
+  company: EnvoyMetaCompany;
+  zone: EnvoyMetaZone;
+  auth: EnvoyMetaAuth | null;
 };
 
 /**
@@ -96,16 +96,16 @@ export type EnvoyEventMeta<Event extends string = string, Config = Record<string
  * @category Meta
  */
 export type EnvoyRouteMeta<Config = Record<string, unknown>, Params = Record<string, unknown>> = {
-  route: string,
-  plugin_id: string,
-  install_id: string,
-  config: Config,
-  params: Params,
-  location: EnvoyMetaLocation,
-  company: EnvoyMetaCompany,
-  zone: EnvoyMetaZone,
-  auth: EnvoyMetaAuth | null,
-  forwarded_bearer_token?: string,
+  route: string;
+  plugin_id: string;
+  install_id: string;
+  config: Config;
+  params: Params;
+  location: EnvoyMetaLocation;
+  company: EnvoyMetaCompany;
+  zone: EnvoyMetaZone;
+  auth: EnvoyMetaAuth | null;
+  forwarded_bearer_token?: string;
 };
 
 /**

@@ -13,9 +13,7 @@ interface EnvoyWebDataLoaderKey extends JSONAPIData {
  * with the "type" set to the relationships name instead of the actual model's name.
  * This mapping allows us to alias those cases.
  */
-const TYPE_ALIASES = new Map<string, string>([
-  ['employee-screening-flows', 'flows'],
-]);
+const TYPE_ALIASES = new Map<string, string>([['employee-screening-flows', 'flows']]);
 
 /**
  * Make typed API calls to Envoy.
@@ -35,10 +33,11 @@ export default class EnvoyAPI {
       'Content-Type': 'application/vnd.api+json',
       Accept: 'application/vnd.api+json',
     },
-    paramsSerializer: (params) => qs.stringify(params, {
-      arrayFormat: 'brackets',
-      encode: false,
-    }),
+    paramsSerializer: (params) =>
+      qs.stringify(params, {
+        arrayFormat: 'brackets',
+        encode: false,
+      }),
   });
 
   /**
@@ -47,12 +46,13 @@ export default class EnvoyAPI {
    * unless they exist in cache (which they usually will).
    */
   protected readonly dataLoader = new DataLoader<EnvoyWebDataLoaderKey, any, string>(
-    (keys) => Promise.all(
-      keys.map(async ({ type, id, include }) => {
-        const { data } = await this.axios.get(`api/v3/${type}/${id}`, { params: { include } });
-        return data.data;
-      }),
-    ),
+    (keys) =>
+      Promise.all(
+        keys.map(async ({ type, id, include }) => {
+          const { data } = await this.axios.get(`api/v3/${type}/${id}`, { params: { include } });
+          return data.data;
+        }),
+      ),
     {
       cacheKeyFn: (key) => `${key.type}_${key.id}`,
     },
@@ -64,24 +64,22 @@ export default class EnvoyAPI {
      * Saves every model that was "include"ed in the response,
      * which saves us the trouble of fetching related data.
      */
-    this.axios.interceptors.response.use((response) => {
-      const {
-        data: {
-          data: modelOrModels,
-          included,
-        },
-      } = response;
+    this.axios.interceptors.response.use(
+      (response) => {
+        const {
+          data: { data: modelOrModels, included },
+        } = response;
 
-      (included || [])
-        .concat(modelOrModels)
-        .forEach((model: JSONAPIData) => {
+        (included || []).concat(modelOrModels).forEach((model: JSONAPIData) => {
           this.dataLoader.prime({ type: model.type, id: model.id }, model);
           const alias = TYPE_ALIASES.get(model.type);
           if (alias) {
             this.dataLoader.prime({ type: alias, id: model.id }, model);
           }
         });
-      return response;
-    }, (error) => Promise.reject(error));
+        return response;
+      },
+      (error) => Promise.reject(error),
+    );
   }
 }

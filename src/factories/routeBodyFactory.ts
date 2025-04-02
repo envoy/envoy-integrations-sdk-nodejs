@@ -8,23 +8,21 @@ export const routeBodyFactoryDefaultIds = {
 };
 
 export type RouteBodyFactoryOptions<Config, Params, Payload> = {
-  config: Partial<Config>,
-  params: Params,
-  payload: Payload,
-  scope?: Array<EnvoyUserAPIScope>,
-  locationId?: string,
-  companyId?: string,
-  zoneId?: string,
-  route?: string,
+  config: Partial<Config>;
+  params: Params;
+  payload: Payload;
+  scope?: Array<EnvoyUserAPIScope>;
+  locationId?: string;
+  companyId?: string;
+  zoneId?: string;
+  route?: string;
 };
 
 export default function routeBodyFactory<
   Config extends Record<string, unknown> = Record<string, never>,
   Params extends Record<string, unknown> = Record<string, never>,
   Payload extends Record<string, unknown> = Record<string, never>,
-  >(
-  options: RouteBodyFactoryOptions<Config, Params, Payload>,
-) {
+>(options: RouteBodyFactoryOptions<Config, Params, Payload>) {
   return {
     meta: routeMetaFactory<Config, Params>(
       options.route || '',

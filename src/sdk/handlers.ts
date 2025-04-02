@@ -1,9 +1,4 @@
-import {
-  NextFunction,
-  RequestHandler,
-  Request,
-  Response,
-} from 'express';
+import { NextFunction, RequestHandler, Request, Response } from 'express';
 import {
   EnvoyEntryEventRequest,
   EnvoyEventRequest,
@@ -32,78 +27,100 @@ type Result = Promise<void> | void;
  * Handle an entry event, such as `entry_sign_in`.
  * @category Handler
  */
-export type EntryEventHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyEntryEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+export type EntryEventHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyEntryEventRequest<Config> & Additions,
+  res: EnvoyResponse,
+) => Result;
 
 /**
  * Handle an invite event, such as `invite_created`.
  * @category Handler
  */
-export type InviteEventHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyInviteEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+export type InviteEventHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyInviteEventRequest<Config> & Additions,
+  res: EnvoyResponse,
+) => Result;
 
 /**
  * Handle an location event, such as `location_capacity_updated`.
  * @category Handler
  */
-export type LocationEventHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyLocationEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+export type LocationEventHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyLocationEventRequest<Config> & Additions,
+  res: EnvoyResponse,
+) => Result;
 
 /**
  * Handle an notification event.
  * @category Handler
  */
-export type NotificationEventHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyNotificationEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+export type NotificationEventHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyNotificationEventRequest<Config> & Additions,
+  res: EnvoyResponse,
+) => Result;
 
 /**
  * Handle a takeover event.
  * @category Handler
  */
-export type TakeoverEventHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyTakeoverEventRequest<Config> & Additions, res: EnvoyResponse) => Result;
+export type TakeoverEventHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyTakeoverEventRequest<Config> & Additions,
+  res: EnvoyResponse,
+) => Result;
 
 /**
  * Handle a `plugin_uninstalled` event for cleaning up.
  * @category Handler
  */
-export type PluginUninstalledEventHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyEventRequest<'plugin_uninstalled', never, Config> & Additions, res: EnvoyResponse) => Result;
+export type PluginUninstalledEventHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyEventRequest<'plugin_uninstalled', never, Config> & Additions,
+  res: EnvoyResponse,
+) => Result;
 
 /**
  * Handle a "migration" route.
  * @category Handler
  */
-export type MigrationRouteHandler<OldConfig = SomeObject, NewConfig = SomeObject, Additions = SomeObject> =
-  (req: EnvoyMigrationRouteRequest<OldConfig> & Additions, res: EnvoyResponse<NewConfig>) => Result;
+export type MigrationRouteHandler<OldConfig = SomeObject, NewConfig = SomeObject, Additions = SomeObject> = (
+  req: EnvoyMigrationRouteRequest<OldConfig> & Additions,
+  res: EnvoyResponse<NewConfig>,
+) => Result;
 
 /**
  * Handle an "options" route.
  * @category Handler
  */
-export type OptionsRouteHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyOptionsRouteRequest<Config> & Additions, res: EnvoyOptionsRouteResponse) => Result;
+export type OptionsRouteHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyOptionsRouteRequest<Config> & Additions,
+  res: EnvoyOptionsRouteResponse,
+) => Result;
 
 /**
  * Handle a "remote value" route.
  * @category Handler
  */
-export type RemoteValueRouteHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoyRemoteValueRouteRequest<Config> & Additions, res: EnvoyRemoteValueRouteResponse) => Result;
+export type RemoteValueRouteHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoyRemoteValueRouteRequest<Config> & Additions,
+  res: EnvoyRemoteValueRouteResponse,
+) => Result;
 
 /**
  * Handle a "selected values" route.
  * @category Handler
  */
-export type SelectedValuesRouteHandler<Config = SomeObject, Additions = SomeObject> =
-  (req: EnvoySelectedValuesRouteRequest<Config> & Additions, res: EnvoySelectedValuesRouteResponse) => Result;
+export type SelectedValuesRouteHandler<Config = SomeObject, Additions = SomeObject> = (
+  req: EnvoySelectedValuesRouteRequest<Config> & Additions,
+  res: EnvoySelectedValuesRouteResponse,
+) => Result;
 
 /**
  * Handle a "validation" route.
  * @category Handler
  */
-export type ValidationRouteHandler<Config = SomeObject, Payload = SomeObject, Additions = SomeObject> =
-  (req: EnvoyValidationRouteRequest<Payload, Config> & Additions, res: EnvoyValidationRouteResponse<Config>) => Result;
+export type ValidationRouteHandler<Config = SomeObject, Payload = SomeObject, Additions = SomeObject> = (
+  req: EnvoyValidationRouteRequest<Payload, Config> & Additions,
+  res: EnvoyValidationRouteResponse<Config>,
+) => Result;
 
 /**
  * Wraps any express.js-based handlers
@@ -112,11 +129,15 @@ export type ValidationRouteHandler<Config = SomeObject, Payload = SomeObject, Ad
  * @category Handler
  */
 // eslint-disable-next-line max-len
-export function asyncHandler<Req extends Request, Res extends Response>(handler: (req: Req, res: Res) => Result): RequestHandler {
+export function asyncHandler<Req extends Request, Res extends Response>(
+  handler: (req: Req, res: Res) => Result,
+): RequestHandler {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return (req: Req, res: Res, next: NextFunction): void => {
-    void Promise.resolve().then(() => handler(req, res)).catch(next);
+    void Promise.resolve()
+      .then(() => handler(req, res))
+      .catch(next);
   };
 }
 
@@ -125,10 +146,9 @@ export function asyncHandler<Req extends Request, Res extends Response>(handler:
  *
  * @category Handler
  */
-export function entryEventHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: EntryEventHandler<Config, Additions>) {
+export function entryEventHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: EntryEventHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -137,10 +157,9 @@ export function entryEventHandler<
  *
  * @category Handler
  */
-export function inviteEventHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: InviteEventHandler<Config, Additions>) {
+export function inviteEventHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: InviteEventHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -149,10 +168,9 @@ export function inviteEventHandler<
  *
  * @category Handler
  */
-export function locationEventHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: LocationEventHandler<Config, Additions>) {
+export function locationEventHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: LocationEventHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -161,11 +179,9 @@ export function locationEventHandler<
  *
  * @category Handler
  */
-export function migrationRouteHandler<
-  OldConfig,
-  NewConfig,
-  Additions = SomeObject,
-  >(handler: MigrationRouteHandler<OldConfig, NewConfig, Additions>) {
+export function migrationRouteHandler<OldConfig, NewConfig, Additions = SomeObject>(
+  handler: MigrationRouteHandler<OldConfig, NewConfig, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -174,10 +190,9 @@ export function migrationRouteHandler<
  *
  * @category Handler
  */
-export function notificationEventHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: NotificationEventHandler<Config, Additions>) {
+export function notificationEventHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: NotificationEventHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -186,10 +201,9 @@ export function notificationEventHandler<
  *
  * @category Handler
  */
-export function takeoverEventHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: TakeoverEventHandler<Config, Additions>) {
+export function takeoverEventHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: TakeoverEventHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -198,10 +212,9 @@ export function takeoverEventHandler<
  *
  * @category Handler
  */
-export function optionsRouteHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: OptionsRouteHandler<Config, Additions>) {
+export function optionsRouteHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: OptionsRouteHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -210,10 +223,9 @@ export function optionsRouteHandler<
  *
  * @category Handler
  */
-export function pluginUninstalledEventHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: PluginUninstalledEventHandler<Config, Additions>) {
+export function pluginUninstalledEventHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: PluginUninstalledEventHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -222,10 +234,9 @@ export function pluginUninstalledEventHandler<
  *
  * @category Handler
  */
-export function remoteValueRouteHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: RemoteValueRouteHandler<Config, Additions>) {
+export function remoteValueRouteHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: RemoteValueRouteHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -234,10 +245,9 @@ export function remoteValueRouteHandler<
  *
  * @category Handler
  */
-export function selectedValuesRouteHandler<
-  Config = SomeObject,
-  Additions = SomeObject,
-  >(handler: SelectedValuesRouteHandler<Config, Additions>) {
+export function selectedValuesRouteHandler<Config = SomeObject, Additions = SomeObject>(
+  handler: SelectedValuesRouteHandler<Config, Additions>,
+) {
   return asyncHandler(handler);
 }
 
@@ -246,10 +256,8 @@ export function selectedValuesRouteHandler<
  *
  * @category Handler
  */
-export function validationRouteHandler<
-  Config = SomeObject,
-  Payload = SomeObject,
-  Additions = SomeObject,
-  >(handler: ValidationRouteHandler<Config, Payload, Additions>) {
+export function validationRouteHandler<Config = SomeObject, Payload = SomeObject, Additions = SomeObject>(
+  handler: ValidationRouteHandler<Config, Payload, Additions>,
+) {
   return asyncHandler(handler);
 }

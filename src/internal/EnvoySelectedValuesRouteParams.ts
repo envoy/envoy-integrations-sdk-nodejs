@@ -1,5 +1,5 @@
 type EnvoySelectedValuesRouteParams = {
-  value: Array<string> | string,
+  value: Array<string> | string;
 };
 
 export default EnvoySelectedValuesRouteParams;

@@ -27,7 +27,7 @@ function envoyAxiosRequestLogger(config: AxiosRequestConfig) {
       default:
         log(`${boldMethodText} ${method}\n`);
         break;
-    };
+    }
   }
   if (config?.baseURL && config?.url) {
     log(`${chalk.bold('URL')}: ${config.baseURL}/${config.url}\n`);
@@ -79,7 +79,7 @@ function envoyAxiosResponseLogger(response: AxiosResponse) {
       default:
         log(`${boldMethodText} ${method}\n`);
         break;
-    };
+    }
   }
   if (response?.request?.baseURL && response?.request?.url) {
     log(`${chalk.bold('Request URL')}: ${response.request.baseURL}/${response.request.url}\n`);
@@ -133,7 +133,7 @@ function envoyAxiosErrorLogger(error: AxiosError) {
       default:
         log(`${boldMethodText} ${method}\n`);
         break;
-    };
+    }
   }
   if (error?.request?.baseURL && error?.request?.url) {
     log(`${chalk.bold('Request URL')}: ${error.request.baseURL}/${error.request.url}\n`);

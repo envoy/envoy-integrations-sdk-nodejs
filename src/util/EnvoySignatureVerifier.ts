@@ -6,10 +6,10 @@ import { envoyClientSecret } from '../constants';
  * @category Helper
  */
 export type EnvoySignatureVerifierOptions = {
-  algorithm: 'sha256' | string,
-  encoding: BinaryToTextEncoding,
-  secret: string,
-  header: 'x-envoy-signature' | string,
+  algorithm: 'sha256' | string;
+  encoding: BinaryToTextEncoding;
+  secret: string;
+  header: 'x-envoy-signature' | string;
 };
 
 const defaultOptions: EnvoySignatureVerifierOptions = {
@@ -39,12 +39,7 @@ export default class EnvoySignatureVerifier {
    * Verifies that the signature provided matches the request body.
    */
   verify(req: Request, rawBody: Buffer): boolean {
-    const {
-      algorithm,
-      encoding,
-      secret,
-      header,
-    } = this.options;
+    const { algorithm, encoding, secret, header } = this.options;
 
     if (!req.headers[header]) {
       return false;
@@ -53,9 +48,6 @@ export default class EnvoySignatureVerifier {
     const computedHmac = crypto.createHmac(algorithm, secret);
     computedHmac.update(rawBody);
 
-    return crypto.timingSafeEqual(
-      Buffer.from(receivedDigest),
-      Buffer.from(computedHmac.digest(encoding)),
-    );
+    return crypto.timingSafeEqual(Buffer.from(receivedDigest), Buffer.from(computedHmac.digest(encoding)));
   }
 }
