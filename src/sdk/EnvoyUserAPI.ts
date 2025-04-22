@@ -17,7 +17,7 @@ import { UserModel } from '../resources/UserResource';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 import { sanitizeAxiosError } from '../util/axiosConstructor';
-import { ReservationCreationAttributes, ReservationModel } from "../resources/ReservationResource";
+import { ReservationCreationAttributes, ReservationModel } from '../resources/ReservationResource';
 
 export type EnvoyUserAPIScope =
   'flows.read' |
@@ -197,34 +197,34 @@ export default class EnvoyUserAPI extends EnvoyAPI {
   }
 
   async createReservation(reservationDetails: ReservationCreationAttributes): Promise<ReservationModel> {
-    let createReservationBody = {
+    const createReservationBody = {
       data: {
         relationships: {
           user: {
             data: {
               type: 'users',
-              id: reservationDetails.userId
-            }},
+              id: reservationDetails.userId,
+            } },
           ...(reservationDetails.locationId && {
-              location: {
-                data: {
-                  type: 'locations',
-                  id: reservationDetails.locationId
-                }
-              }
-            }
-          )
+            location: {
+              data: {
+                type: 'locations',
+                id: reservationDetails.locationId,
+              },
+            },
+          }
+          ),
         },
         attributes: {
-            'start-time': reservationDetails.startTime,
-            ...(reservationDetails.endTime && {
-                'end-time': reservationDetails.endTime
-            }),
-            'booking-source': 'EXTERNAL_API',
-            'booking-type': 'visitor'
-        }
-      }
-    }
+          'start-time': reservationDetails.startTime,
+          ...(reservationDetails.endTime && {
+            'end-time': reservationDetails.endTime,
+          }),
+          'booking-source': 'EXTERNAL_API',
+          'booking-type': 'visitor',
+        },
+      },
+    };
     const { data } = await this.axios({
       method: 'POST',
       url: '/a/rms/reservations',

@@ -17,6 +17,8 @@
   "scripts": {
     "test": "jest",
     "docs:generate": "typedoc",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
     "prepublishOnly": "tsc",
     "compile": "tsc"
   },

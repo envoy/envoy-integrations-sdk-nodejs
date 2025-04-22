@@ -38,5 +38,5 @@ module.exports = {
       }
     }
   ],
-  ignorePatterns: ["*.js"]
+  ignorePatterns: ['*.js', '*.d.ts'],
 };
