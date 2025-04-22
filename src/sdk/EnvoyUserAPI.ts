@@ -1,4 +1,3 @@
-import { Url } from 'url';
 import axios from 'axios';
 import EnvoyAPI from '../base/EnvoyAPI';
 import { AgreementPageModel } from '../resources/AgreementPageResource';

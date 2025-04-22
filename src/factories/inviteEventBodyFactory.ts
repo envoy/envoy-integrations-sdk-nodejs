@@ -35,7 +35,6 @@ export function invitePayloadFactory(
   options: InvitePayloadFactoryOptions,
   ids: Partial<typeof inviteEventBodyFactoryDefaultIds> = inviteEventBodyFactoryDefaultIds,
 ): Sync.Factory<InvitePayload> {
-  const signedInDate = faker.date.past();
   const allIds = { ...inviteEventBodyFactoryDefaultIds, ...ids };
   return Sync.makeFactory<InvitePayload>({
     id: each((i) => `${i + 1}`),
