@@ -75,6 +75,9 @@ export default class EnvoyAPI {
       (included || [])
         .concat(modelOrModels)
         .forEach((model: JSONAPIData) => {
+          if (!model) {
+            throw new Error('The data you are looking for may not exist.');
+          }
           this.dataLoader.prime({ type: model.type, id: model.id }, model);
           const alias = TYPE_ALIASES.get(model.type);
           if (alias) {
