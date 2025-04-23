@@ -1,11 +1,5 @@
 import bodyParser from 'body-parser';
-import {
-  Request,
-  Response,
-  NextFunction,
-  ErrorRequestHandler,
-  RequestHandler,
-} from 'express';
+import { Request, Response, NextFunction, ErrorRequestHandler, RequestHandler } from 'express';
 
 import HttpStatus from '../internal/HttpStatus';
 import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from '../util/EnvoySignatureVerifier';
@@ -43,7 +37,7 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
         if (now > threshold) {
           const { access_token: rawAccessToken, expires_in: expiresIn } = await EnvoyPluginAPI.loginAsPlugin();
           accessToken = rawAccessToken;
-          threshold = now + (expiresIn * 1000) - (1000 * 60 * 10);
+          threshold = now + expiresIn * 1000 - 1000 * 60 * 10;
         }
         const envoyRequest = req as EnvoyRequest;
         const envoyResponse = res as EnvoyResponse;
@@ -61,7 +55,11 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
         /**
          * Respond with "ignored" if no action will be performed.
          */
-        envoyResponse.sendIgnored = (message = '', debugInfo: unknown = {}, ...attachments: Array<EnvoyPluginJobAttachment>) => {
+        envoyResponse.sendIgnored = (
+          message = '',
+          debugInfo: unknown = {},
+          ...attachments: Array<EnvoyPluginJobAttachment>
+        ) => {
           envoyResponse.statusCode = HttpStatus.IGNORED;
           envoyResponse.setHeader('Content-Type', 'application/json');
           envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
@@ -70,7 +68,11 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
         /**
          * Respond with "failed" in case of errors.
          */
-        envoyResponse.sendFailed = (message = '', debugInfo: unknown = {}, ...attachments: Array<EnvoyPluginJobAttachment>) => {
+        envoyResponse.sendFailed = (
+          message = '',
+          debugInfo: unknown = {},
+          ...attachments: Array<EnvoyPluginJobAttachment>
+        ) => {
           envoyResponse.statusCode = HttpStatus.FAILED;
           envoyResponse.setHeader('Content-Type', 'application/json');
           envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));

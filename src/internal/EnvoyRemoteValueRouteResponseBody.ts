@@ -1,4 +1,4 @@
 type EnvoyRemoteValueRouteResponseBody = {
-  value: string,
+  value: string;
 };
 export default EnvoyRemoteValueRouteResponseBody;

@@ -93,8 +93,8 @@ export type InviteModel = JSONAPIModel<InviteAttributes, InviteRelationships, 'i
 type InviteCreationRequiredRelationships = 'location'; // surprising, but flow is not required. if not provided, it will be defaulted
 type InviteCreationProhibitedRelationships = 'creator';
 type InviteCreationOptionalRelationships = Exclude<
-InviteRelationships,
-InviteCreationRequiredRelationships | InviteCreationProhibitedRelationships
+  InviteRelationships,
+  InviteCreationRequiredRelationships | InviteCreationProhibitedRelationships
 >;
 
 /**
@@ -102,8 +102,8 @@ InviteCreationRequiredRelationships | InviteCreationProhibitedRelationships
  * We do this by first omitting the relationships field from JSONAPIModel, then adding it back in with modified type.
  */
 export type InviteCreationModel = Omit<
-JSONAPIModel<InviteCreationAttributes, InviteRelationships, 'invites', undefined>,
-'relationships'
+  JSONAPIModel<InviteCreationAttributes, InviteRelationships, 'invites', undefined>,
+  'relationships'
 > & {
   relationships: {
     [key in InviteCreationRequiredRelationships]: {

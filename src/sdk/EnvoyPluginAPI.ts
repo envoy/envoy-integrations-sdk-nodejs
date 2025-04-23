@@ -70,7 +70,11 @@ export default class EnvoyPluginAPI extends EnvoyAPI {
   /**
    * Gets a plugin access token using `client_credentials` as the grant type.
    */
-  static async loginAsPlugin(id = envoyClientId, secret = envoyClientSecret, scope: string[] = ['plugin', 'token.refresh']): Promise<EnvoyMetaAuth> {
+  static async loginAsPlugin(
+    id = envoyClientId,
+    secret = envoyClientSecret,
+    scope: string[] = ['plugin', 'token.refresh'],
+  ): Promise<EnvoyMetaAuth> {
     try {
       const { data } = await axios({
         auth: {

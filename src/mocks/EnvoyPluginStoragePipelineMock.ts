@@ -39,14 +39,22 @@ export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePi
           }
           case 'set_unique':
             try {
-              const value = EnvoyPluginStoragePipelineMock.setUnique(command.key, command as EnvoyStorageSetUniqueOptions, isGlobal);
+              const value = EnvoyPluginStoragePipelineMock.setUnique(
+                command.key,
+                command as EnvoyStorageSetUniqueOptions,
+                isGlobal,
+              );
               return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
             } catch (err) {
               return null;
             }
           case 'set_unique_num': {
             try {
-              const value = EnvoyPluginStoragePipelineMock.setUniqueNum(command.key, command as EnvoyStorageSetUniqueNumOptions, isGlobal);
+              const value = EnvoyPluginStoragePipelineMock.setUniqueNum(
+                command.key,
+                command as EnvoyStorageSetUniqueNumOptions,
+                isGlobal,
+              );
               return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
             } catch (err) {
               return null;
@@ -101,9 +109,9 @@ export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePi
     return value;
   }
 
-  static setUnique(key:string, options = DEFAULT_UNIQUE_OPTIONS, isGlobal = false) {
+  static setUnique(key: string, options = DEFAULT_UNIQUE_OPTIONS, isGlobal = false) {
     key = EnvoyPluginStoragePipelineMock.normalizeKey(key, isGlobal);
-    const chars = (options.chars && options.chars.length) ? options.chars : UNIQUE_OPTIONS_DEFAULT_CHARS;
+    const chars = options.chars && options.chars.length ? options.chars : UNIQUE_OPTIONS_DEFAULT_CHARS;
     const size = options.size || UNIQUE_OPTIONS_DEFAULT_SIZE;
     if (!chars || !size) {
       throw new Error('Invalid "chars" or "size" arguments');

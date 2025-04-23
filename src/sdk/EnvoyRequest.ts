@@ -24,7 +24,7 @@ export const VERIFIED = Symbol('verified');
  * @internal
  */
 export interface VerifiedRequest extends Request {
-  [VERIFIED]: boolean
+  [VERIFIED]: boolean;
 }
 
 /**
@@ -36,7 +36,7 @@ export interface VerifiedRequest extends Request {
  * @category Base
  */
 export interface EnvoyBaseRequest<Meta = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
-  envoy: EnvoyPluginSDK<Meta, Payload>
+  envoy: EnvoyPluginSDK<Meta, Payload>;
 }
 
 /**
@@ -48,47 +48,61 @@ export type EnvoyRouteRequest<
   Payload = unknown,
   Config = Record<string, unknown>,
   Params = Record<string, unknown>,
-  > = EnvoyBaseRequest<EnvoyRouteMeta<Config, Params>, Payload>;
+> = EnvoyBaseRequest<EnvoyRouteMeta<Config, Params>, Payload>;
 
 /**
  * Use to type your `req` object in Envoy "migration" route handlers.
  *
  * @category Request
  */
-export type EnvoyMigrationRouteRequest<OldConfig = Record<string, unknown>> =
-  EnvoyRouteRequest<never, OldConfig, never>;
+export type EnvoyMigrationRouteRequest<OldConfig = Record<string, unknown>> = EnvoyRouteRequest<
+  never,
+  OldConfig,
+  never
+>;
 
 /**
  * Use to type your `req` object in Envoy "options URL" route handlers.
  *
  * @category Request
  */
-export type EnvoyOptionsRouteRequest<Config = Record<string, unknown>> =
-  EnvoyRouteRequest<EnvoyOptionsRouteResponseBody, Config, EnvoyOptionsRouteParams>;
+export type EnvoyOptionsRouteRequest<Config = Record<string, unknown>> = EnvoyRouteRequest<
+  EnvoyOptionsRouteResponseBody,
+  Config,
+  EnvoyOptionsRouteParams
+>;
 
 /**
  * Use to type your `req` object in Envoy "selected values URL" route handlers.
  *
  * @category Request
  */
-export type EnvoySelectedValuesRouteRequest<Config = Record<string, unknown>> =
-  EnvoyRouteRequest<EnvoySelectedValuesRouteResponseBody, Config, EnvoySelectedValuesRouteParams>;
+export type EnvoySelectedValuesRouteRequest<Config = Record<string, unknown>> = EnvoyRouteRequest<
+  EnvoySelectedValuesRouteResponseBody,
+  Config,
+  EnvoySelectedValuesRouteParams
+>;
 
 /**
  * Use to type your `req` object in Envoy "remote value URL" route handlers.
  *
  * @category Request
  */
-export type EnvoyRemoteValueRouteRequest<Config = Record<string, unknown>> =
-  EnvoyRouteRequest<EnvoyRemoteValueRouteResponseBody, Config, never>;
+export type EnvoyRemoteValueRouteRequest<Config = Record<string, unknown>> = EnvoyRouteRequest<
+  EnvoyRemoteValueRouteResponseBody,
+  Config,
+  never
+>;
 
 /**
  * Use to type your `req` object in Envoy "validation URL" route handlers.
  *
  * @category Request
  */
-export type EnvoyValidationRouteRequest<Payload = Record<string, unknown>, Config = Record<string, unknown>> =
-  EnvoyRouteRequest<Payload, Config, never>;
+export type EnvoyValidationRouteRequest<
+  Payload = Record<string, unknown>,
+  Config = Record<string, unknown>,
+> = EnvoyRouteRequest<Payload, Config, never>;
 
 /**
  * Base type for event requests.
@@ -96,8 +110,11 @@ export type EnvoyValidationRouteRequest<Payload = Record<string, unknown>, Confi
  *
  * @category Request
  */
-export type EnvoyEventRequest<Event extends string = string, Payload = unknown, Config = Record<string, unknown>> =
-  EnvoyBaseRequest<EnvoyEventMeta<Event, Config>, Payload>;
+export type EnvoyEventRequest<
+  Event extends string = string,
+  Payload = unknown,
+  Config = Record<string, unknown>,
+> = EnvoyBaseRequest<EnvoyEventMeta<Event, Config>, Payload>;
 
 /**
  * Use to type your `req` object in entry event handlers,
@@ -105,8 +122,11 @@ export type EnvoyEventRequest<Event extends string = string, Payload = unknown, 
  *
  * @category Request
  */
-export type EnvoyEntryEventRequest<Config = Record<string, unknown>> =
-  EnvoyEventRequest<EnvoyEntryEvent, EntryPayload, Config>;
+export type EnvoyEntryEventRequest<Config = Record<string, unknown>> = EnvoyEventRequest<
+  EnvoyEntryEvent,
+  EntryPayload,
+  Config
+>;
 
 /**
  * Use to type your `req` object in invite event handlers,
@@ -114,8 +134,11 @@ export type EnvoyEntryEventRequest<Config = Record<string, unknown>> =
  *
  * @category Request
  */
-export type EnvoyInviteEventRequest<Config = Record<string, unknown>> =
-  EnvoyEventRequest<EnvoyInviteEvent, InvitePayload, Config>;
+export type EnvoyInviteEventRequest<Config = Record<string, unknown>> = EnvoyEventRequest<
+  EnvoyInviteEvent,
+  InvitePayload,
+  Config
+>;
 
 /**
  * Use to type your `req` object in location event handlers,
@@ -123,24 +146,33 @@ export type EnvoyInviteEventRequest<Config = Record<string, unknown>> =
  *
  * @category Request
  */
-export type EnvoyLocationEventRequest<Config = Record<string, unknown>> =
-  EnvoyEventRequest<EnvoyLocationEvent, LocationPayload, Config>;
+export type EnvoyLocationEventRequest<Config = Record<string, unknown>> = EnvoyEventRequest<
+  EnvoyLocationEvent,
+  LocationPayload,
+  Config
+>;
 
 /**
  * Use to type your `req` object in your notification event handler.
  *
  * @category Request
  */
-export type EnvoyNotificationEventRequest<Config = Record<string, unknown>> =
-  EnvoyEventRequest<string, NotificationPayload, Config>;
+export type EnvoyNotificationEventRequest<Config = Record<string, unknown>> = EnvoyEventRequest<
+  string,
+  NotificationPayload,
+  Config
+>;
 
 /**
  * Use to type your `req` object in your takeover event handler.
  *
  * @category Request
  */
-export type EnvoyTakeoverEventRequest<Config = Record<string, unknown>> =
-  EnvoyEventRequest<string, TakeoverPayload, Config>;
+export type EnvoyTakeoverEventRequest<Config = Record<string, unknown>> = EnvoyEventRequest<
+  string,
+  TakeoverPayload,
+  Config
+>;
 
 /**
  * You probably won't need to use this type directly.
@@ -149,6 +181,8 @@ export type EnvoyTakeoverEventRequest<Config = Record<string, unknown>> =
  *
  * @category Base
  */
-type EnvoyRequest<Payload = unknown, Config = Record<string, unknown>> =
-  EnvoyBaseRequest<EnvoyRouteMeta<Config> | EnvoyEventMeta<string, Config>, Payload>;
+type EnvoyRequest<Payload = unknown, Config = Record<string, unknown>> = EnvoyBaseRequest<
+  EnvoyRouteMeta<Config> | EnvoyEventMeta<string, Config>,
+  Payload
+>;
 export default EnvoyRequest;

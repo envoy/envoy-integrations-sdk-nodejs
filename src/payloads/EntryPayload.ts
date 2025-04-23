@@ -5,85 +5,81 @@ import JSONAPIData from '../util/json-api/JSONAPIData';
  * @category Event
  */
 type EntryPayload = {
-  id: string,
-  type: 'entries',
+  id: string;
+  type: 'entries';
   attributes: {
-    'full-name': string,
-    'phone-number'?: string,
-    email: string | null,
-    'employee-screening-flow': boolean,
-    host: string | null,
-    'host-email': string | null,
-    'private-notes': string | null,
-    'signed-in-at': string,
-    'signed-out-at'?: string,
+    'full-name': string;
+    'phone-number'?: string;
+    email: string | null;
+    'employee-screening-flow': boolean;
+    host: string | null;
+    'host-email': string | null;
+    'private-notes': string | null;
+    'signed-in-at': string;
+    'signed-out-at'?: string;
     thumbnails: {
-      large: string | null,
-      original: string | null,
-      small: string | null,
-    },
-    'flow-name': string,
-    nda?: string,
+      large: string | null;
+      original: string | null;
+      small: string | null;
+    };
+    'flow-name': string;
+    nda?: string;
     'legal-docs'?: Array<{
-      id: string,
-      url: string,
-      'signed-at': string,
+      id: string;
+      url: string;
+      'signed-at': string;
       agreement: {
-        id: string,
-      },
-    }>,
+        id: string;
+      };
+    }>;
     'user-data': Array<{
-      field: string,
-      value: string | null,
-    }>,
+      field: string;
+      value: string | null;
+    }>;
     'approval-status'?: {
-      status: string,
-      'auto-approved': boolean,
+      status: string;
+      'auto-approved': boolean;
       report: Array<{
-        reason?: string,
-        result: string,
-        source: string,
+        reason?: string;
+        result: string;
+        source: string;
         messages: Array<{
           failure: {
-            text: string,
-            header: string,
-          },
-        }>,
-      }>,
-      blacklistReportUUID?: string,
-    },
-  },
+            text: string;
+            header: string;
+          };
+        }>;
+      }>;
+      blacklistReportUUID?: string;
+    };
+  };
   relationships: {
     location: {
-      data: JSONAPIData<'locations'>,
-    },
+      data: JSONAPIData<'locations'>;
+    };
     'visitor-entrance'?: {
-      data: JSONAPIData<'visitor-entrances'>,
-    },
+      data: JSONAPIData<'visitor-entrances'>;
+    };
     device?: {
-      data: JSONAPIData<'devices'>,
-    },
+      data: JSONAPIData<'devices'>;
+    };
     employee?: {
-      data: JSONAPIData<'employees'>,
-    },
+      data: JSONAPIData<'employees'>;
+    };
     invite?: {
-      data: JSONAPIData<'invites'>,
-    },
+      data: JSONAPIData<'invites'>;
+    };
     flow?: {
-      data: JSONAPIData<'flows'>,
-    },
+      data: JSONAPIData<'flows'>;
+    };
     'agreeable-ndas'?: {
-      data: Array<JSONAPIData<'agreeable-ndas'>>,
-    }
-  }
+      data: Array<JSONAPIData<'agreeable-ndas'>>;
+    };
+  };
 };
 
-export function normalizeEntryPayload(payload : EntryPayload): EntryPayload {
-  const {
-    'signed-in-at': signedInAt,
-    'signed-out-at': signedOutAt,
-    'legal-docs': legalDocs,
-  } = payload.attributes;
+export function normalizeEntryPayload(payload: EntryPayload): EntryPayload {
+  const { 'signed-in-at': signedInAt, 'signed-out-at': signedOutAt, 'legal-docs': legalDocs } = payload.attributes;
   const normalized = { ...payload };
   normalized.attributes['signed-in-at'] = DateTime.fromSQL(signedInAt, { zone: 'UTC' }).toISO();
   if (signedOutAt) {

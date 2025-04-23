@@ -1,9 +1,4 @@
-import {
-  Request,
-  Response,
-  NextFunction,
-  RequestHandler,
-} from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import EnvoyRequest, { EnvoyEntryEventRequest } from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
 
@@ -47,16 +42,14 @@ export function excludedEmployeesFilterMiddleware<Config>(
   return (req: Request, res: Response, next: NextFunction): void => {
     const {
       envoy: {
-        meta: {
-          config,
-        },
+        meta: { config },
         payload,
       },
     } = req as EnvoyEntryEventRequest<Config>;
     if (!payload.attributes['employee-screening-flow']) {
       return next();
     }
-    const excludedEmployees = config[excludeEmployeesKey] as unknown as Array<string> || [];
+    const excludedEmployees = (config[excludeEmployeesKey] as unknown as Array<string>) || [];
     if (!Array.isArray(excludedEmployees)) {
       return next(new Error(`${excludeEmployeesKey} is not an array.`));
     }
@@ -82,12 +75,10 @@ export function inviteOnlyEntryFilterMiddleware<Config>(
   return (req: Request, res: Response, next: NextFunction): void => {
     const {
       envoy: {
-        meta: {
-          config,
-        },
+        meta: { config },
         payload,
       },
-    } = (req as EnvoyEntryEventRequest<Config>);
+    } = req as EnvoyEntryEventRequest<Config>;
     if (!payload.relationships.invite && config[invitesOnlyKey]) {
       return (res as EnvoyResponse).sendIgnored(message);
     }

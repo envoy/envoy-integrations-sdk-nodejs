@@ -4,14 +4,14 @@ export interface ReservationAttributes {
   'is-partial-day': boolean;
   'updated-at': number;
   'is-assignable': boolean;
-  'name': string;
+  name: string;
   'assigned-to': string | null;
   'neighborhood-id': number;
   'created-at': number;
-  'neighborhood': number | null;
+  neighborhood: number | null;
   'parent-desk-id': string | null;
-  'availability': string | null;
-  'enabled': boolean;
+  availability: string | null;
+  enabled: boolean;
   'x-pos': number | null;
   'y-pos': number | null;
 }
@@ -33,6 +33,14 @@ export interface ReservationCreationAttributes {
   };
 }
 
-export type ReservationRelationships = 'location' | 'desk' | 'company' | 'floor' | 'employee' | 'entry' | 'invite' | 'user';
+export type ReservationRelationships =
+  | 'location'
+  | 'desk'
+  | 'company'
+  | 'floor'
+  | 'employee'
+  | 'entry'
+  | 'invite'
+  | 'user';
 
 export type ReservationModel = JSONAPIModel<ReservationAttributes, ReservationRelationships, 'reservations'>;

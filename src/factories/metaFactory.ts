@@ -83,7 +83,7 @@ export function authFactory(): Sync.Factory<EnvoyMetaAuth> {
 export function routeMetaFactory<
   Config extends Record<string, unknown> = Record<string, never>,
   Params extends Record<string, unknown> = Record<string, never>,
-  >(
+>(
   route: string,
   config: Partial<Config>,
   params: Params,
