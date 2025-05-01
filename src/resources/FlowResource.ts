@@ -23,6 +23,7 @@ export interface FlowAttributes {
   enabled: boolean;
   'created-at': string;
   'updated-at': string;
+  type: string;
 }
 
 /**

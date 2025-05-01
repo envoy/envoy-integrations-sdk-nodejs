@@ -29,6 +29,7 @@ import EnvoyValidationRouteResponseBody from './sdk/EnvoyValidationRouteResponse
 import EnvoyJWT from './util/EnvoyJWT';
 import EnvoySignatureVerifier from './util/EnvoySignatureVerifier';
 import JSONAPIData from './util/json-api/JSONAPIData';
+import JSONAPIResponse from './util/json-api/JSONAPIResponse';
 
 export * from './factories/entryEventBodyFactory';
 export * from './factories/eventBodyFactory';
@@ -80,6 +81,7 @@ export {
   EnvoyUserAPI,
   EnvoyValidationRouteResponseBody,
   JSONAPIData,
+  JSONAPIResponse,
   HttpStatus,
   entryEventBodyFactory,
   eventBodyFactory,
