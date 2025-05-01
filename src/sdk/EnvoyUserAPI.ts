@@ -1,4 +1,3 @@
-import { Url } from 'url';
 import axios from 'axios';
 import EnvoyAPI from '../base/EnvoyAPI';
 import { AgreementPageModel } from '../resources/AgreementPageResource';
@@ -10,40 +9,38 @@ import { LocationFilterFields, LocationModel, LocationSortFields } from '../reso
 import { SignInFieldPageModel } from '../resources/SignInFieldPageResource';
 import { SignInFieldModel } from '../resources/SignInFieldResource';
 import JSONAPIPaginationParams from '../util/json-api/JSONAPIPaginationParams';
-import {
-  InviteCreationModel, InviteFilterFields, InviteModel, InviteSortFields,
-} from '../resources/InviteResource';
+import { InviteCreationModel, InviteFilterFields, InviteModel, InviteSortFields } from '../resources/InviteResource';
 import { UserModel } from '../resources/UserResource';
 import { envoyBaseURL, envoyClientId, envoyClientSecret } from '../constants';
 import { EnvoyMetaAuth } from './EnvoyMeta';
 import { sanitizeAxiosError } from '../util/axiosConstructor';
-import { ReservationCreationAttributes, ReservationModel } from "../resources/ReservationResource";
+import { ReservationCreationAttributes, ReservationModel } from '../resources/ReservationResource';
 
 export type EnvoyUserAPIScope =
-  'flows.read' |
-  'entries.read' |
-  'entries.write' |
-  'invites.read' |
-  'invites.write' |
-  'invites.attest' |
-  'locations.read' |
-  'companies.read' |
-  'agreements.read' |
-  'agreements.write' |
-  'sign-in-field-pages.read' |
-  'sign-in-fields.read' |
-  'sign-in-fields.write' |
-  'employees.read' |
-  'employees.write' |
-  'badges.read' |
-  'blacklist-filters.read' |
-  'blacklist-filters.write' |
-  'tickets.read' |
-  'tickets.write' |
-  'spaces.read' |
-  'reservations.read' |
-  'reservations.write' |
-  string;
+  | 'flows.read'
+  | 'entries.read'
+  | 'entries.write'
+  | 'invites.read'
+  | 'invites.write'
+  | 'invites.attest'
+  | 'locations.read'
+  | 'companies.read'
+  | 'agreements.read'
+  | 'agreements.write'
+  | 'sign-in-field-pages.read'
+  | 'sign-in-fields.read'
+  | 'sign-in-fields.write'
+  | 'employees.read'
+  | 'employees.write'
+  | 'badges.read'
+  | 'blacklist-filters.read'
+  | 'blacklist-filters.write'
+  | 'tickets.read'
+  | 'tickets.write'
+  | 'spaces.read'
+  | 'reservations.read'
+  | 'reservations.write'
+  | string;
 
 /**
  * API endpoints for *user-scoped* tokens.
@@ -122,7 +119,11 @@ export default class EnvoyUserAPI extends EnvoyAPI {
         limit: 1,
       },
     };
-    const { data: { data: [employee] } } = await this.axios.get('/api/v3/employees', {
+    const {
+      data: {
+        data: [employee],
+      },
+    } = await this.axios.get('/api/v3/employees', {
       params: {
         include,
         ...paginationParams,
@@ -197,34 +198,34 @@ export default class EnvoyUserAPI extends EnvoyAPI {
   }
 
   async createReservation(reservationDetails: ReservationCreationAttributes): Promise<ReservationModel> {
-    let createReservationBody = {
+    const createReservationBody = {
       data: {
         relationships: {
           user: {
             data: {
               type: 'users',
-              id: reservationDetails.userId
-            }},
+              id: reservationDetails.userId,
+            },
+          },
           ...(reservationDetails.locationId && {
-              location: {
-                data: {
-                  type: 'locations',
-                  id: reservationDetails.locationId
-                }
-              }
-            }
-          )
+            location: {
+              data: {
+                type: 'locations',
+                id: reservationDetails.locationId,
+              },
+            },
+          }),
         },
         attributes: {
-            'start-time': reservationDetails.startTime,
-            ...(reservationDetails.endTime && {
-                'end-time': reservationDetails.endTime
-            }),
-            'booking-source': 'EXTERNAL_API',
-            'booking-type': 'visitor'
-        }
-      }
-    }
+          'start-time': reservationDetails.startTime,
+          ...(reservationDetails.endTime && {
+            'end-time': reservationDetails.endTime,
+          }),
+          'booking-source': 'EXTERNAL_API',
+          'booking-type': 'visitor',
+        },
+      },
+    };
     const { data } = await this.axios({
       method: 'POST',
       url: '/a/rms/reservations',

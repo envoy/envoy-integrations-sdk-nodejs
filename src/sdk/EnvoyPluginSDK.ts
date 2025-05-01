@@ -13,8 +13,8 @@ import InvitePayload, { normalizeInvitePayload } from '../payloads/InvitePayload
  * @category Request
  */
 export interface EnvoyRequestBody<Meta, Payload> {
-  meta: Meta,
-  payload: Payload,
+  meta: Meta;
+  payload: Payload;
 }
 
 /**
@@ -96,7 +96,7 @@ export default class EnvoyPluginSDK<Meta = unknown, Payload = unknown> {
     const meta = this.meta as unknown as EnvoyRouteMeta;
     const { auth } = meta;
     let accessToken: string | undefined = auth?.access_token;
-    if (!accessToken && ('forwarded_bearer_token' in meta)) {
+    if (!accessToken && 'forwarded_bearer_token' in meta) {
       accessToken = meta.forwarded_bearer_token;
     }
     if (!accessToken) {

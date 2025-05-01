@@ -12,20 +12,21 @@ npm install --save @envoy/envoy-integrations-sdk
 
 The SDK relies on a few environment variables:
 
-* `ENVOY_CLIENT_ID` - can be found in the Integration Builder
-* `ENVOY_CLIENT_SECRET` - can be found in the Integration Builder
-* `ENVOY_BASE_URL` - \(optional in production\) the URL to Envoy's API
-* `JWT_SECRET` - \(optional\) used if encoding/decoding JWTs
+- `ENVOY_CLIENT_ID` - can be found in the Integration Builder
+- `ENVOY_CLIENT_SECRET` - can be found in the Integration Builder
+- `ENVOY_BASE_URL` - \(optional in production\) the URL to Envoy's API
+- `JWT_SECRET` - \(optional\) used if encoding/decoding JWTs
 
 Locally, these environment variables can be set using a `.env` file.
 
 ### Getting Started
 
-View our Node.js [quickstart guide](https://developers.envoy.com/hub/docs/nodejs).  
+View our Node.js [quickstart guide](https://developers.envoy.com/hub/docs/nodejs).
 
 ### Usage
 
 #### Define your `config`
+
 When customers go through your integration's setup steps, that info is saved in a `config` object that is sent along with every request Envoy makes to your integration.
 
 Defining this object as a specific type allows us to safely type the various handlers that will use those values.
@@ -33,19 +34,21 @@ Defining this object as a specific type allows us to safely type the various han
 ```typescript
 // defs/Config.ts
 type Config = {
-  greeting: string
+  greeting: string;
 };
 export default Config;
 ```
 
 #### Implement setup routes
+
 As customers go through the setup steps of your integration, they may trigger several requests to your integration for things like:
+
 - loading dropdown options
 - loading text fields with remote data
 - validating submitted step data
 
 Below, we'll implement a route that will load a list of greetings into a dropdown in our setup steps.
- 
+
 View the other types of handlers [here](docs#handler-functions).
 
 ```typescript
@@ -71,6 +74,7 @@ export default optionsRouteHandler((req, res) => {
 ```
 
 #### Implement event handlers
+
 Your integration can respond to several Envoy events. Below, we'll implement a simple event handler for an `entry_sign_in` event.
 
 All it does is to take the greeting that the customer chose during setup, and displays it in the Envoy Dashboard when a visitor signs in.
@@ -91,18 +95,19 @@ export default entryEventHandler<Config>(async (req, res) => {
 });
 ```
 
-
 #### Setup your `express.js` app
+
 Use the `envoyMiddleware` to get an instance of [EnvoyPluginSDK](docs/classes/envoypluginsdk.md) attached to every request.
 
 View the other types of middleware [here](docs#middleware-functions).
+
 ```typescript
 // index.ts
 import express from 'express';
 import { envoyMiddleware, errorMiddleware } from '@envoy/envoy-integrations-sdk';
 
 import greetingOptions from './greetingOptions';
-import entrySignIn from './entrySignIn'
+import entrySignIn from './entrySignIn';
 
 const app = express();
 app.use(envoyMiddleware());
@@ -113,12 +118,14 @@ app.listen(process.env.PORT);
 ```
 
 #### More examples
+
 Here's some more things you can do with the `req.envoy` object.
+
 ```typescript
- /**
+/**
  * @type EnvoyPluginSDK
  */
-const { envoy } = req;  // "envoy" is the SDK
+const { envoy } = req; // "envoy" is the SDK
 const {
   meta, // the platform event request_meta object
   payload, // the platform event request_body object
@@ -190,7 +197,10 @@ res.sendFailed('This step has failed validation.'); // prevent the installer fro
 /**
  * If in an options route:
  */
-res.send([ { label: 'Foo', value: 1 }, { label: 'Bar', value: 2 } ]); // display these options in the dropdown.
+res.send([
+  { label: 'Foo', value: 1 },
+  { label: 'Bar', value: 2 },
+]); // display these options in the dropdown.
 
 /**
  * If in an event handler:
@@ -204,14 +214,12 @@ res.sendIgnored("We're not gonna do this one, sorry.", { hello: 'world' }); // d
 res.sendFailed('We tried, but failed.', { hello: 'world' }); // we cant continue with this job.
 
 /**
-* Implement Axios Loggers
-*/
+ * Implement Axios Loggers
+ */
 this.axios.interceptors.request.use(envoyAxiosRequestLogger, envoyAxiosErrorLogger); // Request interceptor
 
 this.axios.interceptors.response.use(envoyAxiosResponseLogger, envoyAxiosErrorLogger); // Response interceptor
-
 ```
-
 
 ## SDK Reference
 

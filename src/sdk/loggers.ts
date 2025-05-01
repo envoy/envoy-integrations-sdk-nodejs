@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import util from 'util';
 
 function envoyAxiosRequestLogger(config: AxiosRequestConfig) {
-  const log = console.log;
+  const { log } = console;
   log('---------------- Axios Request ----------------\n');
   if (config?.method) {
     const boldMethodText = chalk.bold('Method:');
@@ -27,7 +27,7 @@ function envoyAxiosRequestLogger(config: AxiosRequestConfig) {
       default:
         log(`${boldMethodText} ${method}\n`);
         break;
-    };
+    }
   }
   if (config?.baseURL && config?.url) {
     log(`${chalk.bold('URL')}: ${config.baseURL}/${config.url}\n`);
@@ -55,11 +55,11 @@ function envoyAxiosRequestLogger(config: AxiosRequestConfig) {
 }
 
 function envoyAxiosResponseLogger(response: AxiosResponse) {
-  const log = console.log;
+  const { log } = console;
   log('---------------- Axios Response ----------------\n');
   if (response?.request?.method) {
     const boldMethodText = chalk.bold('Method:');
-    const method = response.request.method;
+    const { method } = response.request;
     switch (method) {
       case 'GET':
         log(`${boldMethodText} ${chalk.green(method)}\n`);
@@ -79,7 +79,7 @@ function envoyAxiosResponseLogger(response: AxiosResponse) {
       default:
         log(`${boldMethodText} ${method}\n`);
         break;
-    };
+    }
   }
   if (response?.request?.baseURL && response?.request?.url) {
     log(`${chalk.bold('Request URL')}: ${response.request.baseURL}/${response.request.url}\n`);
@@ -88,9 +88,9 @@ function envoyAxiosResponseLogger(response: AxiosResponse) {
   if (response?.status && response?.statusText) {
     const boldStatusTitle = chalk.bold('Status:');
     const boldStatusTextTitle = chalk.bold('Status Text:');
-    const status = response.status;
-    const statusText = response.statusText;
-    if (199 < status && status < 300) {
+    const { status } = response;
+    const { statusText } = response;
+    if (status > 199 && status < 300) {
       log(`${boldStatusTitle} ${chalk.green(status)}\n`);
       log(`${boldStatusTextTitle} ${chalk.green(statusText)}\n`);
     } else {
@@ -109,11 +109,11 @@ function envoyAxiosResponseLogger(response: AxiosResponse) {
 }
 
 function envoyAxiosErrorLogger(error: AxiosError) {
-  const log = console.log;
+  const { log } = console;
   log('---------------- Axios Error ----------------\n');
   if (error?.request?.method) {
     const boldMethodText = chalk.bold('Method:');
-    const method = error.request.method;
+    const { method } = error.request;
     switch (method) {
       case 'GET':
         log(`${boldMethodText} ${chalk.green(method)}\n`);
@@ -133,7 +133,7 @@ function envoyAxiosErrorLogger(error: AxiosError) {
       default:
         log(`${boldMethodText} ${method}\n`);
         break;
-    };
+    }
   }
   if (error?.request?.baseURL && error?.request?.url) {
     log(`${chalk.bold('Request URL')}: ${error.request.baseURL}/${error.request.url}\n`);
@@ -142,9 +142,9 @@ function envoyAxiosErrorLogger(error: AxiosError) {
   if (error?.response?.status && error?.response?.statusText) {
     const boldStatusTitle = chalk.bold('Status:');
     const boldStatusTextTitle = chalk.bold('Status Text:');
-    const status = error.response.status;
-    const statusText = error.response.statusText;
-    if (199 < status && status < 300) {
+    const { status } = error.response;
+    const { statusText } = error.response;
+    if (status > 199 && status < 300) {
       log(`${boldStatusTitle} ${chalk.green(status)}\n`);
       log(`${boldStatusTextTitle} ${chalk.green(statusText)}\n`);
     } else {

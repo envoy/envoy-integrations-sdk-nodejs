@@ -1,7 +1,7 @@
 type EnvoyOption = {
-  label: string,
-  value: string,
-  isDisabled?: boolean,
+  label: string;
+  value: string;
+  isDisabled?: boolean;
 };
 
 export default EnvoyOption;

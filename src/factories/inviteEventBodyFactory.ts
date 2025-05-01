@@ -7,17 +7,17 @@ import { EnvoyUserAPIScope } from '../sdk/EnvoyUserAPI';
 import eventBodyFactory from './eventBodyFactory';
 
 export type InvitePayloadFactoryVisitorOptions = {
-  isProtectFlow: false,
-  hasEmail: boolean,
-  hasHost: boolean,
-  preregistrationComplete: boolean,
-  hasPhoto?: boolean,
+  isProtectFlow: false;
+  hasEmail: boolean;
+  hasHost: boolean;
+  preregistrationComplete: boolean;
+  hasPhoto?: boolean;
 };
 
 export type InvitePayloadFactoryProtectOptions = {
-  isProtectFlow: true,
-  preregistrationComplete: boolean,
-  hasPhoto?: boolean,
+  isProtectFlow: true;
+  preregistrationComplete: boolean;
+  hasPhoto?: boolean;
 };
 
 export type InvitePayloadFactoryOptions = InvitePayloadFactoryVisitorOptions | InvitePayloadFactoryProtectOptions;
@@ -35,7 +35,6 @@ export function invitePayloadFactory(
   options: InvitePayloadFactoryOptions,
   ids: Partial<typeof inviteEventBodyFactoryDefaultIds> = inviteEventBodyFactoryDefaultIds,
 ): Sync.Factory<InvitePayload> {
-  const signedInDate = faker.date.past();
   const allIds = { ...inviteEventBodyFactoryDefaultIds, ...ids };
   return Sync.makeFactory<InvitePayload>({
     id: each((i) => `${i + 1}`),
@@ -43,16 +42,16 @@ export function invitePayloadFactory(
     attributes: {
       'employee-screening-flow': options.isProtectFlow,
       'full-name': faker.name.findName(),
-      email: (options.isProtectFlow || options.hasEmail) ? faker.internet.email() : null,
-      'inviter-name': (!options.isProtectFlow && options.hasHost) ? faker.name.findName() : null,
-      'inviter-email': (!options.isProtectFlow && options.hasHost) ? faker.internet.email() : null,
+      email: options.isProtectFlow || options.hasEmail ? faker.internet.email() : null,
+      'inviter-name': !options.isProtectFlow && options.hasHost ? faker.name.findName() : null,
+      'inviter-email': !options.isProtectFlow && options.hasHost ? faker.internet.email() : null,
       'expected-arrival-time': faker.date.future().toISOString(),
       'private-notes': null,
       arrived: false,
       'been-here-before': false,
       'flow-name': options.isProtectFlow ? 'Employee registration' : 'Visitor',
       'flow-id': allIds.flow,
-      'user-data': [] as Array<{ field: string, value: string | null }>,
+      'user-data': [] as Array<{ field: string; value: string | null }>,
       'secret-token': faker.random.alphaNumeric(10),
       'edit-token': faker.random.alphaNumeric(10),
       'photo-url': faker.image.avatar(),
@@ -74,22 +73,25 @@ export function invitePayloadFactory(
           type: 'flows',
         },
       },
-      employee: (options.isProtectFlow || options.hasHost) ? {
-        data: {
-          id: allIds.employee,
-          type: 'employees',
-        },
-      } : undefined,
+      employee:
+        options.isProtectFlow || options.hasHost
+          ? {
+              data: {
+                id: allIds.employee,
+                type: 'employees',
+              },
+            }
+          : undefined,
     },
   });
 }
 
 export type InviteEventBodyFactoryOptions<Config extends Record<string, unknown> = Record<string, never>> = {
-  event: EnvoyInviteEvent,
-  config: Partial<Config>,
-  payloadOptions: InvitePayloadFactoryOptions,
-  scope?: Array<EnvoyUserAPIScope>,
-  ids?: Partial<typeof inviteEventBodyFactoryDefaultIds>,
+  event: EnvoyInviteEvent;
+  config: Partial<Config>;
+  payloadOptions: InvitePayloadFactoryOptions;
+  scope?: Array<EnvoyUserAPIScope>;
+  ids?: Partial<typeof inviteEventBodyFactoryDefaultIds>;
 };
 
 export default function entryEventBodyFactory<Config extends Record<string, unknown> = Record<string, never>>(

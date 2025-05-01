@@ -11,11 +11,12 @@ export type SignInFieldPageAttributes = {
 /**
  * @category API Resource
  */
-export type SignInFieldPageRelationships = 'flow'
-| 'actionable-sign-in-field-actions'
-| 'actionable-sign-in-fields'
-| 'sign-in-field-actions'
-| 'sign-in-fields';
+export type SignInFieldPageRelationships =
+  | 'flow'
+  | 'actionable-sign-in-field-actions'
+  | 'actionable-sign-in-fields'
+  | 'sign-in-field-actions'
+  | 'sign-in-fields';
 
 /**
  * @category API Resource

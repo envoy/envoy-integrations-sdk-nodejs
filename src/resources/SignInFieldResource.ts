@@ -15,9 +15,9 @@ export interface SignInFieldAttributes {
     'display-name': string;
   }>;
   options?: Array<{
-    value: string,
-    position: number,
-  }>,
+    value: string;
+    position: number;
+  }>;
   position?: number;
   'store-response'?: boolean;
   'created-at'?: string;
