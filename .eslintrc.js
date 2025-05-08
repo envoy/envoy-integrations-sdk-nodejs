@@ -30,9 +30,6 @@ module.exports = {
   overrides: [
     {
       files: ['test/**/*.ts'],
-      env: {
-        mocha: true,
-      },
       rules: {
         'prefer-arrow-callback': 'off',
         'func-names': 'off',
