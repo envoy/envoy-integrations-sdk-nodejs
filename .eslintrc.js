@@ -6,7 +6,7 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
+    project: './tsconfig.eslint.json',
   },
   rules: {
     'no-param-reassign': 'off',
@@ -30,9 +30,6 @@ module.exports = {
   overrides: [
     {
       files: ['test/**/*.ts'],
-      env: {
-        mocha: true,
-      },
       rules: {
         'prefer-arrow-callback': 'off',
         'func-names': 'off',
