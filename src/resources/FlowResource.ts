@@ -29,7 +29,7 @@ export interface FlowAttributes {
 /**
  * @category API Resource
  */
-export type FlowRelationships = 'location' | 'sign-in-field-page' | 'agreement-page';
+export type FlowRelationships = 'location' | 'sign-in-field-page' | 'agreement-page' | 'global-flow';
 
 /**
  * @category API Resource

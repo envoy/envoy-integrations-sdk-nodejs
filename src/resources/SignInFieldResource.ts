@@ -25,15 +25,19 @@ export interface SignInFieldAttributes {
 }
 
 type SignInFieldCreationRequiredAttributes = Pick<SignInFieldAttributes, 'name' | 'kind'>;
-type SignInFieldCreationOptionalAttributes = Pick<SignInFieldAttributes, 'identifier' | 'localized' | 'options' | 'position' | 'store-response'>;
 type SignInFieldCreationProhibitedAttributes = 'created-at' | 'updated-at' | 'ipad-localized-names';
+type SignInFieldCreationOptionalAttributes = Omit<
+  SignInFieldAttributes,
+  keyof SignInFieldCreationRequiredAttributes | SignInFieldCreationProhibitedAttributes
+>;
 
 /**
  * @category API Resource
  */
-type SignInFieldCreationAttributes = SignInFieldCreationRequiredAttributes & Partial<SignInFieldCreationOptionalAttributes> & {
-  [key in SignInFieldCreationProhibitedAttributes]?: never;
-};
+type SignInFieldCreationAttributes = SignInFieldCreationRequiredAttributes &
+  Partial<SignInFieldCreationOptionalAttributes> & {
+    [key in SignInFieldCreationProhibitedAttributes]?: never;
+  };
 
 /**
  * @category API Resource
@@ -48,4 +52,9 @@ export type SignInFieldModel = JSONAPIModel<SignInFieldAttributes, SignInFieldRe
 /**
  * @category API Resource
  */
-export type SignInFieldCreationModel = JSONAPIModel<SignInFieldCreationAttributes, SignInFieldRelationships, 'sign-in-fields', undefined>;
+export type SignInFieldCreationModel = JSONAPIModel<
+  SignInFieldCreationAttributes,
+  SignInFieldRelationships,
+  'sign-in-fields',
+  undefined
+>;

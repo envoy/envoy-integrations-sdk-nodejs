@@ -5,6 +5,11 @@ import JSONAPIResponse from '../util/json-api/JSONAPIResponse';
 import EnvoyUserAPI from './EnvoyUserAPI';
 import { FlowModel } from '../resources/FlowResource';
 
+type RecursivePartial<T> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [P in keyof T]?: T[P] extends object ? RecursivePartial<T[P]> : T[P];
+};
+
 /**
  * API endpoints for managing sign in fields in Envoy visitor flows.
  *
@@ -18,12 +23,8 @@ export default class SignInFieldManager {
   }
 
   async addField(fieldData: SignInFieldCreationModel): Promise<SignInFieldModel> {
-    const response = await this.userAPI.axios<JSONAPIResponse<SignInFieldModel>>({
-      method: 'POST',
-      url: '/api/v3/sign-in-fields',
-      data: {
-        data: fieldData,
-      },
+    const response = await this.userAPI.axios.post<JSONAPIResponse<SignInFieldModel>>('/api/v3/sign-in-fields', {
+      data: fieldData,
     });
 
     const field = response.data.data;
@@ -32,10 +33,7 @@ export default class SignInFieldManager {
 
   async deleteField(signInFieldId: string): Promise<void> {
     try {
-      await this.userAPI.axios({
-        method: 'DELETE',
-        url: `/api/v3/sign-in-fields/${signInFieldId}`,
-      });
+      await this.userAPI.axios.delete(`/api/v3/sign-in-fields/${signInFieldId}`);
     } catch (err) {
       const error = ensureError(err);
       // When the delete succeeds, EnvoyAPI throws an error with this message
@@ -47,38 +45,36 @@ export default class SignInFieldManager {
     }
   }
 
-  async updateField(signInFieldId: string, patchData: Partial<SignInFieldModel>): Promise<SignInFieldModel> {
+  async updateField(signInFieldId: string, patchData: RecursivePartial<SignInFieldModel>): Promise<SignInFieldModel> {
     patchData.id = signInFieldId;
-    const response = await this.userAPI.axios<JSONAPIResponse<SignInFieldModel>>({
-      method: 'PUT',
-      url: `/api/v3/sign-in-fields/${signInFieldId}`,
-      data: {
+    const response = await this.userAPI.axios.put<JSONAPIResponse<SignInFieldModel>>(
+      `/api/v3/sign-in-fields/${signInFieldId}`,
+      {
         data: patchData,
       },
-    });
+    );
 
     const field = response.data.data;
     return field;
   }
 
   async getFieldById(signInFieldId: string): Promise<SignInFieldModel> {
-    const response = await this.userAPI.axios<JSONAPIResponse<SignInFieldModel>>({
-      method: 'GET',
-      url: `/api/v3/sign-in-fields/${signInFieldId}`,
-      data: {},
-      params: {
-        include: 'sign-in-field-page,sign-in-field-page.flow',
+    const response = await this.userAPI.axios.get<JSONAPIResponse<SignInFieldModel>>(
+      `/api/v3/sign-in-fields/${signInFieldId}`,
+      {
+        data: {},
+        params: {
+          include: 'sign-in-field-page,sign-in-field-page.flow',
+        },
       },
-    });
+    );
 
     const field = response.data.data;
     return field;
   }
 
   async getFieldsByFlowId(flowId: string): Promise<SignInFieldModel[]> {
-    const response = await this.userAPI.axios<JSONAPIResponse<FlowModel[]>>({
-      method: 'GET',
-      url: `/api/v3/flows/${flowId}`,
+    const response = await this.userAPI.axios.get<JSONAPIResponse<FlowModel[]>>(`/api/v3/flows/${flowId}`, {
       data: {},
       params: {
         include: 'sign-in-field-page.sign-in-fields',
@@ -94,10 +90,27 @@ export default class SignInFieldManager {
     return fields;
   }
 
+  async getFlowByFieldId(signInFieldId: string): Promise<FlowModel> {
+    const response = await this.userAPI.axios.get<JSONAPIResponse<SignInFieldModel>>(
+      `/api/v3/sign-in-fields/${signInFieldId}`,
+      {
+        data: {},
+        params: {
+          include: 'sign-in-field-page,sign-in-field-page.flow',
+        },
+      },
+    );
+    if (!response.data.included) {
+      throw new Error('No flow data found');
+    }
+
+    const included = response.data.included as (SignInFieldPageModel | FlowModel)[];
+    const flow = included.find((item) => item.type === 'flows') as FlowModel;
+    return flow;
+  }
+
   async getSignInFieldPageIdByFlowId(flowId: string): Promise<SignInFieldPageModel> {
-    const response = await this.userAPI.axios<JSONAPIResponse<FlowModel>>({
-      method: 'GET',
-      url: `/api/v3/flows/${flowId}`,
+    const response = await this.userAPI.axios.get<JSONAPIResponse<FlowModel>>(`/api/v3/flows/${flowId}`, {
       data: {},
       params: {
         include: 'sign-in-field-page',
@@ -109,6 +122,40 @@ export default class SignInFieldManager {
     }
 
     const page = response.data.included[0] as SignInFieldPageModel;
+    return page;
+  }
+
+  async getEditableSignInFieldPageByFlowId(flowId: string): Promise<SignInFieldPageModel> {
+    // We can't rely on userAPI.getFlow because it may not return the included data
+    const response = await this.userAPI.axios.get<JSONAPIResponse<FlowModel>>(`/api/v3/flows/${flowId}`, {
+      data: {},
+      params: {
+        include: 'sign-in-field-page',
+      },
+    });
+
+    let { included } = response.data;
+    const flow = response.data.data;
+    if (flow.attributes.type?.includes('GlobalChild')) {
+      const globalFlowData = flow.relationships['global-flow'];
+      const globalFlowId = globalFlowData.data && 'id' in globalFlowData.data ? globalFlowData.data.id : null;
+      if (!globalFlowId) {
+        throw new Error('Global flow ID expected but not found');
+      }
+      const globalFlow = await this.userAPI.axios.get<JSONAPIResponse<FlowModel>>(`/api/v3/flows/${globalFlowId}`, {
+        data: {},
+        params: {
+          include: 'sign-in-field-page',
+        },
+      });
+      included = globalFlow.data.included;
+    }
+
+    if (!included) {
+      throw new Error('No sign in field page found');
+    }
+
+    const page = included[0] as SignInFieldPageModel;
     return page;
   }
 }
