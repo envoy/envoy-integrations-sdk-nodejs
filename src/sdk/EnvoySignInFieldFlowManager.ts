@@ -2,7 +2,7 @@ import { isAxiosError } from 'axios';
 import { SignInFieldCreationModel, SignInFieldModel } from '../resources/SignInFieldResource';
 import { ensureError } from '../util/errorHandling';
 import promiseAllSettled from '../util/promiseAllSettled';
-import SignInFieldManager from './EnvoySignInFieldManager';
+import EnvoySignInFieldManager from './EnvoySignInFieldManager';
 import EnvoyUserAPI from './EnvoyUserAPI';
 
 export enum FieldErrorCodes {
@@ -40,13 +40,13 @@ type FieldOperationResult<T> = {
  * This class provides functionality to create, update, validate, and delete fields
  * while maintaining synchronization between flows and their associated fields.
  */
-class SignInFieldFlowManager {
-  private readonly signInFieldManager: SignInFieldManager;
+class EnvoySignInFieldFlowManager {
+  private readonly signInFieldManager: EnvoySignInFieldManager;
 
   private readonly defaultFieldConfig: FieldConfig;
 
   constructor(userAPI: EnvoyUserAPI, defaultFieldConfig: FieldConfig) {
-    this.signInFieldManager = new SignInFieldManager(userAPI);
+    this.signInFieldManager = new EnvoySignInFieldManager(userAPI);
     this.defaultFieldConfig = defaultFieldConfig;
   }
 
@@ -378,4 +378,4 @@ class SignInFieldFlowManager {
   }
 }
 
-export default SignInFieldFlowManager;
+export default EnvoySignInFieldFlowManager;

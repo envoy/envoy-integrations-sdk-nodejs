@@ -1,6 +1,6 @@
 import { AxiosError, AxiosHeaders } from 'axios';
-import SignInFieldFlowManager, { FieldErrorCodes } from '../src/sdk/SignInFieldFlowManager';
-import SignInFieldManager from '../src/sdk/EnvoySignInFieldManager';
+import EnvoySignInFieldFlowManager, { FieldErrorCodes } from '../src/sdk/EnvoySignInFieldFlowManager';
+import EnvoySignInFieldManager from '../src/sdk/EnvoySignInFieldManager';
 import EnvoyUserAPI from '../src/sdk/EnvoyUserAPI';
 import { SignInFieldModel } from '../src/resources/SignInFieldResource';
 import { FlowModel } from '../src/resources/FlowResource';
@@ -9,7 +9,7 @@ import { SignInFieldPageModel } from '../src/resources/SignInFieldPageResource';
 jest.mock('../src/sdk/EnvoySignInFieldManager');
 jest.mock('../src/sdk/EnvoyUserAPI');
 
-describe('SignInFieldFlowManager', () => {
+describe('EnvoySignInFieldFlowManager', () => {
   const defaultFieldConfig = {
     name: 'Card Number',
     kind: 'text',
@@ -18,8 +18,8 @@ describe('SignInFieldFlowManager', () => {
   };
 
   let mockUserAPI: jest.Mocked<EnvoyUserAPI>;
-  let mockSignInFieldManager: jest.Mocked<SignInFieldManager>;
-  let manager: SignInFieldFlowManager;
+  let mockSignInFieldManager: jest.Mocked<EnvoySignInFieldManager>;
+  let manager: EnvoySignInFieldFlowManager;
 
   const createMockSignInField = (id: string): SignInFieldModel => ({
     id,
@@ -106,9 +106,9 @@ describe('SignInFieldFlowManager', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     mockUserAPI = new EnvoyUserAPI('test-token') as jest.Mocked<EnvoyUserAPI>;
-    mockSignInFieldManager = new SignInFieldManager(mockUserAPI) as jest.Mocked<SignInFieldManager>;
-    (SignInFieldManager as jest.Mock).mockImplementation(() => mockSignInFieldManager);
-    manager = new SignInFieldFlowManager(mockUserAPI, defaultFieldConfig);
+    mockSignInFieldManager = new EnvoySignInFieldManager(mockUserAPI) as jest.Mocked<EnvoySignInFieldManager>;
+    (EnvoySignInFieldManager as jest.Mock).mockImplementation(() => mockSignInFieldManager);
+    manager = new EnvoySignInFieldFlowManager(mockUserAPI, defaultFieldConfig);
   });
 
   describe('validateFlowFields', () => {

@@ -15,13 +15,16 @@ type RecursivePartial<T> = {
  *
  * @category API
  */
-export default class SignInFieldManager {
+export default class EnvoySignInFieldManager {
   private userAPI: EnvoyUserAPI;
 
   constructor(userAPI: EnvoyUserAPI) {
     this.userAPI = userAPI;
   }
 
+  /**
+   * Creates a new sign-in field in Envoy.
+   */
   async addField(fieldData: SignInFieldCreationModel): Promise<SignInFieldModel> {
     const response = await this.userAPI.axios.post<JSONAPIResponse<SignInFieldModel>>('/api/v3/sign-in-fields', {
       data: fieldData,
@@ -31,6 +34,9 @@ export default class SignInFieldManager {
     return field;
   }
 
+  /**
+   * Deletes a sign-in field from Envoy.
+   */
   async deleteField(signInFieldId: string): Promise<void> {
     try {
       await this.userAPI.axios.delete(`/api/v3/sign-in-fields/${signInFieldId}`);
@@ -45,6 +51,9 @@ export default class SignInFieldManager {
     }
   }
 
+  /**
+   * Updates an existing sign-in field with new data.
+   */
   async updateField(signInFieldId: string, patchData: RecursivePartial<SignInFieldModel>): Promise<SignInFieldModel> {
     patchData.id = signInFieldId;
     const response = await this.userAPI.axios.put<JSONAPIResponse<SignInFieldModel>>(
@@ -58,6 +67,9 @@ export default class SignInFieldManager {
     return field;
   }
 
+  /**
+   * Retrieves a sign-in field by its ID.
+   */
   async getFieldById(signInFieldId: string): Promise<SignInFieldModel> {
     const response = await this.userAPI.axios.get<JSONAPIResponse<SignInFieldModel>>(
       `/api/v3/sign-in-fields/${signInFieldId}`,
@@ -73,6 +85,9 @@ export default class SignInFieldManager {
     return field;
   }
 
+  /**
+   * Retrieves sign-in fields associated with a flow.
+   */
   async getFieldsByFlowId(flowId: string): Promise<SignInFieldModel[]> {
     const response = await this.userAPI.axios.get<JSONAPIResponse<FlowModel[]>>(`/api/v3/flows/${flowId}`, {
       data: {},
@@ -90,6 +105,9 @@ export default class SignInFieldManager {
     return fields;
   }
 
+  /**
+   * Retrieves the flow associated with a sign-in field.
+   */
   async getFlowByFieldId(signInFieldId: string): Promise<FlowModel> {
     const response = await this.userAPI.axios.get<JSONAPIResponse<SignInFieldModel>>(
       `/api/v3/sign-in-fields/${signInFieldId}`,
@@ -109,6 +127,9 @@ export default class SignInFieldManager {
     return flow;
   }
 
+  /**
+   * Retrieves the sign-in field page associated with a flow.
+   */
   async getSignInFieldPageIdByFlowId(flowId: string): Promise<SignInFieldPageModel> {
     const response = await this.userAPI.axios.get<JSONAPIResponse<FlowModel>>(`/api/v3/flows/${flowId}`, {
       data: {},
@@ -125,6 +146,10 @@ export default class SignInFieldManager {
     return page;
   }
 
+  /**
+   * Retrieves the editable sign-in field page for a flow.
+   * For global child flows, returns the sign-in field page from the parent global flow.
+   */
   async getEditableSignInFieldPageByFlowId(flowId: string): Promise<SignInFieldPageModel> {
     // We can't rely on userAPI.getFlow because it may not return the included data
     const response = await this.userAPI.axios.get<JSONAPIResponse<FlowModel>>(`/api/v3/flows/${flowId}`, {
