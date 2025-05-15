@@ -24,21 +24,6 @@ export interface SignInFieldAttributes {
   'updated-at'?: string;
 }
 
-type SignInFieldCreationRequiredAttributes = Pick<SignInFieldAttributes, 'name' | 'kind'>;
-type SignInFieldCreationProhibitedAttributes = 'created-at' | 'updated-at' | 'ipad-localized-names';
-type SignInFieldCreationOptionalAttributes = Omit<
-  SignInFieldAttributes,
-  keyof SignInFieldCreationRequiredAttributes | SignInFieldCreationProhibitedAttributes
->;
-
-/**
- * @category API Resource
- */
-type SignInFieldCreationAttributes = SignInFieldCreationRequiredAttributes &
-  Partial<SignInFieldCreationOptionalAttributes> & {
-    [key in SignInFieldCreationProhibitedAttributes]?: never;
-  };
-
 /**
  * @category API Resource
  */
@@ -48,13 +33,3 @@ export type SignInFieldRelationships = 'sign-in-field-page';
  * @category API Resource
  */
 export type SignInFieldModel = JSONAPIModel<SignInFieldAttributes, SignInFieldRelationships>;
-
-/**
- * @category API Resource
- */
-export type SignInFieldCreationModel = JSONAPIModel<
-  SignInFieldCreationAttributes,
-  SignInFieldRelationships,
-  'sign-in-fields',
-  undefined
->;
