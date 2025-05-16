@@ -23,12 +23,13 @@ export interface FlowAttributes {
   enabled: boolean;
   'created-at': string;
   'updated-at': string;
+  type: string;
 }
 
 /**
  * @category API Resource
  */
-export type FlowRelationships = 'location' | 'sign-in-field-page' | 'agreement-page';
+export type FlowRelationships = 'location' | 'sign-in-field-page' | 'agreement-page' | 'global-flow';
 
 /**
  * @category API Resource
