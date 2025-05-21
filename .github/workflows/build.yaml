@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    secrets:
+      gh-token: ${{ secrets.GH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       # Setup .npmrc file to publish to npm
