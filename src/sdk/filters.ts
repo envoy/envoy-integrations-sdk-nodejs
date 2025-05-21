@@ -51,7 +51,7 @@ export function excludedEmployeesFilterMiddleware<Config>(
     }
     const excludedEmployees = (config[excludeEmployeesKey] as unknown as Array<string>) || [];
     if (!Array.isArray(excludedEmployees)) {
-      return next(new Error(`${excludeEmployeesKey} is not an array.`));
+      return next(new Error(`${String(excludeEmployeesKey)} is not an array.`));
     }
     const employeeId = payload.relationships.employee?.data.id;
     if (!employeeId || !excludedEmployees.includes(employeeId)) {

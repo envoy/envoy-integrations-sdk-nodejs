@@ -24,7 +24,7 @@ export interface EnvoyRequestBody<Meta, Payload> {
  *
  * @category SDK
  */
-export default class EnvoyPluginSDK<Meta = unknown, Payload = unknown> {
+export default class EnvoyPluginSDK<Meta extends object = Record<string, any>, Payload = unknown> {
   /**
    * Body of the request.
    * use `meta` or `payload` to access the relevant properties,

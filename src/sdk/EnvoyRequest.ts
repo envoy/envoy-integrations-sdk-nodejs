@@ -35,7 +35,7 @@ export interface VerifiedRequest extends Request {
  *
  * @category Base
  */
-export interface EnvoyBaseRequest<Meta = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
+export interface EnvoyBaseRequest<Meta extends object = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
   envoy: EnvoyPluginSDK<Meta, Payload>;
 }
 
