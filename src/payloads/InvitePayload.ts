@@ -24,6 +24,7 @@ type InvitePayload = {
       value: string | null;
     }>;
     nda?: string;
+    'changed-fields'?: Array<string>;
     'secret-token': string;
     'edit-token': string;
     'photo-url': string | null;
