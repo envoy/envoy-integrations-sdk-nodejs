@@ -8,6 +8,7 @@ export interface TakeoverAttributes {
     title: string;
     message: string;
     created_at: string;
+    type: 'critical' | 'normal';
   };
   'start-at': number;
   'end-at': number | null;
