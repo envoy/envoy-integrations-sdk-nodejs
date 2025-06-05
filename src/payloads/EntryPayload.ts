@@ -24,6 +24,7 @@ type EntryPayload = {
     };
     'flow-name': string;
     nda?: string;
+    'changed-fields'?: Array<string>;
     'legal-docs'?: Array<{
       id: string;
       url: string;
