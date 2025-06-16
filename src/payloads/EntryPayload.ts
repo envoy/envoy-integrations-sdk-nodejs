@@ -24,7 +24,6 @@ type EntryPayload = {
     };
     'flow-name': string;
     nda?: string;
-    'changed-fields'?: Array<string>;
     'legal-docs'?: Array<{
       id: string;
       url: string;
@@ -77,6 +76,13 @@ type EntryPayload = {
       data: Array<JSONAPIData<'agreeable-ndas'>>;
     };
   };
+  'changed-fields'?: Record<
+    string,
+    {
+      old: unknown;
+      new: unknown;
+    }
+  >;
 };
 
 export function normalizeEntryPayload(payload: EntryPayload): EntryPayload {
