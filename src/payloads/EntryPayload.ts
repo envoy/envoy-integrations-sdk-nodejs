@@ -76,6 +76,13 @@ type EntryPayload = {
       data: Array<JSONAPIData<'agreeable-ndas'>>;
     };
   };
+  'changed-fields'?: Record<
+    string,
+    {
+      old: unknown;
+      new: unknown;
+    }
+  >;
 };
 
 export function normalizeEntryPayload(payload: EntryPayload): EntryPayload {
