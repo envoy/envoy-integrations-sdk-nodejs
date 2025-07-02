@@ -1,7 +1,7 @@
 type EnvoyOptionsRouteParams = {
-  search?: string,
-  page?: number,
-  cursor?: string,
+  search?: string;
+  page?: string;
+  cursor?: string;
 };
 
 export default EnvoyOptionsRouteParams;
