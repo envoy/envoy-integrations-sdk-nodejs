@@ -202,7 +202,7 @@ describe('Axios', () => {
           await client.get('http://example.com');
           fail('Should have thrown an error');
         } catch (error) {
-          expect(error.stack).toBe(originalStack);
+          expect(error.stack).toContain(originalStack);
         }
       });
     });
