@@ -68,15 +68,17 @@ describe('request-promise-native', () => {
     });
 
     it('should make a successful request', async () => {
-        const response = await request('https://httpstat.us/200').catch(EnvoyAPI.safeRequestsError);
-        expect(response).toBe('200 OK');
+        const response = await request('https://httpstatuses.maor.io/200').catch(EnvoyAPI.safeRequestsError);
+        expect(response).toContain('200');
+        expect(response).toContain('OK');
     });
 
     it('should throw an error', async () => {
         try {
-            await request('https://httpstat.us/500').catch(EnvoyAPI.safeRequestsError);
+            await request('https://httpstatuses.maor.io/500').catch(EnvoyAPI.safeRequestsError);
         } catch (error) {
-            expect(error.message).toBe('500 - "500 Internal Server Error"');
+            expect(error.message).toContain('500');
+            expect(error.message).toContain('Internal Server Error');
         }
     });
 });
