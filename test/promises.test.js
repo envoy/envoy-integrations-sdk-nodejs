@@ -1,32 +1,34 @@
-const request = require('request-promise-native');
+const axios = require('axios');
 const EnvoyAPI = require('../lib/EnvoyAPI');
 
-describe('request-promise-native', () => {
+describe('axios', () => {
     it('default client should leak credentials in error', async () => {
-        const client = request.defaults({
+        const client = axios.create({
+            family: 4,
             headers: {
                 Authorization: 'Bearer 1234',
             },
         });
         try {
-            await client('http://localhost:3000/axios-error');
+            await client.get('http://localhost:3000/axios-error');
         } catch (error) {
-            expect(error.options).toBeDefined();
+            expect(error.config).toBeDefined();
             const errorStr = JSON.stringify(error);
             expect(errorStr).toContain('Bearer 1234');
         }
     });
 
     it('should sanitize requests error response', async () => {
-        const client = request.defaults({
+        const client = axios.create({
+            family: 4,
             headers: {
                 Authorization: 'Bearer 1234',
             },
         });
         try {
-            await client('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
+            await client.get('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
         } catch (error) {
-            expect(error.options).toBeUndefined();
+            expect(error.config).toBeUndefined();
             expect(error.message).toBe('Error: connect ECONNREFUSED 127.0.0.1:3000');
             expect(error.name).toBe('RequestError');
             const errorStr = JSON.stringify(error);
@@ -35,28 +37,30 @@ describe('request-promise-native', () => {
     });
 
     it('should return rejected promise and leak credentials', () => {
-        const client = request.defaults({
+        const client = axios.create({
+            family: 4,
             headers: {
                 Authorization: 'Bearer 1234',
             },
         });
-        const response = client('http://localhost:3000/axios-error');
+        const response = client.get('http://localhost:3000/axios-error');
         response.then((data) => {
             expect(false).toBe(true);
         }).catch((error) => {
-            expect(error.options).toBeDefined();
+            expect(error.config).toBeDefined();
             const errorStr = JSON.stringify(error);
             expect(errorStr).toContain('Bearer 1234');
         });
     });
 
     it('should return rejected promise', () => {
-        const client = request.defaults({
+        const client = axios.create({
+            family: 4,
             headers: {
                 Authorization: 'Bearer 1234',
             },
         });
-        const response = client('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
+        const response = client.get('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
         response.then((data) => {
             expect(false).toBe(true);
         }).catch((error) => {
@@ -68,17 +72,16 @@ describe('request-promise-native', () => {
     });
 
     it('should make a successful request', async () => {
-        const response = await request('https://httpstatuses.maor.io/200').catch(EnvoyAPI.safeRequestsError);
-        expect(response).toContain('200');
-        expect(response).toContain('OK');
+        const response = await axios.get('https://httpstatuses.maor.io/200', { family: 4 }).then(res => res.data).catch(EnvoyAPI.safeRequestsError);
+        expect(response.code).toBe(200);
+        expect(response.description).toBe('OK');
     });
 
     it('should throw an error', async () => {
         try {
-            await request('https://httpstatuses.maor.io/500').catch(EnvoyAPI.safeRequestsError);
+            await axios.get('https://httpstatuses.maor.io/500', { family: 4 }).catch(EnvoyAPI.safeRequestsError);
         } catch (error) {
             expect(error.message).toContain('500');
-            expect(error.message).toContain('Internal Server Error');
         }
     });
 });
