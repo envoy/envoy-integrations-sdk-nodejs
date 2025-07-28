@@ -82,6 +82,7 @@ describe('axios', () => {
             await axios.get('https://httpstatuses.maor.io/500', { family: 4 }).catch(EnvoyAPI.safeRequestsError);
         } catch (error) {
             expect(error.message).toContain('500');
+            expect(error.message).toContain('Internal Server Error');
         }
     });
 });
