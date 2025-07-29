@@ -1,7 +1,7 @@
-const request = require('request-promise-native');
+const request = require('../lib/request-wrapper');
 const EnvoyAPI = require('../lib/EnvoyAPI');
 
-describe('request-promise-native', () => {
+describe('@cypress/request', () => {
     it('default client should leak credentials in error', async () => {
         const client = request.defaults({
             headers: {
@@ -27,7 +27,7 @@ describe('request-promise-native', () => {
             await client('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
         } catch (error) {
             expect(error.options).toBeUndefined();
-            expect(error.message).toBe('Error: connect ECONNREFUSED 127.0.0.1:3000');
+            expect(error.message).toContain('connect ECONNREFUSED 127.0.0.1:3000');
             expect(error.name).toBe('RequestError');
             const errorStr = JSON.stringify(error);
             expect(errorStr).not.toContain('Bearer 1234');
@@ -60,7 +60,7 @@ describe('request-promise-native', () => {
         response.then((data) => {
             expect(false).toBe(true);
         }).catch((error) => {
-            expect(error.message).toBe('Error: connect ECONNREFUSED 127.0.0.1:3000');
+            expect(error.message).toContain('connect ECONNREFUSED 127.0.0.1:3000');
             expect(error.name).toBe('RequestError');
             const errorStr = JSON.stringify(error);
             expect(errorStr).not.toContain('Bearer 1234');
