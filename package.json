@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/envoy/envoy-integrations-sdk-nodejs#readme",
   "dependencies": {
+    "@cypress/request": "^3.0.9",
     "axios": "^1.4.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.1.0",
-    "jsonwebtoken": "^9.0.0",
-    "@cypress/request": "^3.0.9"
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
