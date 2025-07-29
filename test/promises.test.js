@@ -27,7 +27,7 @@ describe('@cypress/request', () => {
             await client('http://localhost:3000/axios-error').catch(EnvoyAPI.safeRequestsError);
         } catch (error) {
             expect(error.options).toBeUndefined();
-            expect(error.message).toContain('connect ECONNREFUSED 127.0.0.1:3000');
+            expect(error.message).toBe('Error: connect ECONNREFUSED 127.0.0.1:3000');
             expect(error.name).toBe('RequestError');
             const errorStr = JSON.stringify(error);
             expect(errorStr).not.toContain('Bearer 1234');
@@ -60,7 +60,7 @@ describe('@cypress/request', () => {
         response.then((data) => {
             expect(false).toBe(true);
         }).catch((error) => {
-            expect(error.message).toContain('connect ECONNREFUSED 127.0.0.1:3000');
+            expect(error.message).toBe('Error: connect ECONNREFUSED 127.0.0.1:3000');
             expect(error.name).toBe('RequestError');
             const errorStr = JSON.stringify(error);
             expect(errorStr).not.toContain('Bearer 1234');
