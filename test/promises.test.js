@@ -1,7 +1,7 @@
-const request = require('request-promise-native');
+const request = require('../lib/request-wrapper');
 const EnvoyAPI = require('../lib/EnvoyAPI');
 
-describe('request-promise-native', () => {
+describe('@cypress/request', () => {
     it('default client should leak credentials in error', async () => {
         const client = request.defaults({
             headers: {
