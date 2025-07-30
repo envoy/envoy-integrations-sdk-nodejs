@@ -8,7 +8,6 @@ To enable diplomat routing, set these environment variables in your integration:
 
 ```bash
 DIPLOMAT_ENABLED=true
-DIPLOMAT_SERVER_URL=https://diplomat-server.envoy.christmas
 DIPLOMAT_SERVER_AUTH_USERNAME=your-basic-auth-username
 DIPLOMAT_SERVER_AUTH_PASSWORD=your-basic-auth-password
 
@@ -16,6 +15,10 @@ DIPLOMAT_SERVER_AUTH_PASSWORD=your-basic-auth-password
 DIPLOMAT_CLIENT_ID=your-client-id
 DIPLOMAT_INTERNAL_URL=http://192.168.1.100:8080  # Customer's internal endpoint
 ```
+
+**Note:** The diplomat server URL is automatically inferred by the SDK:
+- **Production**: `https://diplomat-server.envoy.com` (when `NODE_ENV=production`, `ENVIRONMENT=production`, or `ENV=production`)
+- **All other environments**: `https://diplomat-server.envoy.christmas` (staging, development, test, etc.)
 
 ## Usage
 

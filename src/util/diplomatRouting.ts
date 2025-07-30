@@ -30,15 +30,30 @@ export interface DiplomatClientInstall {
 }
 
 /**
+ * Infers the diplomat server URL based on the current environment
+ */
+function inferDiplomatServerUrl(): string {
+  // Check for explicit environment indicators
+  if (process.env.NODE_ENV === 'production' || 
+      process.env.ENVIRONMENT === 'production' ||
+      process.env.ENV === 'production') {
+    return 'https://diplomat-server.envoy.com';
+  }
+  
+  // Default to staging for all other environments (development, staging, test, etc.)
+  return 'https://diplomat-server.envoy.christmas';
+}
+
+/**
  * Gets diplomat configuration from environment variables
  */
 export function getDiplomatConfigFromEnv(): DiplomatConfig | null {
   const enabled = process.env.DIPLOMAT_ENABLED === 'true';
-  const serverUrl = process.env.DIPLOMAT_SERVER_URL;
+  const serverUrl = inferDiplomatServerUrl();
   const authUsername = process.env.DIPLOMAT_SERVER_AUTH_USERNAME;
   const authPassword = process.env.DIPLOMAT_SERVER_AUTH_PASSWORD;
 
-  if (!enabled || !serverUrl || !authUsername || !authPassword) {
+  if (!enabled || !authUsername || !authPassword) {
     return null;
   }
 
