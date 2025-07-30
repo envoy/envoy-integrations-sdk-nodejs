@@ -61,6 +61,7 @@ export * from './sdk/middleware';
 
 export * from './util/EnvoySignatureVerifier';
 export * from './util/axiosConstructor';
+export * from './util/diplomatRouting';
 
 export {
   EntryPayload,
