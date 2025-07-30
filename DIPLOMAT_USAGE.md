@@ -22,33 +22,37 @@ DIPLOMAT_INTERNAL_URL=http://192.168.1.100:8080  # Customer's internal endpoint
 
 ## Usage
 
-### Basic Usage (Environment Variables Only)
+### Basic Usage (Automatic Diplomat Routing)
 
 ```typescript
 import { createAxiosClient } from '@envoy/integrations-sdk-nodejs';
 
-// Create an axios client - it will automatically check for diplomat config
+// Create an axios client with your integration's install ID
 const client = createAxiosClient({
+  baseURL: 'https://customer-system.com',
   timeout: 30000,
   headers: {
     'User-Agent': 'My Integration'
-  }
+  },
+  installId: 'your-plugin-install-id' // SDK automatically fetches diplomat config
 });
 
 // Make requests normally - they will be routed through diplomat if configured
 const response = await client.get('/api/data');
 ```
 
-### Advanced Usage (Dynamic Client Install Info)
+### Advanced Usage (Custom Client Install Function)
+
+For advanced use cases where you need custom logic for fetching diplomat client install info:
 
 ```typescript
 import { createAxiosClient, DiplomatClientInstall } from '@envoy/integrations-sdk-nodejs';
 
-// Function to fetch diplomat client install info dynamically
+// Function to fetch diplomat client install info with custom logic
 async function getDiplomatClientInstall(): Promise<DiplomatClientInstall | null> {
   try {
-    // This would typically call your integration's API to get the install info
-    const response = await fetch(`/api/diplomat-installs/${installId}`);
+    // Custom logic to get diplomat install info
+    const response = await fetch(`/api/custom-diplomat-logic`);
     const data = await response.json();
     
     return {
@@ -62,8 +66,9 @@ async function getDiplomatClientInstall(): Promise<DiplomatClientInstall | null>
   }
 }
 
-// Create axios client with dynamic diplomat config
+// Create axios client with custom diplomat config function
 const client = createAxiosClient({
+  baseURL: 'https://customer-system.com',
   timeout: 30000,
   getDiplomatClientInstall: getDiplomatClientInstall
 });
@@ -74,10 +79,13 @@ const response = await client.post('/api/action', { data: 'example' });
 
 ### Static Client Install Info
 
+For cases where you have static diplomat configuration:
+
 ```typescript
 import { createAxiosClient } from '@envoy/integrations-sdk-nodejs';
 
 const client = createAxiosClient({
+  baseURL: 'https://customer-system.com',
   timeout: 30000,
   diplomatClientInstall: {
     enabled: true,

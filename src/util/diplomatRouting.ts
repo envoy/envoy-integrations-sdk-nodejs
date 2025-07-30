@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { createAxiosClient } from './axiosConstructor';
 
 // Base64 encoding utilities (from Kantech implementation)
 function utf8ToBase64(str: string | undefined): string | undefined {
@@ -68,10 +67,35 @@ export function getDiplomatConfigFromEnv(): DiplomatConfig | null {
 }
 
 /**
+ * Fetches diplomat client install info from diplomat server
+ */
+export async function getDiplomatClientInstall(installId: string, diplomatConfig: DiplomatConfig): Promise<DiplomatClientInstall | null> {
+  if (!installId || !diplomatConfig) {
+    return null;
+  }
+
+  console.log('Pulling diplomat client install', {
+    installId,
+    url: `${diplomatConfig.serverUrl}/clients/enabled?plugin_install_id=${installId}`,
+  });
+
+  try {
+    const axiosClient = createDiplomatAxiosClient(diplomatConfig);
+    const response = await axiosClient.get(`/clients/enabled?plugin_install_id=${installId}`);
+    console.log(`returning ${JSON.stringify(response.data)}`);
+    return response.data;
+  } catch (err) {
+    console.warn('Error while pulling diplomat install', { err });
+    return null;
+  }
+}
+
+/**
  * Creates an axios client configured for diplomat server communication
+ * Uses plain axios to avoid circular dependency with createAxiosClient
  */
 function createDiplomatAxiosClient(config: DiplomatConfig): AxiosInstance {
-  return createAxiosClient({
+  return axios.create({
     baseURL: config.serverUrl,
     auth: {
       username: config.authUsername,

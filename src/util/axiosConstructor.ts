@@ -4,6 +4,7 @@ import {
   getDiplomatConfigFromEnv, 
   shouldUseDiplomat, 
   routeThroughDiplomat,
+  getDiplomatClientInstall,
   DiplomatClientInstall 
 } from './diplomatRouting';
 
@@ -42,8 +43,9 @@ export function sanitizeAxiosError(error: unknown): Error {
 }
 
 export interface DiplomatEnabledAxiosConfig extends AxiosRequestConfig {
-  // Optional function to get diplomat client install info
-  // Integrations can provide this if they have a way to fetch it dynamically
+  // Plugin install ID for automatic diplomat client install fetching
+  installId?: string;
+  // Optional function to get diplomat client install info (for advanced use cases)
   getDiplomatClientInstall?: () => Promise<DiplomatClientInstall | null>;
   // Or provide static diplomat client install info
   diplomatClientInstall?: DiplomatClientInstall;
@@ -66,13 +68,22 @@ export function createAxiosClient(config?: DiplomatEnabledAxiosConfig): AxiosIns
       let diplomatClientInstall: DiplomatClientInstall | null = null;
 
       // Try to get diplomat client install info
-      if (config?.getDiplomatClientInstall) {
+      if (config?.installId) {
+        // Automatic diplomat client install fetching using installId
+        try {
+          diplomatClientInstall = await getDiplomatClientInstall(config.installId, diplomatConfig!);
+        } catch (error) {
+          console.warn('Failed to get diplomat client install info:', error);
+        }
+      } else if (config?.getDiplomatClientInstall) {
+        // Custom function for advanced use cases
         try {
           diplomatClientInstall = await config.getDiplomatClientInstall();
         } catch (error) {
           console.warn('Failed to get diplomat client install info:', error);
         }
       } else if (config?.diplomatClientInstall) {
+        // Static diplomat client install info
         diplomatClientInstall = config.diplomatClientInstall;
       } else if (diplomatConfig?.clientId && diplomatConfig?.internalUrl) {
         // Use config from environment variables
@@ -88,10 +99,10 @@ export function createAxiosClient(config?: DiplomatEnabledAxiosConfig): AxiosIns
         console.log('Routing request through diplomat tunnel');
         try {
           const diplomatResponse = await routeThroughDiplomat(requestConfig, diplomatConfig!, diplomatClientInstall);
-          // Return a special config that will be handled by the response interceptor
+          // Create a fake axios request that will return the diplomat response
           return {
             ...requestConfig,
-            __diplomatResponse: diplomatResponse,
+            adapter: () => Promise.resolve(diplomatResponse),
           } as any;
         } catch (error) {
           console.warn('Diplomat routing failed, falling back to direct request:', error);
@@ -104,15 +115,9 @@ export function createAxiosClient(config?: DiplomatEnabledAxiosConfig): AxiosIns
     (error) => Promise.reject(sanitizeAxiosError(error))
   );
 
-  // Add response interceptor to handle diplomat responses and error sanitization
+  // Add response interceptor for error sanitization
   client.interceptors.response.use(
-    (response) => {
-      // If this was a diplomat response, return it directly
-      if ((response.config as any).__diplomatResponse) {
-        return (response.config as any).__diplomatResponse;
-      }
-      return response;
-    },
+    (response) => response, // Pass through all responses unchanged
     (error) => Promise.reject(sanitizeAxiosError(error)),
   );
 
