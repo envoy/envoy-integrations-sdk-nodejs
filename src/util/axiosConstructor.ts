@@ -5,6 +5,7 @@ import {
   shouldUseDiplomat, 
   routeThroughDiplomat,
   getDiplomatClientInstall,
+  initializeDiplomat,
   DiplomatClientInstall 
 } from './diplomatRouting';
 
@@ -53,46 +54,44 @@ export interface DiplomatEnabledAxiosConfig extends AxiosRequestConfig {
 
 export function createAxiosClient(config?: DiplomatEnabledAxiosConfig): AxiosInstance {
   const client = axios.create(config);
-  
-  // Get diplomat configuration from environment
   const diplomatConfig = getDiplomatConfigFromEnv();
+  
+  // Simple cache for this axios instance
+  let cachedDiplomatClientInstall: DiplomatClientInstall | null = null;
+  let isDiplomatSupported: boolean | null = null;
   
   // Add request interceptor to handle diplomat routing
   client.interceptors.request.use(
     async (requestConfig) => {
-      // Check if we should route through diplomat
       if (!shouldUseDiplomat(requestConfig, diplomatConfig)) {
         return requestConfig;
       }
 
+      // Check plugin support once
+      if (isDiplomatSupported === null) {
+        isDiplomatSupported = await initializeDiplomat(diplomatConfig!);
+        if (!isDiplomatSupported) return requestConfig;
+      }
+
       let diplomatClientInstall: DiplomatClientInstall | null = null;
 
-      // Try to get diplomat client install info
-      if (config?.installId) {
-        // Automatic diplomat client install fetching using installId
-        try {
-          diplomatClientInstall = await getDiplomatClientInstall(config.installId, diplomatConfig!);
-        } catch (error) {
-          console.warn('Failed to get diplomat client install info:', error);
+      // Get diplomat client install (cached after first call)
+      if (cachedDiplomatClientInstall === null) {
+        if (config?.installId) {
+          cachedDiplomatClientInstall = await getDiplomatClientInstall(config.installId, diplomatConfig!);
+        } else if (config?.getDiplomatClientInstall) {
+          cachedDiplomatClientInstall = await config.getDiplomatClientInstall();
+        } else if (config?.diplomatClientInstall) {
+          cachedDiplomatClientInstall = config.diplomatClientInstall;
+        } else if (diplomatConfig?.clientId && diplomatConfig?.internalUrl) {
+          cachedDiplomatClientInstall = {
+            enabled: true,
+            client_id: diplomatConfig.clientId,
+            internal_url: diplomatConfig.internalUrl,
+          };
         }
-      } else if (config?.getDiplomatClientInstall) {
-        // Custom function for advanced use cases
-        try {
-          diplomatClientInstall = await config.getDiplomatClientInstall();
-        } catch (error) {
-          console.warn('Failed to get diplomat client install info:', error);
-        }
-      } else if (config?.diplomatClientInstall) {
-        // Static diplomat client install info
-        diplomatClientInstall = config.diplomatClientInstall;
-      } else if (diplomatConfig?.clientId && diplomatConfig?.internalUrl) {
-        // Use config from environment variables
-        diplomatClientInstall = {
-          enabled: true,
-          client_id: diplomatConfig.clientId,
-          internal_url: diplomatConfig.internalUrl,
-        };
       }
+      diplomatClientInstall = cachedDiplomatClientInstall;
 
       // If we have diplomat client install info, route through diplomat
       if (diplomatClientInstall && diplomatClientInstall.enabled) {

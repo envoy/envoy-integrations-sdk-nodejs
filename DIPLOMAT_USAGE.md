@@ -7,14 +7,18 @@ The SDK now supports automatic routing of HTTP requests through the Diplomat tun
 To enable diplomat routing, set these environment variables in your integration:
 
 ```bash
-DIPLOMAT_ENABLED=true
 DIPLOMAT_SERVER_AUTH_USERNAME=your-basic-auth-username
 DIPLOMAT_SERVER_AUTH_PASSWORD=your-basic-auth-password
+
+# Optional: Plugin ID for validation (recommended for performance)
+DIPLOMAT_PLUGIN_ID=your-plugin-id
 
 # Optional: If you know the client ID and internal URL statically
 DIPLOMAT_CLIENT_ID=your-client-id
 DIPLOMAT_INTERNAL_URL=http://192.168.1.100:8080  # Customer's internal endpoint
 ```
+
+Diplomat routing is automatically enabled when authentication credentials are provided. If `DIPLOMAT_PLUGIN_ID` is set, the SDK will validate that your plugin supports diplomat routing.
 
 **Note:** The diplomat server URL is automatically inferred by the SDK:
 - **Production**: `https://diplomat-server.envoy.com` (when `NODE_ENV=production`, `ENVIRONMENT=production`, or `ENV=production`)
@@ -54,7 +58,7 @@ async function getDiplomatClientInstall(): Promise<DiplomatClientInstall | null>
     // Custom logic to get diplomat install info
     const response = await fetch(`/api/custom-diplomat-logic`);
     const data = await response.json();
-    
+
     return {
       enabled: data.enabled,
       client_id: data.client_id,
@@ -127,6 +131,10 @@ The SDK logs diplomat routing decisions to the console:
 - `"Routing request through diplomat tunnel"` - Request will use diplomat
 - `"Diplomat routing failed, falling back to direct request"` - Fallback to direct request
 - `"Routing request through diplomat: {...}"` - Full diplomat task configuration
+
+## Performance Notes
+
+The SDK caches diplomat client install info per axios instance to avoid repeated API calls. If you provide `DIPLOMAT_PLUGIN_ID`, the SDK will check once if your plugin supports diplomat routing.
 
 ## Error Handling
 

@@ -1,5 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
+// Cache for supported plugin IDs (loaded once per SDK instance)
+let supportedPluginsCache: Set<string> | null = null;
+
 // Base64 encoding utilities (from Kantech implementation)
 function utf8ToBase64(str: string | undefined): string | undefined {
   if (!str) return undefined;
@@ -19,6 +22,7 @@ export interface DiplomatConfig {
   authPassword: string;
   clientId?: string;
   internalUrl?: string;
+  pluginId?: string;
 }
 
 // Diplomat client install interface (matches Kantech's getDiplomatClientInstall response)
@@ -47,22 +51,22 @@ function inferDiplomatServerUrl(): string {
  * Gets diplomat configuration from environment variables
  */
 export function getDiplomatConfigFromEnv(): DiplomatConfig | null {
-  const enabled = process.env.DIPLOMAT_ENABLED === 'true';
   const serverUrl = inferDiplomatServerUrl();
   const authUsername = process.env.DIPLOMAT_SERVER_AUTH_USERNAME;
   const authPassword = process.env.DIPLOMAT_SERVER_AUTH_PASSWORD;
 
-  if (!enabled || !authUsername || !authPassword) {
+  if (!authUsername || !authPassword) {
     return null;
   }
 
   return {
-    enabled,
+    enabled: true, // Always enabled if credentials are provided
     serverUrl,
     authUsername,
     authPassword,
     clientId: process.env.DIPLOMAT_CLIENT_ID,
     internalUrl: process.env.DIPLOMAT_INTERNAL_URL,
+    pluginId: process.env.DIPLOMAT_PLUGIN_ID,
   };
 }
 
@@ -163,6 +167,29 @@ export async function routeThroughDiplomat(
 }
 
 /**
+ * Loads supported plugins once and caches them
+ */
+async function loadSupportedPlugins(diplomatConfig: DiplomatConfig): Promise<void> {
+  if (supportedPluginsCache !== null) return;
+  
+  try {
+    const axiosClient = createDiplomatAxiosClient(diplomatConfig);
+    const response = await axiosClient.get('/plugins/supported');
+    supportedPluginsCache = new Set(response.data.plugins.map((p: any) => p.id));
+  } catch (error) {
+    console.warn('Failed to load supported plugins, disabling diplomat for all plugins:', error);
+    supportedPluginsCache = new Set(); // Empty = no plugins supported
+  }
+}
+
+/**
+ * Checks if plugin supports diplomat
+ */
+export function isPluginSupported(pluginId: string): boolean {
+  return supportedPluginsCache?.has(pluginId) ?? false;
+}
+
+/**
  * Determines if a request should be routed through diplomat
  */
 export function shouldUseDiplomat(
@@ -179,4 +206,12 @@ export function shouldUseDiplomat(
   }
 
   return true;
+}
+
+/**
+ * Initialize diplomat with plugin validation
+ */
+export async function initializeDiplomat(diplomatConfig: DiplomatConfig): Promise<boolean> {
+  await loadSupportedPlugins(diplomatConfig);
+  return diplomatConfig.pluginId ? isPluginSupported(diplomatConfig.pluginId) : true;
 }
