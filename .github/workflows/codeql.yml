@@ -1,15 +1,17 @@
-name: "CodeQL Sec Analysis"
+name: "CodeQL Security Analysis"
 
 on:
   push:
     branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]    
   schedule:
-    - cron: '0 2 * * 1'  # Weekly on Monday at 2 AM
+    - cron: '41 19 * * 6'  # Weekly on Saturday at 19:41
 
 jobs:
   analyze:
-    name: Analyze (${ matrix.language })
-
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
     permissions:
       # required for all workflows
       security-events: write
@@ -36,5 +38,5 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: ${ matrix.language }
-        build-mode: ${ matrix.build-mode }
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
