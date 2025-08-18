@@ -1,3 +1,4 @@
+# Updated by automated script on 2025-08-18 05:04:23 UTC
 name: "CodeQL Security Analysis"
 
 on:
@@ -6,7 +7,7 @@ on:
   pull_request:
     branches: [ "master" ]    
   schedule:
-    - cron: '41 19 * * 6'  # Weekly on Saturday at 19:41
+    - cron: '15 2 * * 6'   # Weekly on Saturday at 02:15
 
 jobs:
   analyze:
@@ -40,3 +41,11 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
+    
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"     
