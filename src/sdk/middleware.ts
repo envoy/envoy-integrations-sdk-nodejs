@@ -10,6 +10,16 @@ import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 
 /**
+ * Options for configuring the Envoy middleware.
+ */
+export interface EnvoyMiddlewareOptions extends EnvoySignatureVerifierOptions {
+  /** Optional custom client ID to use for API authentication instead of environment variable */
+  customClientId?: string;
+  /** Optional custom client secret to use for API authentication instead of environment variable */
+  customClientSecret?: string;
+}
+
+/**
  * Sets up an {@link EnvoyPluginSDK} object in the path `req.envoy`.
  * Modifies the `res` object to include Envoy's helpers, per {@link EnvoyResponse}.
  *
@@ -18,7 +28,7 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
  *
  * @category Middleware
  */
-export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): RequestHandler {
+export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandler {
   const signatureVerifier = new EnvoySignatureVerifier(options);
   const verify = (req: VerifiedRequest, res: Response, rawBody: Buffer) => {
     req[VERIFIED] = signatureVerifier.verify(req, rawBody);
@@ -35,7 +45,10 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
       try {
         const now = Date.now();
         if (now > threshold) {
-          const { access_token: rawAccessToken, expires_in: expiresIn } = await EnvoyPluginAPI.loginAsPlugin();
+          const hasCustomCredentials = options?.customClientId && options?.customClientSecret;
+          const { access_token: rawAccessToken, expires_in: expiresIn } = hasCustomCredentials
+            ? await EnvoyPluginAPI.loginAsPlugin(options?.customClientId, options?.customClientSecret)
+            : await EnvoyPluginAPI.loginAsPlugin();
           accessToken = rawAccessToken;
           threshold = now + expiresIn * 1000 - 1000 * 60 * 10;
         }
