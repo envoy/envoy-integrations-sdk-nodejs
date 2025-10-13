@@ -114,3 +114,9 @@ export function errorMiddleware(onError: (err: Error) => void = () => {}): Error
     res.end(JSON.stringify({ message: err.message }));
   };
 }
+
+/**
+ * Backward compatibility alias for envoyMiddleware
+ * @deprecated Use envoyMiddleware instead
+ */
+export const middleware = envoyMiddleware;
