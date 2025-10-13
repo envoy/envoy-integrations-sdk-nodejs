@@ -12,7 +12,7 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
 /**
  * Options for configuring the Envoy middleware.
  */
-export interface EnvoyMiddlewareOptions extends EnvoySignatureVerifierOptions {
+export interface EnvoyMiddlewareOptions extends Partial<EnvoySignatureVerifierOptions> {
   /** Optional custom client ID to use for API authentication instead of environment variable */
   customClientId?: string;
   /** Optional custom client secret to use for API authentication instead of environment variable */
@@ -29,7 +29,7 @@ export interface EnvoyMiddlewareOptions extends EnvoySignatureVerifierOptions {
  * @category Middleware
  */
 export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandler {
-  const signatureVerifier = new EnvoySignatureVerifier(options);
+  const signatureVerifier = new EnvoySignatureVerifier(options as EnvoySignatureVerifierOptions);
   const verify = (req: VerifiedRequest, res: Response, rawBody: Buffer) => {
     req[VERIFIED] = signatureVerifier.verify(req, rawBody);
   };
