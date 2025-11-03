@@ -3,6 +3,7 @@ import DataLoader from 'dataloader';
 import JSONAPIData from '../util/json-api/JSONAPIData';
 import { envoyBaseURL } from '../constants';
 import { createAxiosClient } from '../util/axiosConstructor';
+import { EMPTY_STORAGE_ERROR_MESSAGE } from '../util/errorHandling';
 
 interface EnvoyWebDataLoaderKey extends JSONAPIData {
   include?: string;
@@ -72,7 +73,7 @@ export default class EnvoyAPI {
 
         (included || []).concat(modelOrModels).forEach((model: JSONAPIData) => {
           if (!model) {
-            throw new Error('The data you are looking for may not exist.');
+            throw new Error(EMPTY_STORAGE_ERROR_MESSAGE);
           }
           this.dataLoader.prime({ type: model.type, id: model.id }, model);
           const alias = TYPE_ALIASES.get(model.type);
