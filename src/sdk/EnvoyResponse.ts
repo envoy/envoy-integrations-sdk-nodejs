@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
+import EnvoyPluginJobAttachment, { EnvoyPluginScreenerJobAttachment } from './EnvoyPluginJobAttachment';
 import EnvoyOptionsRouteResponseBody from '../internal/EnvoyOptionsRouteResponseBody';
 import EnvoySelectedValuesRouteResponseBody from '../internal/EnvoySelectedValuesRouteResponseBody';
 import EnvoyRemoteValueRouteResponseBody from '../internal/EnvoyRemoteValueRouteResponseBody';
@@ -26,6 +26,10 @@ export default interface EnvoyResponse<Body = unknown> extends Response {
    * Marks the job as "failed". The message will be communicated to the Envoy Dashboard user.
    */
   sendFailed: (message: string, debugInfo?: unknown, ...attachments: Array<EnvoyPluginJobAttachment>) => void;
+  /**
+   * Marks the job as "failed". The message will be communicated to the Envoy Dashboard user.
+   */
+  sendFailedScreen: (message: string, debugInfo?: unknown, attachment?: EnvoyPluginScreenerJobAttachment) => void;
 }
 
 /**

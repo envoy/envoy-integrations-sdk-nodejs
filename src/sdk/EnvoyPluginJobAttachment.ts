@@ -10,6 +10,17 @@ export interface EnvoyPluginTextJobAttachment {
 }
 
 /**
+ * Display some JSON data in Envoy's dashboard.
+ *
+ * @category Attachment
+ */
+export interface EnvoyPluginJSONJobAttachment {
+  type: 'json';
+  label: string;
+  value: unknown;
+}
+
+/**
  * Display a link in Envoy's dashboard.
  *
  * @category Attachment
@@ -35,6 +46,50 @@ export interface EnvoyPluginCredentialJobAttachment extends EnvoyPluginTextJobAt
 }
 
 /**
+ * Display a screener report in Envoy's dashboard,
+ * and allow for approval or rejection.
+ *
+ * @category Attachment
+ */
+export interface EnvoyPluginScreenerJobAttachment extends EnvoyPluginJSONJobAttachment {
+  label: string;
+  value: ScreenerDetails;
+}
+
+/**
+ * Screener report definitions
+ */
+export interface ScreenerDetails {
+  input: {
+    fields: ScreenerInputField[];
+  }
+  matches: ScreenerMatch[];
+}
+
+export interface ScreenerMatch {
+  headers: ScreenerMatchHeaders;
+  "visible-fields-count": number;
+  fields: ScreenerMatchField[];
+}
+
+export interface ScreenerMatchHeaders {
+  name: string; // ex: Tags
+  value: string; // ex: Content
+}
+
+export interface ScreenerMatchField {
+  name: string;
+  value: string;
+  type: "text" | "image";
+}
+
+export interface ScreenerInputField {
+  name: string;
+  value: string;
+  type: "text" | "image";
+}
+
+/**
  * Attachments to jobs, which will be displayed in the Envoy dashboard.
  * Some attachments like `credential_image` can show up in other places,
  * like an invitee's welcome email.
@@ -44,6 +99,7 @@ export interface EnvoyPluginCredentialJobAttachment extends EnvoyPluginTextJobAt
 type EnvoyPluginJobAttachment =
   | EnvoyPluginTextJobAttachment
   | EnvoyPluginLinkJobAttachment
-  | EnvoyPluginCredentialJobAttachment;
+  | EnvoyPluginCredentialJobAttachment
+  | EnvoyPluginScreenerJobAttachment;
 
 export default EnvoyPluginJobAttachment;

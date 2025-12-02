@@ -70,9 +70,9 @@ export default class EnvoyPluginJob {
   }
 
   /**
-   * Reports that the job is ignored.
+   * Reports that the job is failed.
    *
-   * Instead of calling this directly, you can return a 400 response from the job's event handler,
+   * Instead of calling this directly, you can return a 412 response from the job's event handler,
    * using {@link EnvoyRequest.sendFailed}.
    */
   fail(message: string, reason: string): Promise<void> {
