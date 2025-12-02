@@ -24,6 +24,7 @@ Use to type your `res` object in Envoy event handlers.
 - [sendFailed](envoyresponse.md#sendfailed)
 - [sendIgnored](envoyresponse.md#sendignored)
 - [sendOngoing](envoyresponse.md#sendongoing)
+- [sendFailedScreen](envoyresponse.md#sendFailedScreen)
 
 ## Properties
 
@@ -60,6 +61,12 @@ ___
 • **sendFailed**: (`message`: `string`, `debugInfo?`: `unknown`, ...`attachments`: `EnvoyPluginJobAttachment`[]) => `void`
 
 Marks the job as "failed". The message will be communicated to the Envoy Dashboard user.
+
+### sendFailedScreen
+
+• **sendFailedScreen**: (`message`: `string`, `debugInfo?`: `unknown`, ...`attachments`: `EnvoyPluginScreenerJobAttachment`, ) => `void`
+
+Halts processing of the job. The message will be communicated to the Envoy Dashboard user and a pop up modal for access approval will be displayed. 
 
 #### Type declaration
 

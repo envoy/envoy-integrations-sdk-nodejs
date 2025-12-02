@@ -5,7 +5,7 @@ import HttpStatus from '../internal/HttpStatus';
 import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from '../util/EnvoySignatureVerifier';
 import EnvoyRequest, { VERIFIED, VerifiedRequest } from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
-import EnvoyPluginJobAttachment from './EnvoyPluginJobAttachment';
+import EnvoyPluginJobAttachment, { EnvoyPluginScreenerJobAttachment } from './EnvoyPluginJobAttachment';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
 
@@ -76,6 +76,19 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
           envoyResponse.statusCode = HttpStatus.FAILED;
           envoyResponse.setHeader('Content-Type', 'application/json');
           envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
+        };
+
+        /**
+         * Respond with "failed" for screener in case of screener matches.
+         */
+        envoyResponse.sendFailedScreen = (
+          message = '',
+          debugInfo: unknown = {},
+          attachment?: EnvoyPluginScreenerJobAttachment,
+        ) => {
+          envoyResponse.statusCode = HttpStatus.FAILED;
+          envoyResponse.setHeader('Content-Type', 'application/json');
+          envoyResponse.end(JSON.stringify({ message, debugInfo, attachment }));
         };
         next();
       } catch (error) {
