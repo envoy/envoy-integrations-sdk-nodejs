@@ -68,7 +68,7 @@ export interface ScreenerDetails {
 
 export interface ScreenerMatch {
   headers: ScreenerMatchHeaders;
-  "visible-fields-count": number;
+  'visible-fields-count': number;
   fields: ScreenerMatchField[];
 }
 
@@ -80,13 +80,13 @@ export interface ScreenerMatchHeaders {
 export interface ScreenerMatchField {
   name: string;
   value: string;
-  type: "text" | "image";
+  type: 'text' | 'image';
 }
 
 export interface ScreenerInputField {
   name: string;
   value: string;
-  type: "text" | "image";
+  type: 'text' | 'image';
 }
 
 /**
