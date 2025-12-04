@@ -84,11 +84,11 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
         envoyResponse.sendFailedScreen = (
           message = '',
           debugInfo: unknown = {},
-          attachment?: EnvoyPluginScreenerJobAttachment,
+          attachments?: EnvoyPluginScreenerJobAttachment,
         ) => {
           envoyResponse.statusCode = HttpStatus.FAILED;
           envoyResponse.setHeader('Content-Type', 'application/json');
-          envoyResponse.end(JSON.stringify({ message, debugInfo, attachment }));
+          envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
         };
         next();
       } catch (error) {
