@@ -29,7 +29,7 @@ export default interface EnvoyResponse<Body = unknown> extends Response {
   /**
    * Marks the job as "failed". The message will be communicated to the Envoy Dashboard user.
    */
-  sendFailedScreen: (message: string, debugInfo?: unknown, attachment?: EnvoyPluginScreenerJobAttachment) => void;
+  sendFailedScreen: (message: string, debugInfo?: unknown, attachments?: EnvoyPluginScreenerJobAttachment) => void;
 }
 
 /**
