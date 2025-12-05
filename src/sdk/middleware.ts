@@ -84,7 +84,7 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
         envoyResponse.sendFailedScreen = (
           message = '',
           debugInfo: unknown = {},
-          attachments?: EnvoyPluginScreenerJobAttachment,
+          ...attachments: Array<EnvoyPluginScreenerJobAttachment>
         ) => {
           envoyResponse.statusCode = HttpStatus.FAILED;
           envoyResponse.setHeader('Content-Type', 'application/json');

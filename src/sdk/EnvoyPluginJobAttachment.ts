@@ -52,7 +52,7 @@ export interface EnvoyPluginCredentialJobAttachment extends EnvoyPluginTextJobAt
  * @category Attachment
  */
 export interface EnvoyPluginScreenerJobAttachment extends EnvoyPluginJSONJobAttachment {
-  label: string;
+  label: 'Screener Details';
   value: ScreenerDetails;
 }
 
