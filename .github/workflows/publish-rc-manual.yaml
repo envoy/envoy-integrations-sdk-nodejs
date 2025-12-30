@@ -1,0 +1,86 @@
+name: Publish RC (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      rc_suffix:
+        description: 'RC suffix (e.g., "test1" for version 2.4.3-rc.test1). Leave empty to use git SHA.'
+        required: false
+        default: ''
+
+jobs:
+  publish-rc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.x'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Get Node.js version
+        id: node-version
+        run: |
+          echo "version=$(node --version)" >> $GITHUB_OUTPUT
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: node_modules
+          key: v1-node-${{ steps.node-version.outputs.version }}-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ENVOYBOT_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Generate RC version
+        id: rc-version
+        run: |
+          BASE_VERSION=$(node -p "require('./package.json').version")
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          if [ -z "${{ github.event.inputs.rc_suffix }}" ]; then
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            RC_SUFFIX="${SHORT_SHA}"
+          else
+            RC_SUFFIX="${{ github.event.inputs.rc_suffix }}"
+          fi
+          RC_VERSION="${BASE_VERSION}-rc.${RC_SUFFIX}"
+          echo "version=${RC_VERSION}" >> $GITHUB_OUTPUT
+          echo "📦 Publishing: ${PACKAGE_NAME}@${RC_VERSION}"
+
+      - name: Update package.json version
+        run: npm version ${{ steps.rc-version.outputs.version }} --no-git-tag-version
+
+      - name: Compile TypeScript
+        run: npm run compile
+
+      - name: Publish to GitHub Packages (private)
+        run: npm publish --tag rc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "✅ Successfully published RC version: ${{ steps.rc-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Published to: GitHub Packages (private)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Install in your plugin:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Update package.json:" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          echo '"@envoy/envoy-integrations-sdk": "${{ steps.rc-version.outputs.version }}"' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Or install directly:" >> $GITHUB_STEP_SUMMARY
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo "npm install @envoy/envoy-integrations-sdk@${{ steps.rc-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
