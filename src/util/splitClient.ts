@@ -38,6 +38,15 @@ export function createSplitClient(apiKey: string, proxyUrl?: string) {
 }
 
 /**
- * Singleton Split.io client instance
+ * Lazy-loaded Split.io client instance
  */
-export const splitClient = createSplitClient(SPLIT_API_KEY, SPLIT_PROXY_URL);
+let internalSplitClient: SplitIO.IClient | null = null;
+
+export const splitClient = {
+  getTreatment: (key: string, splitName: string) => {
+    if (!internalSplitClient) {
+      internalSplitClient = createSplitClient(SPLIT_API_KEY, SPLIT_PROXY_URL);
+    }
+    return internalSplitClient.getTreatment(key, splitName);
+  },
+};
