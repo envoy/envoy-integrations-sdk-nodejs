@@ -16,6 +16,9 @@ import {
   base64ToUtf8,
   DiplomatServerResponse,
 } from './diplomat';
+import { rootLogger } from './logger';
+
+const logger = rootLogger.child({ source: 'diplomat-interceptor' });
 
 export function sanitizeAxiosError(error: unknown): Error {
   if (!axios.isAxiosError(error)) {
@@ -59,8 +62,14 @@ export function sanitizeAxiosError(error: unknown): Error {
 async function diplomatRequestInterceptor(
   config: InternalAxiosRequestConfig,
 ): Promise<InternalAxiosRequestConfig> {
-  // Extract installId from headers
+  // Extract installId and correlationId from headers
   const installId = config.headers?.['x-envoy-install-id'] as string | undefined;
+  const correlationId = config.headers?.['correlation-id'] as string | undefined;
+
+  const contextLogger = logger.child({
+    install_id: installId,
+    correlation_id: correlationId,
+  });
 
   if (!installId) {
     // No installId - skip diplomat routing
@@ -68,11 +77,20 @@ async function diplomatRequestInterceptor(
   }
 
   try {
+    contextLogger.debug('Checking diplomat configuration for request', {
+      url: config.url,
+      method: config.method,
+      baseURL: config.baseURL,
+    });
+
     // Check if diplomat is enabled for this install
     const diplomatConfig = await getDiplomatClientInstall(installId);
 
     if (!diplomatConfig || !diplomatConfig.enabled) {
-      // Diplomat not enabled - use direct routing
+      contextLogger.debug('Diplomat not enabled, using direct routing', {
+        has_config: !!diplomatConfig,
+        is_enabled: diplomatConfig?.enabled,
+      });
       return config;
     }
 
@@ -80,13 +98,24 @@ async function diplomatRequestInterceptor(
     const useV1 = useDiplomatV1Routing(installId);
     const serverUrlEnvVar = useV1 ? 'DIPLOMAT_SERVER_V1_URL' : 'DIPLOMAT_SERVER_URL';
     const diplomatServerUrl = process.env[serverUrlEnvVar];
+    const diplomatVersion = useV1 ? 'v1' : 'latest';
+
+    contextLogger.debug('Diplomat enabled, checking server configuration', {
+      client_id: diplomatConfig.client_id,
+      diplomat_version: diplomatVersion,
+      has_server_url: !!diplomatServerUrl,
+      has_credentials: !!(process.env.DIPLOMAT_SERVER_AUTH_USERNAME && process.env.DIPLOMAT_SERVER_AUTH_PASSWORD),
+    });
 
     if (
       !diplomatServerUrl
       || !process.env.DIPLOMAT_SERVER_AUTH_USERNAME
       || !process.env.DIPLOMAT_SERVER_AUTH_PASSWORD
     ) {
-      // Missing diplomat server config - use direct routing
+      contextLogger.debug('Missing diplomat server config, using direct routing', {
+        diplomat_version: diplomatVersion,
+        env_var: serverUrlEnvVar,
+      });
       return config;
     }
 
@@ -106,6 +135,15 @@ async function diplomatRequestInterceptor(
       const dataString = typeof config.data === 'string' ? config.data : JSON.stringify(config.data);
       encodedBody = utf8ToBase64(dataString);
     }
+
+    contextLogger.info('Routing request through diplomat', {
+      diplomat_version: diplomatVersion,
+      client_id: diplomatConfig.client_id,
+      target_method: originalMethod.toUpperCase(),
+      target_url: originalUrl,
+      target_baseURL: originalBaseURL || diplomatConfig.internal_url,
+      has_body: !!encodedBody,
+    });
 
     // Transform request to diplomat format
     config.baseURL = diplomatServerUrl;
@@ -129,7 +167,11 @@ async function diplomatRequestInterceptor(
 
     // Mark this request as diplomat-routed for response interceptor
     config.headers['x-diplomat-routed'] = 'true';
-    config.headers['x-diplomat-version'] = useV1 ? 'v1' : 'latest';
+    config.headers['x-diplomat-version'] = diplomatVersion;
+    // Preserve correlationId for response logging
+    if (correlationId) {
+      config.headers['correlation-id'] = correlationId;
+    }
 
     return config;
   } catch (error) {
@@ -151,13 +193,34 @@ function diplomatResponseInterceptor(response: AxiosResponse): AxiosResponse {
     return response;
   }
 
+  // Extract correlationId for logging
+  const correlationId = response.config?.headers?.['correlation-id'] as string | undefined;
+  const installId = response.config?.headers?.['x-envoy-install-id'] as string | undefined;
+  const diplomatVersion = response.config?.headers?.['x-diplomat-version'] as string | undefined;
+
+  const contextLogger = logger.child({
+    install_id: installId,
+    correlation_id: correlationId,
+    diplomat_version: diplomatVersion,
+  });
+
   try {
+    contextLogger.debug('Received response from diplomat server', {
+      diplomat_server_status: response.status,
+      diplomat_server_statusText: response.statusText,
+    });
+
     const diplomatResponse = response.data as DiplomatServerResponse;
 
     if (isDiplomatLatestResponse(diplomatResponse)) {
       // Latest format: { status, headers, body }
       const decodedBody = diplomatResponse.body ? base64ToUtf8(diplomatResponse.body) : '';
       const parsedData = decodedBody ? JSON.parse(decodedBody) : {};
+
+      contextLogger.info('Decoded diplomat latest response', {
+        target_status: diplomatResponse.status,
+        has_body: !!decodedBody,
+      });
 
       // Return transformed response with actual status code from target system
       const transformedResponse: AxiosResponse = {
@@ -170,6 +233,9 @@ function diplomatResponseInterceptor(response: AxiosResponse): AxiosResponse {
 
       // If target system returned error status, throw to match axios behavior
       if (diplomatResponse.status >= 400) {
+        contextLogger.warn('Target system returned error status', {
+          target_status: diplomatResponse.status,
+        });
         const error = new Error(`Request failed with status code ${diplomatResponse.status}`) as AxiosError;
         error.response = transformedResponse;
         error.isAxiosError = true;
@@ -182,6 +248,11 @@ function diplomatResponseInterceptor(response: AxiosResponse): AxiosResponse {
       // V1 format: { result: { body } }
       const decodedBody = diplomatResponse.result.body ? base64ToUtf8(diplomatResponse.result.body) : '';
       const parsedData = decodedBody ? JSON.parse(decodedBody) : {};
+
+      contextLogger.info('Decoded diplomat v1 response', {
+        diplomat_server_status: response.status,
+        has_body: !!decodedBody,
+      });
 
       // V1 doesn't return status/headers from target system
       // Normalize to latest format: use diplomat server's 200 status and headers as fallback
