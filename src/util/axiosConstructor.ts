@@ -123,7 +123,23 @@ async function diplomatRequestInterceptor(
     const originalBaseURL = config.baseURL || '';
     const originalUrl = config.url || '';
     const originalMethod = config.method || 'GET';
-    const originalHeaders = { ...config.headers };
+
+    // Convert AxiosHeaders to plain object for JSON serialization
+    // AxiosHeaders instance has internal properties that break JSON.stringify when nested in request body
+    let originalHeaders: Record<string, any> = {};
+    if (config.headers) {
+      // Use toJSON() if available (for AxiosHeaders instances)
+      const headersObj =
+        typeof config.headers.toJSON === 'function' ? config.headers.toJSON() : config.headers;
+
+      // Filter to only include serializable string values for diplomat payload
+      for (const [key, value] of Object.entries(headersObj)) {
+        if (value !== null && value !== undefined) {
+          originalHeaders[key] = String(value);
+        }
+      }
+    }
+
     const originalParams = config.params;
 
     // Remove x-envoy-install-id from headers sent to target (it's only for SDK routing)
