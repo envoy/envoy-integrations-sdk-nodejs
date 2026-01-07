@@ -20,6 +20,13 @@ import { rootLogger } from './logger';
 
 const logger = rootLogger.child({ source: 'diplomat-interceptor' });
 
+/**
+ * Ensures URL has trailing slash for proper concatenation in diplomat-client
+ */
+function ensureTrailingSlash(url: string): string {
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
 export function sanitizeAxiosError(error: unknown): Error {
   if (!axios.isAxiosError(error)) {
     return ensureError(error);
@@ -173,11 +180,10 @@ async function diplomatRequestInterceptor(
       handler: 'http',
       options: {
         method: originalMethod.toUpperCase(),
-        baseURL: originalBaseURL || diplomatConfig.internal_url,
+        baseURL: ensureTrailingSlash(diplomatConfig.internal_url),
         url: originalUrl,
         body: encodedBody || '',
         headers: originalHeaders,
-        // params removed - it may contain non-serializable values causing invalid_json
       },
     };
 
