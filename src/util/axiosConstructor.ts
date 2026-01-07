@@ -175,9 +175,9 @@ async function diplomatRequestInterceptor(
         method: originalMethod.toUpperCase(),
         baseURL: originalBaseURL || diplomatConfig.internal_url,
         url: originalUrl,
-        body: encodedBody,
+        body: encodedBody || '',
         headers: originalHeaders,
-        params: originalParams,
+        // params removed - it may contain non-serializable values causing invalid_json
       },
     };
 
@@ -188,6 +188,13 @@ async function diplomatRequestInterceptor(
     if (correlationId) {
       config.headers['correlation-id'] = correlationId;
     }
+
+    // CRITICAL: Override Content-Type to application/json for diplomat-server request
+    // Original Content-Type (e.g., application/x-www-form-urlencoded) was for the target system
+    // and is preserved in originalHeaders to be sent to target via options.headers
+    // Without this, axios will URL-encode the object instead of JSON.stringify it, causing
+    // diplomat-server to receive malformed data and return 400 invalid_json
+    config.headers['Content-Type'] = 'application/json';
 
     return config;
   } catch (error) {
