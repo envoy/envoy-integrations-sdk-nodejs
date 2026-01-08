@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
 import { createAxiosClient, sanitizeAxiosError } from '../../src/util/axiosConstructor';
+import * as diplomat from '../../src/util/diplomat';
 
 describe('Axios', () => {
   beforeEach(() => {
@@ -306,6 +307,561 @@ describe('Axios', () => {
           expect(error.response?.statusText).toBe('Internal Server Error');
           expect(error.response?.data).toBeUndefined();
         }
+      });
+    });
+
+    describe('Diplomat Routing', () => {
+      let getDiplomatClientInstallSpy: jest.SpyInstance;
+
+      beforeEach(() => {
+        // Mock environment variables for diplomat server
+        process.env.DIPLOMAT_SERVER_URL = 'https://diplomat.example.com';
+        process.env.DIPLOMAT_SERVER_AUTH_USERNAME = 'test-user';
+        process.env.DIPLOMAT_SERVER_AUTH_PASSWORD = 'test-pass';
+
+        // Mock getDiplomatClientInstall
+        getDiplomatClientInstallSpy = jest.spyOn(diplomat, 'getDiplomatClientInstall');
+      });
+
+      afterEach(() => {
+        delete process.env.DIPLOMAT_SERVER_URL;
+        delete process.env.DIPLOMAT_SERVER_V1_URL;
+        delete process.env.DIPLOMAT_SERVER_AUTH_USERNAME;
+        delete process.env.DIPLOMAT_SERVER_AUTH_PASSWORD;
+        getDiplomatClientInstallSpy.mockRestore();
+      });
+
+      describe('Request Interceptor', () => {
+        it('bypasses diplomat when no x-envoy-install-id header', async () => {
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: { success: true },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: { headers: new AxiosHeaders() },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.get('https://api.example.com/endpoint');
+
+          expect(getDiplomatClientInstallSpy).not.toHaveBeenCalled();
+          expect(mockAdapter).toHaveBeenCalledWith(
+            expect.objectContaining({
+              url: 'https://api.example.com/endpoint',
+              method: 'get',
+            }),
+          );
+        });
+
+        it('bypasses diplomat when diplomat config is not found', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue(null);
+
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: { success: true },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: { headers: new AxiosHeaders() },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.get('https://api.example.com/endpoint', {
+            headers: {
+              'x-envoy-install-id': 'test-install-123',
+            },
+          });
+
+          expect(getDiplomatClientInstallSpy).toHaveBeenCalledWith('test-install-123');
+          expect(mockAdapter).toHaveBeenCalledWith(
+            expect.objectContaining({
+              url: 'https://api.example.com/endpoint',
+              method: 'get',
+            }),
+          );
+        });
+
+        it('bypasses diplomat when diplomat is disabled', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: false,
+            internal_url: 'http://internal.example.com',
+          });
+
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: { success: true },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: { headers: new AxiosHeaders() },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.get('https://api.example.com/endpoint', {
+            headers: {
+              'x-envoy-install-id': 'test-install-123',
+            },
+          });
+
+          expect(getDiplomatClientInstallSpy).toHaveBeenCalledWith('test-install-123');
+          expect(mockAdapter).toHaveBeenCalledWith(
+            expect.objectContaining({
+              url: 'https://api.example.com/endpoint',
+              method: 'get',
+            }),
+          );
+        });
+
+        it('bypasses diplomat when server config is missing', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          delete process.env.DIPLOMAT_SERVER_URL;
+
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: { success: true },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: { headers: new AxiosHeaders() },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.get('https://api.example.com/endpoint', {
+            headers: {
+              'x-envoy-install-id': 'test-install-123',
+            },
+          });
+
+          expect(mockAdapter).toHaveBeenCalledWith(
+            expect.objectContaining({
+              url: 'https://api.example.com/endpoint',
+              method: 'get',
+            }),
+          );
+        });
+
+        it('routes through diplomat when enabled', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
+
+          const client = createAxiosClient({ baseURL: 'https://api.example.com' });
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: {
+              status: 200,
+              headers: { 'content-type': 'application/json' },
+              body: Buffer.from(JSON.stringify({ result: 'success' })).toString('base64'),
+            },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: {
+              headers: new AxiosHeaders({
+                'x-diplomat-routed': 'true',
+                'x-diplomat-version': 'latest',
+              }),
+            },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.post(
+            '/endpoint',
+            { key: 'value' },
+            {
+              headers: {
+                'x-envoy-install-id': 'test-install-123',
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+            },
+          );
+
+          const callArgs = mockAdapter.mock.calls[0][0];
+          expect(callArgs.baseURL).toBe('https://diplomat.example.com');
+          expect(callArgs.url).toBe('/clients/client-123/tasks');
+          expect(callArgs.method).toBe('POST');
+          expect(callArgs.auth).toEqual({
+            username: 'test-user',
+            password: 'test-pass',
+          });
+
+          // data gets JSON.stringified by axios, so parse it back
+          const parsedData = JSON.parse(callArgs.data);
+          expect(parsedData.handler).toBe('http');
+          expect(parsedData.options.method).toBe('POST');
+          expect(parsedData.options.baseURL).toBe('http://internal.example.com/');
+          expect(parsedData.options.url).toBe('/endpoint');
+          expect(parsedData.options.body).toBeTruthy();
+          expect(parsedData.options.headers['Content-Type']).toBe('application/x-www-form-urlencoded');
+
+          expect(callArgs.headers['x-diplomat-routed']).toBe('true');
+          expect(callArgs.headers['x-diplomat-version']).toBe('latest');
+          expect(callArgs.headers['Content-Type']).toBe('application/json');
+        });
+
+        it('removes x-envoy-install-id from forwarded headers', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
+
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: {
+              status: 200,
+              headers: {},
+              body: Buffer.from('{}').toString('base64'),
+            },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: {
+              headers: new AxiosHeaders({
+                'x-diplomat-routed': 'true',
+              }),
+            },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.get('http://api.example.com/endpoint', {
+            headers: {
+              'x-envoy-install-id': 'test-install-123',
+              'x-custom-header': 'custom-value',
+            },
+          });
+
+          const callArgs = mockAdapter.mock.calls[0][0];
+          const parsedData = JSON.parse(callArgs.data);
+          expect(parsedData.options.headers).not.toHaveProperty('x-envoy-install-id');
+          expect(parsedData.options.headers).toHaveProperty('x-custom-header', 'custom-value');
+        });
+
+        it('adds trailing slash to internal_url', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
+
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: {
+              status: 200,
+              headers: {},
+              body: Buffer.from('{}').toString('base64'),
+            },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: {
+              headers: new AxiosHeaders({
+                'x-diplomat-routed': 'true',
+              }),
+            },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.get('/endpoint', {
+            headers: {
+              'x-envoy-install-id': 'test-install-123',
+            },
+          });
+
+          const callArgs = mockAdapter.mock.calls[0][0];
+          const parsedData = JSON.parse(callArgs.data);
+          expect(parsedData.options.baseURL).toBe('http://internal.example.com/');
+        });
+
+        it('overrides Content-Type to application/json for diplomat request', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
+
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: {
+              status: 200,
+              headers: {},
+              body: Buffer.from('{}').toString('base64'),
+            },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: {
+              headers: new AxiosHeaders({
+                'x-diplomat-routed': 'true',
+                'Content-Type': 'application/json',
+              }),
+            },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          await client.post(
+            '/endpoint',
+            'key=value',
+            {
+              headers: {
+                'x-envoy-install-id': 'test-install-123',
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+            },
+          );
+
+          const callArgs = mockAdapter.mock.calls[0][0];
+          const parsedData = JSON.parse(callArgs.data);
+
+          // Diplomat request should have JSON Content-Type
+          expect(callArgs.headers['Content-Type']).toBe('application/json');
+          // But original Content-Type preserved in options.headers for target system
+          expect(parsedData.options.headers['Content-Type']).toBe('application/x-www-form-urlencoded');
+        });
+      });
+
+      describe('Response Interceptor', () => {
+        it('decodes diplomat latest format response', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
+
+          const client = createAxiosClient();
+          const targetResponseData = { result: 'success', cardNumber: '24188' };
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: {
+              status: 200,
+              headers: { 'content-type': 'application/json' },
+              body: Buffer.from(JSON.stringify(targetResponseData)).toString('base64'),
+            },
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config: {
+              headers: new AxiosHeaders({
+                'x-diplomat-routed': 'true',
+                'x-diplomat-version': 'latest',
+              }),
+            },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          const response = await client.get('/endpoint', {
+            headers: {
+              'x-envoy-install-id': 'test-install-123',
+            },
+          });
+
+          expect(response.status).toBe(200);
+          expect(response.data).toEqual(targetResponseData);
+          expect(response.headers).toEqual({ 'content-type': 'application/json' });
+        });
+
+        it('decodes diplomat v1 format response', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(true);
+          process.env.DIPLOMAT_SERVER_V1_URL = 'https://diplomat-v1.example.com';
+
+          const client = createAxiosClient();
+          const targetResponseData = { result: 'success' };
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: {
+              result: {
+                body: Buffer.from(JSON.stringify(targetResponseData)).toString('base64'),
+              },
+            },
+            status: 200,
+            statusText: 'OK',
+            headers: { 'x-diplomat-server': 'v1' },
+            config: {
+              headers: new AxiosHeaders({
+                'x-diplomat-routed': 'true',
+                'x-diplomat-version': 'v1',
+              }),
+            },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          const response = await client.get('/endpoint', {
+            headers: {
+              'x-envoy-install-id': 'test-install-123',
+            },
+          });
+
+          expect(response.status).toBe(200);
+          expect(response.data).toEqual(targetResponseData);
+        });
+
+        it('throws error for 4xx status from target system (latest format)', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
+
+          const client = createAxiosClient();
+          const errorData = { error: 'Not found' };
+
+          // Mock adapter needs to return the diplomat response in the right structure
+          // The response interceptor will throw when it sees status >= 400
+          const mockAdapter = jest.fn().mockImplementation((config) => {
+            return Promise.resolve({
+              data: {
+                status: 404,
+                headers: { 'content-type': 'application/json' },
+                body: Buffer.from(JSON.stringify(errorData)).toString('base64'),
+              },
+              status: 200,
+              statusText: 'OK',
+              headers: {},
+              config: {
+                ...config,
+                headers: new AxiosHeaders({
+                  'x-diplomat-routed': 'true',
+                  'x-diplomat-version': 'latest',
+                }),
+              },
+            });
+          });
+          client.defaults.adapter = mockAdapter;
+
+          try {
+            await client.get('/endpoint', {
+              headers: {
+                'x-envoy-install-id': 'test-install-123',
+              },
+            });
+            fail('Should have thrown an error');
+          } catch (error: any) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error.response?.status).toBe(404);
+            expect(error.response?.data).toEqual(errorData);
+          }
+        });
+
+        it('passes through non-diplomat responses unchanged', async () => {
+          const client = createAxiosClient();
+          const mockAdapter = jest.fn().mockResolvedValue({
+            data: { success: true },
+            status: 200,
+            statusText: 'OK',
+            headers: { 'content-type': 'application/json' },
+            config: {
+              headers: new AxiosHeaders(),
+            },
+          });
+          client.defaults.adapter = mockAdapter;
+
+          const response = await client.get('https://api.example.com/endpoint');
+
+          expect(response.data).toEqual({ success: true });
+          expect(response.status).toBe(200);
+        });
+      });
+
+      describe('Error Interceptor', () => {
+        it('decodes diplomat error response (latest format)', async () => {
+          getDiplomatClientInstallSpy.mockResolvedValue({
+            client_id: 'client-123',
+            enabled: true,
+            internal_url: 'http://internal.example.com',
+          });
+
+          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
+
+          const client = createAxiosClient();
+          const errorData = { error: 'Unauthorized', message: 'Invalid credentials' };
+
+          // Mock adapter rejects with an AxiosError that has the diplomat response
+          const mockAdapter = jest.fn().mockImplementation((config) => {
+            const axiosError = new AxiosError('Request failed with status code 200', 'ERR_BAD_REQUEST');
+            axiosError.config = config;
+            axiosError.response = {
+              data: {
+                status: 401,
+                headers: { 'content-type': 'application/json' },
+                body: Buffer.from(JSON.stringify(errorData)).toString('base64'),
+              },
+              status: 200,
+              statusText: 'OK',
+              headers: {},
+              config: {
+                ...config,
+                headers: new AxiosHeaders({
+                  'x-diplomat-routed': 'true',
+                  'x-diplomat-version': 'latest',
+                }),
+              },
+            };
+            return Promise.reject(axiosError);
+          });
+          client.defaults.adapter = mockAdapter;
+
+          try {
+            await client.get('/endpoint', {
+              headers: {
+                'x-envoy-install-id': 'test-install-123',
+              },
+            });
+            fail('Should have thrown an error');
+          } catch (error: any) {
+            expect(error.response?.status).toBe(401);
+            expect(error.response?.data).toEqual(errorData);
+            expect(error.response?.headers).toEqual({ 'content-type': 'application/json' });
+          }
+        });
+
+        it('passes through non-diplomat errors unchanged', async () => {
+          const client = createAxiosClient();
+          const axiosError = new AxiosError('Network Error', 'ERR_NETWORK');
+          axiosError.response = {
+            data: { error: 'Network error' },
+            status: 500,
+            statusText: 'Internal Server Error',
+            headers: {},
+            config: {
+              headers: new AxiosHeaders(),
+            },
+          };
+
+          const mockAdapter = jest.fn().mockRejectedValue(axiosError);
+          client.defaults.adapter = mockAdapter;
+
+          try {
+            await client.get('https://api.example.com/endpoint');
+            fail('Should have thrown an error');
+          } catch (error) {
+            expect(error.response?.status).toBe(500);
+            expect(error.response?.data).toEqual({ error: 'Network error' });
+          }
+        });
       });
     });
   });

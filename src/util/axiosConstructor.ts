@@ -265,9 +265,13 @@ function diplomatResponseInterceptor(response: AxiosResponse): AxiosResponse {
         contextLogger.warn('Target system returned error status', {
           target_status: diplomatResponse.status,
         });
-        const error = new Error(`Request failed with status code ${diplomatResponse.status}`) as AxiosError;
-        error.response = transformedResponse;
-        error.isAxiosError = true;
+        const error = new AxiosError(
+          `Request failed with status code ${diplomatResponse.status}`,
+          `ERR_BAD_RESPONSE`,
+          response.config,
+          response.request,
+          transformedResponse,
+        );
         throw error;
       }
 
@@ -332,6 +336,10 @@ function diplomatErrorInterceptor(error: AxiosError): Promise<never> {
         error.response.data = parsedData;
         // V1 doesn't provide target system status/headers, so keep diplomat server's values
         // This matches the success response normalization
+      } else {
+        // Response data doesn't match diplomat format - it was already decoded by response interceptor
+        // Don't sanitize these errors as they already have the correct structure
+        return Promise.reject(error);
       }
     } catch (decodeError) {
       // If decoding fails, keep original error
