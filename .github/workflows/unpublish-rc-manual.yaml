@@ -56,24 +56,47 @@ jobs:
         if: github.event.inputs.action_type == 'unpublish' && github.event.inputs.version != ''
         run: |
           VERSION="${{ github.event.inputs.version }}"
-          echo "🗑️ Attempting to unpublish @envoy/envoy-integrations-sdk@${VERSION}"
+          PACKAGE_NAME="envoy-integrations-sdk"
+          ORG="envoy"
 
-          if npm unpublish @envoy/envoy-integrations-sdk@${VERSION} --force; then
-            echo "✅ Successfully unpublished ${VERSION}" >> $GITHUB_STEP_SUMMARY
+          echo "🗑️ Attempting to delete @${ORG}/${PACKAGE_NAME}@${VERSION}"
+
+          # Get all package versions to find the version ID
+          echo "Fetching package versions..."
+          VERSIONS_JSON=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/orgs/${ORG}/packages/npm/${PACKAGE_NAME}/versions")
+
+          # Find the version ID for the specific version
+          VERSION_ID=$(echo "$VERSIONS_JSON" | jq -r ".[] | select(.name == \"${VERSION}\") | .id")
+
+          if [ -z "$VERSION_ID" ] || [ "$VERSION_ID" == "null" ]; then
+            echo "❌ Failed to find version ${VERSION}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Version may not exist or may already be deleted." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          echo "Found version ID: ${VERSION_ID}"
+
+          # Delete the package version using GitHub API
+          if gh api \
+            --method DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/orgs/${ORG}/packages/npm/${PACKAGE_NAME}/versions/${VERSION_ID}"; then
+            echo "✅ Successfully deleted ${VERSION}" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ Failed to unpublish ${VERSION}" >> $GITHUB_STEP_SUMMARY
+            echo "❌ Failed to delete ${VERSION}" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "This may fail if:" >> $GITHUB_STEP_SUMMARY
-            echo "- Version doesn't exist" >> $GITHUB_STEP_SUMMARY
-            echo "- Other packages depend on it" >> $GITHUB_STEP_SUMMARY
-            echo "- It had >300 downloads in last week" >> $GITHUB_STEP_SUMMARY
             echo "- Insufficient permissions" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "Consider using 'deprecate' action instead." >> $GITHUB_STEP_SUMMARY
+            echo "- Package version is in use" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deprecate RC version
         if: github.event.inputs.action_type == 'deprecate' && github.event.inputs.version != ''
