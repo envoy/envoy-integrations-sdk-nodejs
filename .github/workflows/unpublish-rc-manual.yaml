@@ -1,0 +1,103 @@
+name: Unpublish RC (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'RC version to unpublish (e.g., "2.4.4-rc.103"). Leave empty to list all RC versions.'
+        required: false
+        default: ''
+      action_type:
+        description: 'Action to take'
+        required: true
+        type: choice
+        options:
+          - list_versions
+          - unpublish
+          - deprecate
+        default: 'list_versions'
+      deprecation_message:
+        description: 'Deprecation message (only used if action is "deprecate")'
+        required: false
+        default: 'Deprecated RC version - do not use. Use stable version instead.'
+
+jobs:
+  manage-rc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.x'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Configure npm authentication
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+          echo "@envoy:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+
+      - name: List RC versions
+        if: github.event.inputs.action_type == 'list_versions'
+        run: |
+          echo "## RC Versions Available" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Fetching all published versions..." >> $GITHUB_STEP_SUMMARY
+          npm view @envoy/envoy-integrations-sdk versions --json | jq -r '.[]' | grep 'rc\.' | while read version; do
+            echo "- \`$version\`" >> $GITHUB_STEP_SUMMARY
+          done
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "To unpublish a version, run this workflow again with:" >> $GITHUB_STEP_SUMMARY
+          echo "- **action_type**: unpublish" >> $GITHUB_STEP_SUMMARY
+          echo "- **version**: the version to unpublish" >> $GITHUB_STEP_SUMMARY
+
+      - name: Unpublish RC version
+        if: github.event.inputs.action_type == 'unpublish' && github.event.inputs.version != ''
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          echo "🗑️ Attempting to unpublish @envoy/envoy-integrations-sdk@${VERSION}"
+
+          if npm unpublish @envoy/envoy-integrations-sdk@${VERSION} --force; then
+            echo "✅ Successfully unpublished ${VERSION}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Failed to unpublish ${VERSION}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "This may fail if:" >> $GITHUB_STEP_SUMMARY
+            echo "- Version doesn't exist" >> $GITHUB_STEP_SUMMARY
+            echo "- Other packages depend on it" >> $GITHUB_STEP_SUMMARY
+            echo "- It had >300 downloads in last week" >> $GITHUB_STEP_SUMMARY
+            echo "- Insufficient permissions" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Consider using 'deprecate' action instead." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deprecate RC version
+        if: github.event.inputs.action_type == 'deprecate' && github.event.inputs.version != ''
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          MESSAGE="${{ github.event.inputs.deprecation_message }}"
+          echo "⚠️ Deprecating @envoy/envoy-integrations-sdk@${VERSION}"
+
+          if npm deprecate @envoy/envoy-integrations-sdk@${VERSION} "${MESSAGE}"; then
+            echo "✅ Successfully deprecated ${VERSION}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Deprecation message:** ${MESSAGE}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Failed to deprecate ${VERSION}" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate inputs
+        if: github.event.inputs.action_type != 'list_versions' && github.event.inputs.version == ''
+        run: |
+          echo "❌ Error: version is required when action is not 'list_versions'" >> $GITHUB_STEP_SUMMARY
+          exit 1
