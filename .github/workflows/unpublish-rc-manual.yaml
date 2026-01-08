@@ -36,11 +36,6 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://npm.pkg.github.com'
 
-      - name: Configure npm authentication
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-          echo "@envoy:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-
       - name: List RC versions
         if: github.event.inputs.action_type == 'list_versions'
         run: |
@@ -54,6 +49,8 @@ jobs:
           echo "To unpublish a version, run this workflow again with:" >> $GITHUB_STEP_SUMMARY
           echo "- **action_type**: unpublish" >> $GITHUB_STEP_SUMMARY
           echo "- **version**: the version to unpublish" >> $GITHUB_STEP_SUMMARY
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Unpublish RC version
         if: github.event.inputs.action_type == 'unpublish' && github.event.inputs.version != ''
