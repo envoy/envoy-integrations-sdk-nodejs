@@ -132,17 +132,14 @@ export async function getDiplomatClientInstall(installId?: string): Promise<Dipl
     return response.data;
   } catch (err: unknown) {
     // Log the error but return null to fall back to direct routing
-    const isAxiosError = err && typeof err === 'object' && 'response' in err;
-
-    if (isAxiosError) {
-      const axiosError = err as AxiosError;
+    if (axios.isAxiosError(err)) {
       logger.warn('Diplomat server check failed - falling back to direct routing', {
         install_id: installId,
         diplomat_version: diplomatVersion,
         diplomat_server_url: serverUrl,
-        status_code: axiosError.response?.status,
-        error_message: axiosError.message,
-        error_code: axiosError.code,
+        status_code: err.response?.status,
+        error_message: err.message,
+        error_code: err.code,
       });
     } else {
       logger.warn('Diplomat server check failed - falling back to direct routing', {

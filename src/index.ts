@@ -61,10 +61,7 @@ export * from './sdk/middleware';
 
 export * from './util/EnvoySignatureVerifier';
 export * from './util/axiosConstructor';
-export * from './util/diplomat';
 export * from './util/errorHandling';
-export * from './util/logger';
-export * from './util/splitClient';
 
 export {
   EntryPayload,

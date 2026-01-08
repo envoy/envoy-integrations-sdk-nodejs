@@ -497,12 +497,18 @@ describe('Axios', () => {
 
           // data gets JSON.stringified by axios, so parse it back
           const parsedData = JSON.parse(callArgs.data);
-          expect(parsedData.handler).toBe('http');
-          expect(parsedData.options.method).toBe('POST');
-          expect(parsedData.options.baseURL).toBe('http://internal.example.com/');
-          expect(parsedData.options.url).toBe('/endpoint');
+          expect(parsedData).toEqual(expect.objectContaining({
+            handler: 'http',
+            options: expect.objectContaining({
+              method: 'POST',
+              baseURL: 'http://internal.example.com/',
+              url: '/endpoint',
+              headers: expect.objectContaining({
+                'Content-Type': 'application/x-www-form-urlencoded',
+              }),
+            }),
+          }));
           expect(parsedData.options.body).toBeTruthy();
-          expect(parsedData.options.headers['Content-Type']).toBe('application/x-www-form-urlencoded');
 
           expect(callArgs.headers['x-diplomat-routed']).toBe('true');
           expect(callArgs.headers['x-diplomat-version']).toBe('latest');
