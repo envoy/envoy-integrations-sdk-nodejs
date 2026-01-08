@@ -328,6 +328,9 @@ function diplomatErrorInterceptor(error: AxiosError): Promise<never> {
         error.response.data = parsedData;
         error.response.status = diplomatResponse.status;
         error.response.headers = diplomatResponse.headers;
+
+        // Skip sanitization for decoded diplomat errors
+        return Promise.reject(error);
       } else if (isDiplomatV1Response(diplomatResponse)) {
         const decodedBody = diplomatResponse.result.body ? base64ToUtf8(diplomatResponse.result.body) : '';
         const parsedData = decodedBody ? JSON.parse(decodedBody) : {};
@@ -336,13 +339,17 @@ function diplomatErrorInterceptor(error: AxiosError): Promise<never> {
         error.response.data = parsedData;
         // V1 doesn't provide target system status/headers, so keep diplomat server's values
         // This matches the success response normalization
+
+        // Skip sanitization for decoded diplomat errors
+        return Promise.reject(error);
       } else {
         // Response data doesn't match diplomat format - it was already decoded by response interceptor
         // Don't sanitize these errors as they already have the correct structure
         return Promise.reject(error);
       }
     } catch (decodeError) {
-      // If decoding fails, keep original error
+      // If decoding fails, sanitize and reject
+      return Promise.reject(sanitizeAxiosError(error));
     }
   }
 

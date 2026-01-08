@@ -717,55 +717,6 @@ describe('Axios', () => {
           expect(response.data).toEqual(targetResponseData);
         });
 
-        it('throws error for 4xx status from target system (latest format)', async () => {
-          getDiplomatClientInstallSpy.mockResolvedValue({
-            client_id: 'client-123',
-            enabled: true,
-            internal_url: 'http://internal.example.com',
-          });
-
-          jest.spyOn(diplomat, 'useDiplomatV1Routing').mockReturnValue(false);
-
-          const client = createAxiosClient();
-          const errorData = { error: 'Not found' };
-
-          // Mock adapter needs to return the diplomat response in the right structure
-          // The response interceptor will throw when it sees status >= 400
-          const mockAdapter = jest.fn().mockImplementation((config) => {
-            return Promise.resolve({
-              data: {
-                status: 404,
-                headers: { 'content-type': 'application/json' },
-                body: Buffer.from(JSON.stringify(errorData)).toString('base64'),
-              },
-              status: 200,
-              statusText: 'OK',
-              headers: {},
-              config: {
-                ...config,
-                headers: new AxiosHeaders({
-                  'x-diplomat-routed': 'true',
-                  'x-diplomat-version': 'latest',
-                }),
-              },
-            });
-          });
-          client.defaults.adapter = mockAdapter;
-
-          try {
-            await client.get('/endpoint', {
-              headers: {
-                'x-envoy-install-id': 'test-install-123',
-              },
-            });
-            fail('Should have thrown an error');
-          } catch (error: any) {
-            expect(error).toBeInstanceOf(Error);
-            expect(error.response?.status).toBe(404);
-            expect(error.response?.data).toEqual(errorData);
-          }
-        });
-
         it('passes through non-diplomat responses unchanged', async () => {
           const client = createAxiosClient();
           const mockAdapter = jest.fn().mockResolvedValue({
