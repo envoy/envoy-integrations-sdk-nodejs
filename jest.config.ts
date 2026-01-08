@@ -11,6 +11,9 @@ const config: Config.InitialOptions = {
     ],
   },
   transformIgnorePatterns: ['node_modules/(?!(axios)/)'],
+  moduleNameMapper: {
+    '^@splitsoftware/splitio$': '<rootDir>/test/mocks/splitio.ts',
+  },
 };
 
 export default config;
