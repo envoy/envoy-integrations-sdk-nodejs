@@ -62,6 +62,9 @@ export * from './sdk/middleware';
 export * from './util/EnvoySignatureVerifier';
 export * from './util/axiosConstructor';
 export * from './util/errorHandling';
+export * from './util/userAgent';
+
+export type { EnvoyAPIOptions } from './base/EnvoyAPI';
 
 export {
   EntryPayload,
