@@ -63,6 +63,8 @@ export * from './util/EnvoySignatureVerifier';
 export * from './util/axiosConstructor';
 export * from './util/errorHandling';
 
+export type { EnvoyAPIOptions } from './base/EnvoyAPI';
+
 export {
   EntryPayload,
   InvitePayload,

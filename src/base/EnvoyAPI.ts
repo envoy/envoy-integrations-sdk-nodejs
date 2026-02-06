@@ -4,9 +4,26 @@ import JSONAPIData from '../util/json-api/JSONAPIData';
 import { envoyBaseURL } from '../constants';
 import { createAxiosClient } from '../util/axiosConstructor';
 import { EMPTY_STORAGE_ERROR_MESSAGE } from '../util/errorHandling';
+import { buildUserAgent, buildClientInfoHeader } from '../util/userAgent';
 
 interface EnvoyWebDataLoaderKey extends JSONAPIData {
   include?: string;
+}
+
+/**
+ * Options for configuring EnvoyAPI client
+ */
+export interface EnvoyAPIOptions {
+  /** Access token for authentication */
+  accessToken: string;
+  /**
+   * Custom application identifier appended to User-Agent header.
+   * Format: "AppName/Version"
+   * Example: "MyCompanyApp/1.0.0"
+   *
+   * This identifier helps track API usage by application and aids in debugging.
+   */
+  userAgent?: string;
 }
 
 /**
@@ -27,6 +44,7 @@ const TYPE_ALIASES = new Map<string, string>([['employee-screening-flows', 'flow
 export default class EnvoyAPI {
   /**
    * HTTP Client with Envoy's defaults.
+   * User-Agent headers are set in the constructor after client instantiation.
    */
   readonly axios = createAxiosClient({
     baseURL: envoyBaseURL,
@@ -59,8 +77,51 @@ export default class EnvoyAPI {
     },
   );
 
-  constructor(accessToken: string) {
+  /**
+   * Create an EnvoyAPI client instance
+   *
+   * @param options - Either an access token string or an EnvoyAPIOptions object
+   *                  with accessToken and optional userAgent
+   *
+   * @example
+   * // Simple usage with access token only
+   * const client = new EnvoyAPI('access-token-here');
+   *
+   * @example
+   * // Usage with custom User-Agent for tracking and debugging
+   * const client = new EnvoyAPI({
+   *   accessToken: 'access-token-here',
+   *   userAgent: 'MyApp/1.0.0'
+   * });
+   */
+  constructor(options: EnvoyAPIOptions | string) {
+    // Support both string and options object formats
+    const { accessToken, userAgent } = typeof options === 'string'
+      ? { accessToken: options, userAgent: undefined }
+      : options;
+
+    // Set authorization header (critical - must succeed)
     this.axios.defaults.headers.authorization = `Bearer ${accessToken}`;
+
+    // Set User-Agent headers with absolute guarantee that failures won't break SDK
+    // GUARANTEE: This block will NEVER throw an exception, no matter what happens
+    // User-Agent headers are telemetry/debugging aids, not critical for SDK functionality
+    try {
+      // Primary attempt: Use full header generation functions
+      this.axios.defaults.headers['User-Agent'] = buildUserAgent(userAgent);
+      this.axios.defaults.headers['X-Envoy-Client-Info'] = buildClientInfoHeader(userAgent);
+    } catch (error) {
+      // Secondary fallback: Set minimal valid headers
+      try {
+        this.axios.defaults.headers['User-Agent'] = 'envoy-integrations-sdk/unknown';
+        this.axios.defaults.headers['X-Envoy-Client-Info'] = '{"sdk":"envoy-integrations-sdk"}';
+      } catch (fallbackError) {
+        // Tertiary fallback: Even setting minimal headers failed
+        // Continue without User-Agent headers - SDK remains fully functional
+        // This catch ensures absolute guarantee that SDK initialization succeeds
+      }
+    }
+
     /**
      * Saves every model that was "include"ed in the response,
      * which saves us the trouble of fetching related data.
