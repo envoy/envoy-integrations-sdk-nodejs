@@ -6,7 +6,7 @@ try {
   // Import version from package.json
   // Note: In compiled code, this resolves correctly
   version = require('../../package.json').version;
-} catch (error) {
+} catch {
   // If package.json can't be loaded, use fallback version
   // This ensures SDK initialization never fails
   // Silently fail - User-Agent is telemetry, not critical functionality
@@ -39,7 +39,7 @@ function getNodeVersion(): string {
     if (process?.version) {
       return process.version.replace('v', '');
     }
-  } catch (error) {
+  } catch {
     // Ignore error, use fallback
   }
   return 'unknown';
@@ -52,7 +52,7 @@ function getNodeVersion(): string {
 function getPlatform(): string {
   try {
     return os.platform();
-  } catch (error) {
+  } catch {
     // If os.platform() fails, return fallback
     return 'unknown';
   }
@@ -74,7 +74,7 @@ export function buildUserAgent(customUserAgent?: string): string {
     const nodeVersion = getNodeVersion();
     const baseUA = `envoy-integrations-sdk/${version} node/${nodeVersion}`;
     return customUserAgent ? `${baseUA} ${customUserAgent}` : baseUA;
-  } catch (error) {
+  } catch {
     // Critical fallback - should never happen, but ensures SDK always works
     // Silently fail - User-Agent is telemetry, not critical functionality
     return 'envoy-integrations-sdk/unknown node/unknown';
@@ -109,7 +109,7 @@ export function buildClientInfo(customUserAgent?: string): ClientInfo {
     }
 
     return clientInfo;
-  } catch (error) {
+  } catch {
     // Critical fallback - return minimal safe info
     // Silently fail - User-Agent is telemetry, not critical functionality
     return {
@@ -135,7 +135,7 @@ export function buildClientInfoHeader(customUserAgent?: string): string {
   try {
     const clientInfo = buildClientInfo(customUserAgent);
     return JSON.stringify(clientInfo);
-  } catch (error) {
+  } catch {
     // Critical fallback - return minimal valid JSON
     // Silently fail - User-Agent is telemetry, not critical functionality
     // Return minimal valid JSON that won't break parsing

@@ -145,6 +145,25 @@ describe('EnvoyAPI', () => {
         const parsedClientInfo = JSON.parse(clientInfoHeader);
         expect(parsedClientInfo.application).toBe(customUserAgent);
       });
+
+      it('handles userAgent with emoji and unexpected characters', () => {
+        const customUserAgent = 'MyApp🚀/1.0.0 (test版本)';
+        const api = new EnvoyAPI({
+          accessToken: testAccessToken,
+          userAgent: customUserAgent,
+        });
+
+        // SDK should not fail even with unusual characters
+        expect(api).toBeDefined();
+        expect(api.axios.defaults.headers.authorization).toBe(`Bearer ${testAccessToken}`);
+        expect(api.axios.defaults.headers['User-Agent']).toContain(customUserAgent);
+
+        // JSON serialization should handle these characters
+        const clientInfoHeader = api.axios.defaults.headers['X-Envoy-Client-Info'] as string;
+        expect(() => JSON.parse(clientInfoHeader)).not.toThrow();
+        const parsedClientInfo = JSON.parse(clientInfoHeader);
+        expect(parsedClientInfo.application).toBe(customUserAgent);
+      });
     });
 
     describe('authorization header', () => {

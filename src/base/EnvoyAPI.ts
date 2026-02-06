@@ -80,22 +80,22 @@ export default class EnvoyAPI {
   /**
    * Create an EnvoyAPI client instance
    *
-   * @param options - Either an access token string (for backward compatibility)
-   *                  or an EnvoyAPIOptions object with accessToken and optional userAgent
+   * @param options - Either an access token string or an EnvoyAPIOptions object
+   *                  with accessToken and optional userAgent
    *
    * @example
-   * // Legacy usage (still supported)
+   * // Simple usage with access token only
    * const client = new EnvoyAPI('access-token-here');
    *
    * @example
-   * // New usage with custom User-Agent
+   * // Usage with custom User-Agent for tracking and debugging
    * const client = new EnvoyAPI({
    *   accessToken: 'access-token-here',
    *   userAgent: 'MyApp/1.0.0'
    * });
    */
   constructor(options: EnvoyAPIOptions | string) {
-    // Support both string (legacy) and options object (new)
+    // Support both string and options object formats
     const { accessToken, userAgent } = typeof options === 'string'
       ? { accessToken: options, userAgent: undefined }
       : options;
