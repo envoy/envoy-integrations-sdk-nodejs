@@ -73,7 +73,7 @@ type InvitePayload = {
 
 export function normalizeInvitePayload(payload: InvitePayload): InvitePayload {
   const { 'legal-docs': legalDocs } = payload.attributes;
-  const normalized = { ...payload };
+  const normalized = { ...payload, attributes: { ...payload.attributes } };
   if (Array.isArray(legalDocs) && legalDocs.length) {
     normalized.attributes['legal-docs'] = legalDocs.map((doc) => ({
       ...doc,
