@@ -1,6 +1,6 @@
-import { normalizeEntryPayload } from '../../src/payloads/EntryPayload';
+import EntryPayload, { normalizeEntryPayload } from '../../src/payloads/EntryPayload';
 
-const makePayload = (attributeOverrides = {}) => ({
+const makePayload = (attributeOverrides = {}): EntryPayload => ({
   id: '1',
   type: 'entries' as const,
   attributes: {
@@ -24,11 +24,13 @@ const makePayload = (attributeOverrides = {}) => ({
 describe('normalizeEntryPayload', () => {
   it('converts signed-in-at from SQL to ISO', () => {
     const result = normalizeEntryPayload(makePayload());
+
     expect(result.attributes['signed-in-at']).toBe('2024-01-15T10:30:00.000Z');
   });
 
   it('converts signed-out-at from SQL to ISO when present', () => {
     const result = normalizeEntryPayload(makePayload({ 'signed-out-at': '2024-01-15 11:00:00' }));
+
     expect(result.attributes['signed-out-at']).toBe('2024-01-15T11:00:00.000Z');
   });
 
@@ -36,7 +38,9 @@ describe('normalizeEntryPayload', () => {
     const legalDocs = [
       { id: 'doc1', url: 'https://example.com/doc1', 'signed-at': '2024-01-15 10:30:00', agreement: { id: 'a1' } },
     ];
+
     const result = normalizeEntryPayload(makePayload({ 'legal-docs': legalDocs }));
+
     expect(result.attributes['legal-docs']?.[0]['signed-at']).toBe('2024-01-15T10:30:00.000Z');
   });
 

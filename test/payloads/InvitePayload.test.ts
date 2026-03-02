@@ -1,6 +1,6 @@
-import { normalizeInvitePayload } from '../../src/payloads/InvitePayload';
+import InvitePayload, { normalizeInvitePayload } from '../../src/payloads/InvitePayload';
 
-const makePayload = (attributeOverrides = {}) => ({
+const makePayload = (attributeOverrides = {}): InvitePayload => ({
   id: '1',
   type: 'invites' as const,
   attributes: {
@@ -33,7 +33,9 @@ const makePayload = (attributeOverrides = {}) => ({
 describe('normalizeInvitePayload', () => {
   it('returns the payload unchanged when there are no legal-docs', () => {
     const payload = makePayload();
+
     const result = normalizeInvitePayload(payload);
+
     expect(result.attributes).toEqual(payload.attributes);
   });
 
@@ -41,7 +43,9 @@ describe('normalizeInvitePayload', () => {
     const legalDocs = [
       { id: 'doc1', url: 'https://example.com/doc1', 'signed-at': '2024-01-15 10:30:00', agreement: { id: 'a1' } },
     ];
+
     const result = normalizeInvitePayload(makePayload({ 'legal-docs': legalDocs }));
+
     expect(result.attributes['legal-docs']?.[0]['signed-at']).toBe('2024-01-15T10:30:00.000Z');
   });
 
@@ -53,7 +57,8 @@ describe('normalizeInvitePayload', () => {
 
     normalizeInvitePayload(payload);
 
-    expect(legalDocs[0]['signed-at']).toBe('2024-01-15 10:30:00');
+    expect(payload.attributes['legal-docs']).toBe(legalDocs);
+    expect(payload.attributes['legal-docs']?.[0]['signed-at']).toBe('2024-01-15 10:30:00');
   });
 
   it('produces the same result when called twice on the same payload', () => {
