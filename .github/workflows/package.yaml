@@ -2,7 +2,6 @@ name: Node.js Package
 on:
   release:
     types: [created]
-  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,7 +34,6 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
 
       - run: npm publish --access public
-        if: github.event_name == 'release'
 
       # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v4
