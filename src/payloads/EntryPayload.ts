@@ -87,7 +87,7 @@ type EntryPayload = {
 
 export function normalizeEntryPayload(payload: EntryPayload): EntryPayload {
   const { 'signed-in-at': signedInAt, 'signed-out-at': signedOutAt, 'legal-docs': legalDocs } = payload.attributes;
-  const normalized = { ...payload };
+  const normalized = { ...payload, attributes: { ...payload.attributes } };
   normalized.attributes['signed-in-at'] = DateTime.fromSQL(signedInAt, { zone: 'UTC' }).toISO();
   if (signedOutAt) {
     normalized.attributes['signed-out-at'] = DateTime.fromSQL(signedOutAt, { zone: 'UTC' }).toISO();
