@@ -35,6 +35,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
 
       - run: npm publish --access public
+        if: github.event_name == 'release'
 
       # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v4
