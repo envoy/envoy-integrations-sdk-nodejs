@@ -5,17 +5,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Get Node.js version
         id: node-version
         run: |
-          echo "::set-output name=version::$(node --version)"
+          echo "version=$(node --version)" >> $GITHUB_OUTPUT
+
       - name: Cache node_modules
         uses: actions/cache@v4
         id: cache-node-modules
@@ -26,18 +32,16 @@ jobs:
       - name: Install dependencies
         run: npm install
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ENVOYBOT_PERSONAL_ACCESS_TOKEN }}
 
-      - run: npm publish --tag beta --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ENVOY_NPM_AUTOMATION_TOKEN }}
+      - run: npm publish --access public
+        if: ${{ !github.event.release.prerelease }}
 
-      # Setup .npmrc file to publish to npm
+      # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v4
         with:
           registry-url: 'https://npm.pkg.github.com'
 
-      - run: npm publish --tag beta
+      - run: npm publish
+        if: ${{ !github.event.release.prerelease }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
