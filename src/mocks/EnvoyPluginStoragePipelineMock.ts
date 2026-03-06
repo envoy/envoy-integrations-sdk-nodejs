@@ -179,7 +179,7 @@ export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePi
     return Object.keys(EnvoyPluginStoragePipelineMock.storage)
       .filter((key) => (key.startsWith('global_') && isGlobal) || (key.startsWith('install_') && !isGlobal))
       .sort()
-      .slice(offset, limit)
+      .slice(offset, offset + limit)
       .map((key) => {
         const value = EnvoyPluginStoragePipelineMock.storage[key];
         const pieces = key.split('_');
