@@ -157,7 +157,7 @@ export default class EnvoyPluginSDK<Meta = unknown, Payload = unknown> {
    */
   get jobId(): string | null {
     const { meta } = this;
-    if ('job' in meta) {
+    if (meta !== null && typeof meta === 'object' && 'job' in meta) {
       return (meta as unknown as EnvoyEventMeta).job.id;
     }
     return null;
