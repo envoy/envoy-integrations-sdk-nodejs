@@ -78,21 +78,17 @@ type EntryPayload = {
   }
 };
 
-export function normalizeEntryPayload(payload : EntryPayload): EntryPayload {
-  const {
-    'signed-in-at': signedInAt,
-    'signed-out-at': signedOutAt,
-    'legal-docs': legalDocs,
-  } = payload.attributes;
-  const normalized = { ...payload };
-  normalized.attributes['signed-in-at'] = DateTime.fromSQL(signedInAt, { zone: 'UTC' }).toISO();
+export function normalizeEntryPayload(payload: EntryPayload): EntryPayload {
+  const { 'signed-in-at': signedInAt, 'signed-out-at': signedOutAt, 'legal-docs': legalDocs } = payload.attributes;
+  const normalized = { ...payload, attributes: { ...payload.attributes } };
+  normalized.attributes['signed-in-at'] = DateTime.fromSQL(signedInAt, { zone: 'UTC' }).toISO()!;
   if (signedOutAt) {
-    normalized.attributes['signed-out-at'] = DateTime.fromSQL(signedOutAt, { zone: 'UTC' }).toISO();
+    normalized.attributes['signed-out-at'] = DateTime.fromSQL(signedOutAt, { zone: 'UTC' }).toISO()!;
   }
   if (Array.isArray(legalDocs) && legalDocs.length) {
     normalized.attributes['legal-docs'] = legalDocs.map((doc) => ({
       ...doc,
-      'signed-at': DateTime.fromSQL(doc['signed-at'], { zone: 'UTC' }).toISO(),
+      'signed-at': DateTime.fromSQL(doc['signed-at'], { zone: 'UTC' }).toISO()!,
     }));
   }
   return normalized;

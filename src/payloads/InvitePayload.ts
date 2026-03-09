@@ -76,7 +76,7 @@ export function normalizeInvitePayload(payload: InvitePayload): InvitePayload {
   if (Array.isArray(legalDocs) && legalDocs.length) {
     normalized.attributes['legal-docs'] = legalDocs.map((doc) => ({
       ...doc,
-      'signed-at': DateTime.fromSQL(doc['signed-at'], { zone: 'UTC' }).toISO(),
+      'signed-at': DateTime.fromSQL(doc['signed-at'], { zone: 'UTC' }).toISO()!,
     }));
   }
   return normalized;

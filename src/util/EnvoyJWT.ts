@@ -33,7 +33,7 @@ export default class EnvoyJWT {
       options.subject = `${subject}`;
     }
     if (expiresIn) {
-      options.expiresIn = expiresIn;
+      options.expiresIn = expiresIn as unknown as SignOptions['expiresIn'];
     }
 
     return jwt.sign(payload, secret, options);
