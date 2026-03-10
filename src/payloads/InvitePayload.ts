@@ -43,6 +43,7 @@ type InvitePayload = {
     'signed-in-at'?: string;
     'signed-out-at'?: string;
   };
+  'visitor-profile-id'?: string;
   relationships: {
     entry?: {
       data: JSONAPIData<'entries'>;

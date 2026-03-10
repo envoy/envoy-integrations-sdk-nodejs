@@ -76,6 +76,7 @@ type EntryPayload = {
       data: Array<JSONAPIData<'agreeable-ndas'>>;
     };
   };
+  'visitor-profile-id'?: string;
   'changed-fields'?: Record<
     string,
     {
