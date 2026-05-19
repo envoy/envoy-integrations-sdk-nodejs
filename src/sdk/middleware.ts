@@ -8,6 +8,69 @@ import EnvoyResponse from './EnvoyResponse';
 import EnvoyPluginJobAttachment, { EnvoyPluginScreenerJobAttachment } from './EnvoyPluginJobAttachment';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
+import { StructuredLogger, isRequestWithLogger } from './StructuredLogger';
+
+/**
+ * Request-scoped context that `envoyMiddleware` makes available to a
+ * `loggerFactory` so the factory can produce a logger pre-tagged with the
+ * usual Envoy fields.
+ *
+ * Only the fields that can be derived from the raw express `Request` (before
+ * body parsing) are populated here — richer context (install id, company id,
+ * event name, etc.) lives on `req.envoy.meta` and should be added by a
+ * downstream middleware once the SDK has finished initializing.
+ *
+ * @category Middleware
+ */
+export interface EnvoyLoggerContext {
+  /**
+   * Integration name parsed from the `?name=` query param.
+   *
+   * NOTE: this is a convention used by Envoy monolith integration services
+   * (e.g. `screener-integration-service`, `access-control-integration-service`)
+   * that fan out to plugin-specific routes via a single `?name=<plugin>`
+   * dispatcher. Standalone single-purpose plugins that don't use the
+   * `?name=` query param will receive `undefined` here.
+   */
+  integrationName?: string;
+}
+
+/**
+ * Options for {@link envoyMiddleware}.
+ *
+ * Combines the signature-verifier options (which configure how Envoy's HMAC
+ * header is checked) with an optional `loggerFactory` hook for attaching a
+ * request-scoped {@link StructuredLogger}.
+ *
+ * @category Middleware
+ */
+export interface EnvoyMiddlewareOptions extends Partial<EnvoySignatureVerifierOptions> {
+  /**
+   * If provided, invoked at the start of every request to build a
+   * {@link StructuredLogger}. The result is attached to `req.logger` so it's
+   * available for the rest of the middleware chain (including
+   * `structuredErrorMiddleware`).
+   *
+   * The factory is called *before* the request body is parsed and *before*
+   * `req.envoy` is set up, so it can only depend on the raw express
+   * `Request` plus the {@link EnvoyLoggerContext} the middleware can derive
+   * from it (currently the `?name=` integration name used by Envoy monolith
+   * integration services). Downstream middleware can replace `req.logger`
+   * with a richer child logger once more context (install id, company id,
+   * etc.) is available on `req.envoy.meta`.
+   */
+  loggerFactory?: (req: Request, context: EnvoyLoggerContext) => StructuredLogger;
+}
+
+/**
+ * Pulls the integration name from `req.query.name` if (and only if) it is a
+ * single string. This matches the dispatch convention used by Envoy monolith
+ * integration services — see {@link EnvoyLoggerContext.integrationName}.
+ */
+function extractIntegrationName(req: Request): string | undefined {
+  const candidate = req.query?.name;
+  return typeof candidate === 'string' ? candidate : undefined;
+}
 
 /**
  * Sets up an {@link EnvoyPluginSDK} object in the path `req.envoy`.
@@ -16,10 +79,16 @@ import EnvoyPluginAPI from './EnvoyPluginAPI';
  * Also verifies that the request is coming from Envoy,
  * as well as managing the plugin access token lifecycle.
  *
+ * If a `loggerFactory` is supplied, attaches the produced
+ * {@link StructuredLogger} to `req.logger` so it's available throughout the
+ * middleware chain — including any error that fires inside this middleware
+ * before `req.envoy` finishes initializing.
+ *
  * @category Middleware
  */
-export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): RequestHandler {
-  const signatureVerifier = new EnvoySignatureVerifier(options);
+export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandler {
+  const { loggerFactory, ...verifierOptions } = options ?? {};
+  const signatureVerifier = new EnvoySignatureVerifier(verifierOptions as EnvoySignatureVerifierOptions);
   const verify = (req: VerifiedRequest, res: Response, rawBody: Buffer) => {
     req[VERIFIED] = signatureVerifier.verify(req, rawBody);
   };
@@ -28,6 +97,19 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
   let threshold = 0;
 
   return (req: Request, res: Response, next: NextFunction) => {
+    if (loggerFactory) {
+      try {
+        const context: EnvoyLoggerContext = {
+          integrationName: extractIntegrationName(req),
+        };
+        (req as Request & { logger?: StructuredLogger }).logger = loggerFactory(req, context);
+      } catch (factoryErr) {
+        // A failing loggerFactory must not break the request pipeline — surface
+        // the error so it's debuggable, then continue without a request logger.
+        // eslint-disable-next-line no-console
+        console.error('envoyMiddleware: loggerFactory threw', factoryErr);
+      }
+    }
     json(req, res, async (err) => {
       if (err) {
         return next(err);
@@ -116,28 +198,16 @@ export function errorMiddleware(onError: (err: Error) => void = () => {}): Error
 }
 
 /**
- * Minimal structured-logger shape that `structuredErrorHandler` looks for at
- * `req.logger`. Any logger exposing this method (e.g. the StructuredLogger
- * from `@envoy/envoy-integrations-internal-sdk`) is compatible.
- */
-export interface StructuredErrorLogger {
-  error(message: string, error: Error, metadata?: Record<string, unknown>): void;
-}
-
-interface RequestWithLogger extends Request {
-  logger?: StructuredErrorLogger;
-}
-
-/**
  * Like {@link errorMiddleware} but emits errors as structured log events
- * instead of relying on `error.toString()` via a side-effect callback.
+ * instead of stringifying via a side-effect callback.
  *
  * Default behavior (when no `onError` callback is supplied):
- *   - If upstream middleware has attached a `StructuredErrorLogger` at
- *     `req.logger`, call `req.logger.error(message, err, metadata)`. The
+ *   - If upstream middleware has attached a {@link StructuredLogger} at
+ *     `req.logger` (typically via `envoyMiddleware`'s `loggerFactory`
+ *     option), calls `req.logger.error(message, err, metadata)`. The
  *     metadata includes `operation`, `httpMethod`, and `httpUrl` so Datadog
  *     (or any structured log store) can index on them.
- *   - Otherwise, fall back to `console.error(err)` so errors are never
+ *   - Otherwise, falls back to `console.error(err)` so errors are never
  *     silently lost.
  *
  * Pass an `onError` callback to take full control of how the error is logged
@@ -151,9 +221,7 @@ interface RequestWithLogger extends Request {
  *
  * @category Middleware
  */
-export function structuredErrorHandler(
-  onError?: (err: Error, req: Request) => void,
-): ErrorRequestHandler {
+export function structuredErrorMiddleware(onError?: (err: Error, req: Request) => void): ErrorRequestHandler {
   return (err: Error, req: Request, res: Response, next: NextFunction): void => {
     if (onError) {
       try {
@@ -161,26 +229,23 @@ export function structuredErrorHandler(
       } catch (cbErr) {
         // Don't let a logging callback failure swallow the original error.
         // eslint-disable-next-line no-console
-        console.error('structuredErrorHandler: onError callback threw', cbErr);
+        console.error('structuredErrorMiddleware: onError callback threw', cbErr);
+      }
+    } else if (isRequestWithLogger(req)) {
+      try {
+        req.logger.error('Unhandled error in request pipeline', err, {
+          operation: 'structuredErrorMiddleware',
+          httpMethod: req.method,
+          httpUrl: req.originalUrl,
+        });
+      } catch (logErr) {
+        // eslint-disable-next-line no-console
+        console.error('structuredErrorMiddleware: req.logger.error threw', logErr);
       }
     } else {
-      const requestLogger = (req as RequestWithLogger).logger;
-      if (requestLogger && typeof requestLogger.error === 'function') {
-        try {
-          requestLogger.error('Unhandled error in request pipeline', err, {
-            operation: 'structuredErrorHandler',
-            httpMethod: req.method,
-            httpUrl: req.originalUrl,
-          });
-        } catch (logErr) {
-          // eslint-disable-next-line no-console
-          console.error('structuredErrorHandler: req.logger.error threw', logErr);
-        }
-      } else {
-        // No request-scoped logger attached — surface the raw error so it isn't lost.
-        // eslint-disable-next-line no-console
-        console.error(err);
-      }
+      // No request-scoped logger attached — surface the raw error so it isn't lost.
+      // eslint-disable-next-line no-console
+      console.error(err);
     }
     if (res.headersSent) {
       return next(err);

@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyMeta, { EnvoyEventMeta, EnvoyRouteMeta } from './EnvoyMeta';
+import { StructuredLogger } from './StructuredLogger';
 import EntryPayload from '../payloads/EntryPayload';
 import InvitePayload from '../payloads/InvitePayload';
 import LocationPayload from '../payloads/LocationPayload';
@@ -37,6 +38,14 @@ export interface VerifiedRequest extends Request {
  */
 export interface EnvoyBaseRequest<Meta extends object = EnvoyMeta, Payload = unknown> extends VerifiedRequest {
   envoy: EnvoyPluginSDK<Meta, Payload>;
+  /**
+   * Request-scoped structured logger. Set by `envoyMiddleware` when a
+   * `loggerFactory` option is provided, or by a downstream middleware that
+   * attaches a context-enriched child logger. May be absent when the caller
+   * has not opted into request-scoped logging — narrow with
+   * {@link isRequestWithLogger} before use.
+   */
+  logger?: StructuredLogger;
 }
 
 /**
