@@ -198,9 +198,36 @@ describe('structuredErrorMiddleware', () => {
       } as unknown as Request;
     }
 
-    it('attaches a logger built from the full Envoy context after req.envoy is initialized', async () => {
-      const logger = { error: jest.fn() };
-      const loggerFactory = jest.fn(() => logger);
+    it('attaches an integrationName-only logger synchronously, before body parsing', () => {
+      // The early pass runs before json() returns, so we can observe req.logger
+      // synchronously without driving the async login path.
+      const earlyLogger = { error: jest.fn() };
+      const loggerFactory = jest.fn(() => earlyLogger);
+      const middleware = envoyMiddleware({
+        secret: 'test-secret',
+        algorithm: 'sha256',
+        encoding: 'base64',
+        header: 'x-envoy-signature',
+        loggerFactory,
+      });
+
+      const req = buildEventReq();
+      // We *don't* await — we only want to inspect state immediately after the
+      // sync portion of envoyMiddleware runs.
+      middleware(req, buildRes() as unknown as Response, jest.fn() as unknown as NextFunction);
+
+      // First call only sees `integrationName` (no body parsed yet → no meta/payload).
+      expect(loggerFactory).toHaveBeenCalledWith(req, { integrationName: 'checkr' });
+      expect((req as Request & { logger?: unknown }).logger).toBe(earlyLogger);
+    });
+
+    it('replaces req.logger with a fully-enriched one after req.envoy is initialized', async () => {
+      // Distinguish the two factory invocations by returning two different objects.
+      const earlyLogger = { error: jest.fn() };
+      const lateLogger = { error: jest.fn() };
+      const loggerFactory = jest.fn();
+      loggerFactory.mockReturnValueOnce(earlyLogger).mockReturnValueOnce(lateLogger);
+
       const middleware = envoyMiddleware({
         secret: 'test-secret',
         algorithm: 'sha256',
@@ -211,8 +238,6 @@ describe('structuredErrorMiddleware', () => {
 
       const req = buildEventReq();
       const res = buildRes();
-      // Resolves once envoyMiddleware calls next(), which only happens after the
-      // async login + EnvoyPluginSDK setup + loggerFactory call.
       await new Promise<void>((resolve, reject) => {
         middleware(
           req,
@@ -221,11 +246,11 @@ describe('structuredErrorMiddleware', () => {
         );
       });
 
-      expect(loggerFactory).toHaveBeenCalledTimes(1);
-      const [factoryReq, factoryCtx] = loggerFactory.mock.calls[0] as unknown as [EnvoyRequest, unknown];
-      expect(factoryReq).toBe(req);
-      expect(factoryReq.envoy).toBeDefined();
-      expect(factoryCtx).toEqual({
+      expect(loggerFactory).toHaveBeenCalledTimes(2);
+      // Early call: integrationName only.
+      expect(loggerFactory.mock.calls[0][1]).toEqual({ integrationName: 'checkr' });
+      // Enrichment call: full context.
+      expect(loggerFactory.mock.calls[1][1]).toEqual({
         integrationName: 'checkr',
         installId: 'install-1',
         locationId: 'loc-1',
@@ -235,17 +260,23 @@ describe('structuredErrorMiddleware', () => {
         event: 'entry_sign_in',
         category: 'Visitor',
       });
+      // The enriched logger wins.
+      expect((req as Request & { logger?: unknown }).logger).toBe(lateLogger);
     });
 
-    it('catches loggerFactory exceptions and leaves req.logger unset', async () => {
+    it('keeps the early logger when the enrichment pass throws', async () => {
+      const earlyLogger = { error: jest.fn() };
+      const loggerFactory = jest.fn();
+      loggerFactory.mockReturnValueOnce(earlyLogger).mockImplementationOnce(() => {
+        throw new Error('enrichment blew up');
+      });
+
       const middleware = envoyMiddleware({
         secret: 'test-secret',
         algorithm: 'sha256',
         encoding: 'base64',
         header: 'x-envoy-signature',
-        loggerFactory: () => {
-          throw new Error('factory blew up');
-        },
+        loggerFactory,
       });
 
       const req = buildEventReq();
@@ -258,13 +289,31 @@ describe('structuredErrorMiddleware', () => {
         );
       });
 
-      expect(consoleErrorSpy).toHaveBeenCalledWith('envoyMiddleware: loggerFactory threw', expect.any(Error));
-      // structuredErrorMiddleware should fall through to console.error since
-      // req.logger never got set.
-      consoleErrorSpy.mockClear();
-      const err = new Error('boom');
-      structuredErrorMiddleware()(err, req, res as unknown as Response, jest.fn() as unknown as NextFunction);
-      expect(consoleErrorSpy).toHaveBeenCalledWith(err);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'envoyMiddleware: loggerFactory (enrichment) threw',
+        expect.any(Error),
+      );
+      // Logger never downgrades to undefined — early logger is retained.
+      expect((req as Request & { logger?: unknown }).logger).toBe(earlyLogger);
+    });
+
+    it('leaves req.logger unset when the early pass throws and surfaces via console.error', () => {
+      const middleware = envoyMiddleware({
+        secret: 'test-secret',
+        algorithm: 'sha256',
+        encoding: 'base64',
+        header: 'x-envoy-signature',
+        loggerFactory: () => {
+          throw new Error('early factory blew up');
+        },
+      });
+
+      const req = buildEventReq();
+      // Only inspecting the sync portion — don't drive the async flow.
+      middleware(req, buildRes() as unknown as Response, jest.fn() as unknown as NextFunction);
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith('envoyMiddleware: loggerFactory (early) threw', expect.any(Error));
+      expect((req as Request & { logger?: unknown }).logger).toBeUndefined();
     });
   });
 

@@ -105,23 +105,37 @@ const ENVOY_EVENT_CATEGORIES: Readonly<Record<string, string>> = {
  */
 export interface EnvoyMiddlewareOptions extends Partial<EnvoySignatureVerifierOptions> {
   /**
-   * If provided, invoked once per request — after `req.envoy` is initialized
-   * and immediately before `next()` — to build a {@link StructuredLogger}.
-   * The result is attached to `req.logger` so it's available to every
-   * downstream handler and to `structuredErrorMiddleware`.
+   * If provided, invoked **twice** per request to build a
+   * {@link StructuredLogger} that gets attached to `req.logger` for the rest
+   * of the chain (including `structuredErrorMiddleware`).
    *
-   * Called with the full {@link EnvoyLoggerContext} extracted from
-   * `req.query` + `req.envoy.meta` + `req.envoy.payload`, so the factory can
-   * produce a child logger pre-tagged with `integrationName`, `companyId`,
-   * `installId`, `event`, etc. without any per-service boilerplate.
+   * 1. **Early call** — synchronously at the top of the handler, *before*
+   *    body parsing and `EnvoyPluginAPI.loginAsPlugin`. The context only
+   *    contains `integrationName` (the one field we can derive from the raw
+   *    request without parsing the body). This guarantees `req.logger`
+   *    exists if body parsing or plugin login fails, so those errors land
+   *    as structured logs instead of stringified `console.log` output.
    *
-   * Errors thrown by the factory are caught and surfaced via `console.error`
-   * — they never break the request pipeline. Errors that fire *before*
-   * `req.envoy` finishes initializing (body parsing, plugin login) won't
-   * have `req.logger` set; `structuredErrorMiddleware` falls back to
-   * `console.error` for those, matching today's behavior.
+   * 2. **Enrichment call** — after `req.envoy` is initialized, with the
+   *    full {@link EnvoyLoggerContext} (`companyId`, `installId`, `event`,
+   *    `category`, …). The result *replaces* `req.logger`, so every
+   *    downstream handler logs with the standard Envoy facets baked in.
+   *    If the enrichment call throws, the early logger is kept as a
+   *    fallback — `req.logger` never downgrades to `undefined`.
+   *
+   * Most factories are a one-liner like
+   * `(_req, ctx) => rootLogger.child(ctx)`. The double invocation is
+   * cheap (two child-logger allocations) and produces no observable
+   * difference at the caller — the second logger supersedes the first.
+   *
+   * The only error class still served by the fallback `console.error` path
+   * in `structuredErrorMiddleware` is malformed-JSON body-parser errors,
+   * which have no payload/meta to enrich with regardless.
+   *
+   * Exceptions thrown by the factory itself are caught and surfaced via
+   * `console.error` — a buggy factory never breaks the request pipeline.
    */
-  loggerFactory?: (req: EnvoyRequest, context: EnvoyLoggerContext) => StructuredLogger;
+  loggerFactory?: (req: Request, context: EnvoyLoggerContext) => StructuredLogger;
 }
 
 /**
@@ -201,10 +215,12 @@ export function extractLoggerContext(req: EnvoyRequest): EnvoyLoggerContext {
  * as well as managing the plugin access token lifecycle.
  *
  * If a `loggerFactory` is supplied, attaches the produced
- * {@link StructuredLogger} to `req.logger` once `req.envoy` is initialized,
- * passing the factory the full {@link EnvoyLoggerContext} (integration name,
- * company id, install id, event, category, …) so downstream handlers and
+ * {@link StructuredLogger} to `req.logger` early — first with an
+ * `integrationName`-only context so body-parser / plugin-login errors are
+ * still structured, then again after `req.envoy` is initialized with the
+ * full {@link EnvoyLoggerContext} so downstream handlers and
  * `structuredErrorMiddleware` log with the standard Envoy facets baked in.
+ * See `loggerFactory` for the full two-call contract.
  *
  * @category Middleware
  */
@@ -219,6 +235,21 @@ export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandle
   let threshold = 0;
 
   return (req: Request, res: Response, next: NextFunction) => {
+    // Early pass: attach a minimal logger so body-parser / loginAsPlugin
+    // errors are still structured. `integrationName` is the only field we
+    // can derive from the raw request before body parsing — the enrichment
+    // pass below adds the rest once `req.envoy` is initialized.
+    if (loggerFactory) {
+      try {
+        const earlyContext: EnvoyLoggerContext = { integrationName: extractIntegrationName(req) };
+        (req as Request & { logger?: StructuredLogger }).logger = loggerFactory(req, earlyContext);
+      } catch (factoryErr) {
+        // A failing loggerFactory must not break the request pipeline — surface
+        // the error so it's debuggable, then continue without a request logger.
+        // eslint-disable-next-line no-console
+        console.error('envoyMiddleware: loggerFactory (early) threw', factoryErr);
+      }
+    }
     json(req, res, async (err) => {
       if (err) {
         return next(err);
@@ -234,14 +265,16 @@ export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandle
         const envoyResponse = res as EnvoyResponse;
         envoyRequest.envoy = new EnvoyPluginSDK(envoyRequest.body, envoyRequest[VERIFIED], accessToken);
 
+        // Enrichment pass: replace `req.logger` with one that carries the
+        // full Envoy context now that `req.envoy` exists. If the factory
+        // throws here, keep the early logger as a fallback — never downgrade
+        // `req.logger` to `undefined`.
         if (loggerFactory) {
           try {
             envoyRequest.logger = loggerFactory(envoyRequest, extractLoggerContext(envoyRequest));
           } catch (factoryErr) {
-            // A failing loggerFactory must not break the request pipeline — surface
-            // the error so it's debuggable, then continue without a request logger.
             // eslint-disable-next-line no-console
-            console.error('envoyMiddleware: loggerFactory threw', factoryErr);
+            console.error('envoyMiddleware: loggerFactory (enrichment) threw', factoryErr);
           }
         }
 
