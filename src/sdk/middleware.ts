@@ -8,7 +8,7 @@ import EnvoyResponse from './EnvoyResponse';
 import EnvoyPluginJobAttachment, { EnvoyPluginScreenerJobAttachment } from './EnvoyPluginJobAttachment';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
-import { StructuredLogger, isRequestWithLogger } from './StructuredLogger';
+import { StructuredLogger, addRequestLoggerContext, isRequestWithLogger } from './StructuredLogger';
 
 /**
  * Request-scoped context that `envoyMiddleware` makes available to a
@@ -105,34 +105,26 @@ const ENVOY_EVENT_CATEGORIES: Readonly<Record<string, string>> = {
  */
 export interface EnvoyMiddlewareOptions extends Partial<EnvoySignatureVerifierOptions> {
   /**
-   * If provided, invoked **twice** per request to build a
-   * {@link StructuredLogger} that gets attached to `req.logger` for the rest
-   * of the chain (including `structuredErrorMiddleware`).
+   * If provided, invoked once per request, synchronously at the top of the
+   * handler (*before* body parsing and `EnvoyPluginAPI.loginAsPlugin`), to
+   * build a base {@link StructuredLogger}. The result is attached to
+   * `req.logger`.
    *
-   * 1. **Early call** — synchronously at the top of the handler, *before*
-   *    body parsing and `EnvoyPluginAPI.loginAsPlugin`. The context only
-   *    contains `integrationName` (the one field we can derive from the raw
-   *    request without parsing the body). This guarantees `req.logger`
-   *    exists if body parsing or plugin login fails, so those errors land
-   *    as structured logs instead of stringified `console.log` output.
+   * The context only contains `integrationName` — the one field derivable
+   * from the raw request without parsing the body. Subsequent middleware
+   * in the chain (`envoyLoggerContextMiddleware`, your own per-service
+   * middleware, etc.) enriches `req.logger` with additional context via
+   * {@link addRequestLoggerContext}, which calls `req.logger.child(...)`
+   * instead of asking the factory to construct a new logger.
    *
-   * 2. **Enrichment call** — after `req.envoy` is initialized, with the
-   *    full {@link EnvoyLoggerContext} (`companyId`, `installId`, `event`,
-   *    `category`, …). The result *replaces* `req.logger`, so every
-   *    downstream handler logs with the standard Envoy facets baked in.
-   *    If the enrichment call throws, the early logger is kept as a
-   *    fallback — `req.logger` never downgrades to `undefined`.
+   * This guarantees `req.logger` exists as early as possible so
+   * body-parser, plugin-login, and `EnvoyPluginSDK` construction errors
+   * land as structured logs in `structuredErrorMiddleware` rather than as
+   * unstructured `console.log` output.
    *
-   * Most factories are a one-liner like
-   * `(_req, ctx) => rootLogger.child(ctx)`. The double invocation is
-   * cheap (two child-logger allocations) and produces no observable
-   * difference at the caller — the second logger supersedes the first.
+   * Most factories are a one-liner: `(_req, ctx) => rootLogger.child(ctx)`.
    *
-   * The only error class still served by the fallback `console.error` path
-   * in `structuredErrorMiddleware` is malformed-JSON body-parser errors,
-   * which have no payload/meta to enrich with regardless.
-   *
-   * Exceptions thrown by the factory itself are caught and surfaced via
+   * Exceptions thrown by the factory are caught and surfaced via
    * `console.error` — a buggy factory never breaks the request pipeline.
    */
   loggerFactory?: (req: Request, context: EnvoyLoggerContext) => StructuredLogger;
@@ -215,12 +207,12 @@ export function extractLoggerContext(req: EnvoyRequest): EnvoyLoggerContext {
  * as well as managing the plugin access token lifecycle.
  *
  * If a `loggerFactory` is supplied, attaches the produced
- * {@link StructuredLogger} to `req.logger` early — first with an
- * `integrationName`-only context so body-parser / plugin-login errors are
- * still structured, then again after `req.envoy` is initialized with the
- * full {@link EnvoyLoggerContext} so downstream handlers and
- * `structuredErrorMiddleware` log with the standard Envoy facets baked in.
- * See `loggerFactory` for the full two-call contract.
+ * {@link StructuredLogger} to `req.logger` synchronously at the start of
+ * the handler with an `integrationName`-only context. Downstream
+ * middleware adds the rest of the Envoy facets (`companyId`, `installId`,
+ * `event`, `category`, …) via {@link addRequestLoggerContext} — call
+ * {@link envoyLoggerContextMiddleware} for the standard enrichment, or use
+ * the helper directly in your own middleware.
  *
  * @category Middleware
  */
@@ -235,19 +227,19 @@ export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandle
   let threshold = 0;
 
   return (req: Request, res: Response, next: NextFunction) => {
-    // Early pass: attach a minimal logger so body-parser / loginAsPlugin
-    // errors are still structured. `integrationName` is the only field we
-    // can derive from the raw request before body parsing — the enrichment
-    // pass below adds the rest once `req.envoy` is initialized.
+    // Attach a base logger via the factory synchronously. `integrationName`
+    // is the only context derivable from the raw request before body
+    // parsing — every downstream middleware extends this base via
+    // `addRequestLoggerContext` rather than calling the factory again.
     if (loggerFactory) {
       try {
-        const earlyContext: EnvoyLoggerContext = { integrationName: extractIntegrationName(req) };
-        (req as Request & { logger?: StructuredLogger }).logger = loggerFactory(req, earlyContext);
+        const baseContext: EnvoyLoggerContext = { integrationName: extractIntegrationName(req) };
+        (req as Request & { logger?: StructuredLogger }).logger = loggerFactory(req, baseContext);
       } catch (factoryErr) {
         // A failing loggerFactory must not break the request pipeline — surface
         // the error so it's debuggable, then continue without a request logger.
         // eslint-disable-next-line no-console
-        console.error('envoyMiddleware: loggerFactory (early) threw', factoryErr);
+        console.error('envoyMiddleware: loggerFactory threw', factoryErr);
       }
     }
     json(req, res, async (err) => {
@@ -264,19 +256,6 @@ export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandle
         const envoyRequest = req as EnvoyRequest;
         const envoyResponse = res as EnvoyResponse;
         envoyRequest.envoy = new EnvoyPluginSDK(envoyRequest.body, envoyRequest[VERIFIED], accessToken);
-
-        // Enrichment pass: replace `req.logger` with one that carries the
-        // full Envoy context now that `req.envoy` exists. If the factory
-        // throws here, keep the early logger as a fallback — never downgrade
-        // `req.logger` to `undefined`.
-        if (loggerFactory) {
-          try {
-            envoyRequest.logger = loggerFactory(envoyRequest, extractLoggerContext(envoyRequest));
-          } catch (factoryErr) {
-            // eslint-disable-next-line no-console
-            console.error('envoyMiddleware: loggerFactory (enrichment) threw', factoryErr);
-          }
-        }
 
         /**
          * Respond with "ongoing" for long jobs.
@@ -330,6 +309,56 @@ export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandle
         next(error);
       }
     });
+  };
+}
+
+/**
+ * Options for {@link envoyLoggerContextMiddleware}.
+ *
+ * @category Middleware
+ */
+export interface EnvoyLoggerContextMiddlewareOptions {
+  /**
+   * If `req.logger` isn't already set (the caller didn't wire
+   * `envoyMiddleware`'s `loggerFactory`), this factory is used to
+   * construct one from scratch with the Envoy context. Omit to make this
+   * middleware a no-op when no upstream logger exists.
+   */
+  fallback?: (req: Request, context: EnvoyLoggerContext) => StructuredLogger;
+}
+
+/**
+ * Enriches `req.logger` with the standard Envoy logging facets (extracted
+ * via {@link extractLoggerContext}) using {@link addRequestLoggerContext}.
+ * Place this after `envoyMiddleware` so `req.envoy` is initialized.
+ *
+ * Behavior follows the convention recommended for every middleware
+ * downstream from `envoyMiddleware`:
+ *
+ *   - If `req.logger` is set, it's replaced with
+ *     `req.logger.child({ companyId, installId, event, … })`.
+ *   - Otherwise, if a `fallback` factory is provided, it's used to
+ *     construct a logger from scratch.
+ *   - Otherwise, this middleware is a no-op.
+ *
+ * Your own per-service middleware can use the same pattern via
+ * {@link addRequestLoggerContext} to layer in additional context (route
+ * name, validation step, plugin name, …).
+ *
+ * @category Middleware
+ */
+export function envoyLoggerContextMiddleware(options?: EnvoyLoggerContextMiddlewareOptions): RequestHandler {
+  const { fallback } = options ?? {};
+  // Adapt the typed `fallback(req, EnvoyLoggerContext)` into the generic
+  // `(req, Record<string, unknown>)` shape that addRequestLoggerContext
+  // expects. `extractLoggerContext` only emits keys from EnvoyLoggerContext
+  // so the cast back to that type is safe.
+  const fallbackAdapter = fallback
+    ? (req: Request, context: Record<string, unknown>) => fallback(req, context as EnvoyLoggerContext)
+    : undefined;
+  return (req: Request, _res: Response, next: NextFunction) => {
+    addRequestLoggerContext(req, { ...extractLoggerContext(req as EnvoyRequest) }, fallbackAdapter);
+    next();
   };
 }
 

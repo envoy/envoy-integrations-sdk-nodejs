@@ -2,7 +2,13 @@ import type { NextFunction, Request, Response } from 'express';
 
 import EnvoyPluginAPI from '../../src/sdk/EnvoyPluginAPI';
 import EnvoyRequest, { VERIFIED } from '../../src/sdk/EnvoyRequest';
-import { envoyMiddleware, extractLoggerContext, structuredErrorMiddleware } from '../../src/sdk/middleware';
+import {
+  envoyLoggerContextMiddleware,
+  envoyMiddleware,
+  extractLoggerContext,
+  structuredErrorMiddleware,
+} from '../../src/sdk/middleware';
+import { StructuredLogger } from '../../src/sdk/StructuredLogger';
 
 type MockResponse = {
   headersSent: boolean;
@@ -10,6 +16,22 @@ type MockResponse = {
   setHeader: jest.Mock;
   end: jest.Mock;
 };
+
+/**
+ * A test logger that satisfies the full {@link StructuredLogger} contract:
+ * `error` records calls; `child(ctx)` returns a new test logger that records
+ * the context it was built with, so multi-step enrichment chains can be
+ * inspected.
+ */
+function buildLogger(): StructuredLogger & { error: jest.Mock; child: jest.Mock } {
+  const logger = {
+    error: jest.fn(),
+    // `child` is set after construction so the recursive type lines up.
+    child: jest.fn(),
+  };
+  logger.child.mockImplementation(() => buildLogger());
+  return logger;
+}
 
 function buildReq(overrides: Partial<Request & { logger?: unknown }> = {}): Request {
   return {
@@ -46,16 +68,16 @@ describe('structuredErrorMiddleware', () => {
 
   describe('default behavior (no onError callback)', () => {
     it('calls req.logger.error with message, err, and {operation, httpMethod, httpUrl}', () => {
-      const loggerError = jest.fn();
-      const req = buildReq({ logger: { error: loggerError } });
+      const logger = buildLogger();
+      const req = buildReq({ logger });
       const res = buildRes();
       const next = jest.fn() as unknown as NextFunction;
       const err = new Error('boom');
 
       structuredErrorMiddleware()(err, req, res as unknown as Response, next);
 
-      expect(loggerError).toHaveBeenCalledTimes(1);
-      expect(loggerError).toHaveBeenCalledWith('Unhandled error in request pipeline', err, {
+      expect(logger.error).toHaveBeenCalledTimes(1);
+      expect(logger.error).toHaveBeenCalledWith('Unhandled error in request pipeline', err, {
         operation: 'structuredErrorMiddleware',
         httpMethod: 'POST',
         httpUrl: '/some/path',
@@ -76,7 +98,21 @@ describe('structuredErrorMiddleware', () => {
     });
 
     it('falls back to console.error when req.logger has no error method', () => {
-      const req = buildReq({ logger: { info: jest.fn() } });
+      const req = buildReq({ logger: { info: jest.fn(), child: jest.fn() } });
+      const res = buildRes();
+      const next = jest.fn() as unknown as NextFunction;
+      const err = new Error('boom');
+
+      structuredErrorMiddleware()(err, req, res as unknown as Response, next);
+
+      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(err);
+    });
+
+    it('falls back to console.error when req.logger has no child method', () => {
+      // .child is required by the StructuredLogger contract — without it the
+      // logger can't participate in the addRequestLoggerContext pattern.
+      const req = buildReq({ logger: { error: jest.fn() } });
       const res = buildRes();
       const next = jest.fn() as unknown as NextFunction;
       const err = new Error('boom');
@@ -100,10 +136,11 @@ describe('structuredErrorMiddleware', () => {
     });
 
     it('does not propagate exceptions thrown by req.logger.error', () => {
-      const loggerError = jest.fn(() => {
+      const logger = buildLogger();
+      logger.error.mockImplementation(() => {
         throw new Error('logger blew up');
       });
-      const req = buildReq({ logger: { error: loggerError } });
+      const req = buildReq({ logger });
       const res = buildRes();
       const next = jest.fn() as unknown as NextFunction;
       const err = new Error('boom');
@@ -112,8 +149,7 @@ describe('structuredErrorMiddleware', () => {
         structuredErrorMiddleware()(err, req, res as unknown as Response, next);
       }).not.toThrow();
 
-      // Original error log was attempted; the logger's throw was caught and surfaced via console.
-      expect(loggerError).toHaveBeenCalled();
+      expect(logger.error).toHaveBeenCalled();
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         'structuredErrorMiddleware: req.logger.error threw',
         expect.any(Error),
@@ -124,8 +160,8 @@ describe('structuredErrorMiddleware', () => {
   describe('with onError callback', () => {
     it('invokes the callback with (err, req) and does not touch req.logger', () => {
       const onError = jest.fn();
-      const loggerError = jest.fn();
-      const req = buildReq({ logger: { error: loggerError } });
+      const logger = buildLogger();
+      const req = buildReq({ logger });
       const res = buildRes();
       const next = jest.fn() as unknown as NextFunction;
       const err = new Error('boom');
@@ -134,7 +170,7 @@ describe('structuredErrorMiddleware', () => {
 
       expect(onError).toHaveBeenCalledTimes(1);
       expect(onError).toHaveBeenCalledWith(err, req);
-      expect(loggerError).not.toHaveBeenCalled();
+      expect(logger.error).not.toHaveBeenCalled();
     });
 
     it('does not propagate exceptions thrown by the callback', () => {
@@ -153,259 +189,6 @@ describe('structuredErrorMiddleware', () => {
         'structuredErrorMiddleware: onError callback threw',
         expect.any(Error),
       );
-    });
-  });
-
-  describe('end-to-end with envoyMiddleware loggerFactory', () => {
-    let loginSpy: jest.SpyInstance;
-
-    beforeEach(() => {
-      // envoyMiddleware refreshes its access token via EnvoyPluginAPI.loginAsPlugin
-      // before initializing req.envoy. Stub it so tests don't hit the network.
-      loginSpy = jest
-        .spyOn(EnvoyPluginAPI, 'loginAsPlugin')
-        .mockResolvedValue({ access_token: 'test-token', expires_in: 3600 } as never);
-    });
-
-    afterEach(() => {
-      loginSpy.mockRestore();
-    });
-
-    // Short-circuit body-parser by marking the body as pre-parsed — body-parser
-    // skips its stream-reading path and calls our callback directly when it sees
-    // `req._body === true`, so we can drive envoyMiddleware in a unit test
-    // without standing up a real HTTP server. We also mark the request as
-    // VERIFIED, since body-parser's `verify` callback (which would normally set
-    // it) is bypassed by the short-circuit.
-    function buildEventReq(overrides: Partial<Request> = {}): Request {
-      return {
-        method: 'POST',
-        originalUrl: '/some/path',
-        headers: {},
-        query: { name: 'checkr' },
-        _body: true,
-        [VERIFIED]: true,
-        body: {
-          meta: {
-            install_id: 'install-1',
-            location: { id: 'loc-1' },
-            company: { id: 'company-1' },
-            event: 'entry_sign_in',
-          },
-          payload: { id: 'visitor-1', type: 'visitors' },
-        },
-        ...overrides,
-      } as unknown as Request;
-    }
-
-    it('attaches an integrationName-only logger synchronously, before body parsing', () => {
-      // The early pass runs before json() returns, so we can observe req.logger
-      // synchronously without driving the async login path.
-      const earlyLogger = { error: jest.fn() };
-      const loggerFactory = jest.fn(() => earlyLogger);
-      const middleware = envoyMiddleware({
-        secret: 'test-secret',
-        algorithm: 'sha256',
-        encoding: 'base64',
-        header: 'x-envoy-signature',
-        loggerFactory,
-      });
-
-      const req = buildEventReq();
-      // We *don't* await — we only want to inspect state immediately after the
-      // sync portion of envoyMiddleware runs.
-      middleware(req, buildRes() as unknown as Response, jest.fn() as unknown as NextFunction);
-
-      // First call only sees `integrationName` (no body parsed yet → no meta/payload).
-      expect(loggerFactory).toHaveBeenCalledWith(req, { integrationName: 'checkr' });
-      expect((req as Request & { logger?: unknown }).logger).toBe(earlyLogger);
-    });
-
-    it('replaces req.logger with a fully-enriched one after req.envoy is initialized', async () => {
-      // Distinguish the two factory invocations by returning two different objects.
-      const earlyLogger = { error: jest.fn() };
-      const lateLogger = { error: jest.fn() };
-      const loggerFactory = jest.fn();
-      loggerFactory.mockReturnValueOnce(earlyLogger).mockReturnValueOnce(lateLogger);
-
-      const middleware = envoyMiddleware({
-        secret: 'test-secret',
-        algorithm: 'sha256',
-        encoding: 'base64',
-        header: 'x-envoy-signature',
-        loggerFactory,
-      });
-
-      const req = buildEventReq();
-      const res = buildRes();
-      await new Promise<void>((resolve, reject) => {
-        middleware(
-          req,
-          res as unknown as Response,
-          ((err?: unknown) => (err ? reject(err) : resolve())) as NextFunction,
-        );
-      });
-
-      expect(loggerFactory).toHaveBeenCalledTimes(2);
-      // Early call: integrationName only.
-      expect(loggerFactory.mock.calls[0][1]).toEqual({ integrationName: 'checkr' });
-      // Enrichment call: full context.
-      expect(loggerFactory.mock.calls[1][1]).toEqual({
-        integrationName: 'checkr',
-        installId: 'install-1',
-        locationId: 'loc-1',
-        companyId: 'company-1',
-        recordId: 'visitor-1',
-        recordType: 'visitors',
-        event: 'entry_sign_in',
-        category: 'Visitor',
-      });
-      // The enriched logger wins.
-      expect((req as Request & { logger?: unknown }).logger).toBe(lateLogger);
-    });
-
-    it('keeps the early logger when the enrichment pass throws', async () => {
-      const earlyLogger = { error: jest.fn() };
-      const loggerFactory = jest.fn();
-      loggerFactory.mockReturnValueOnce(earlyLogger).mockImplementationOnce(() => {
-        throw new Error('enrichment blew up');
-      });
-
-      const middleware = envoyMiddleware({
-        secret: 'test-secret',
-        algorithm: 'sha256',
-        encoding: 'base64',
-        header: 'x-envoy-signature',
-        loggerFactory,
-      });
-
-      const req = buildEventReq();
-      const res = buildRes();
-      await new Promise<void>((resolve, reject) => {
-        middleware(
-          req,
-          res as unknown as Response,
-          ((err?: unknown) => (err ? reject(err) : resolve())) as NextFunction,
-        );
-      });
-
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'envoyMiddleware: loggerFactory (enrichment) threw',
-        expect.any(Error),
-      );
-      // Logger never downgrades to undefined — early logger is retained.
-      expect((req as Request & { logger?: unknown }).logger).toBe(earlyLogger);
-    });
-
-    it('leaves req.logger unset when the early pass throws and surfaces via console.error', () => {
-      const middleware = envoyMiddleware({
-        secret: 'test-secret',
-        algorithm: 'sha256',
-        encoding: 'base64',
-        header: 'x-envoy-signature',
-        loggerFactory: () => {
-          throw new Error('early factory blew up');
-        },
-      });
-
-      const req = buildEventReq();
-      // Only inspecting the sync portion — don't drive the async flow.
-      middleware(req, buildRes() as unknown as Response, jest.fn() as unknown as NextFunction);
-
-      expect(consoleErrorSpy).toHaveBeenCalledWith('envoyMiddleware: loggerFactory (early) threw', expect.any(Error));
-      expect((req as Request & { logger?: unknown }).logger).toBeUndefined();
-    });
-  });
-
-  describe('extractLoggerContext', () => {
-    function buildEnvoyRequest(envoy: unknown, query: Record<string, unknown> = {}): EnvoyRequest {
-      return { envoy, query } as unknown as EnvoyRequest;
-    }
-
-    it('pulls every standard Envoy field from an event request', () => {
-      const req = buildEnvoyRequest(
-        {
-          meta: {
-            install_id: 'install-1',
-            location: { id: 'loc-1' },
-            company: { id: 'company-1' },
-            event: 'invite_created',
-          },
-          payload: { id: 'invite-1', type: 'invites' },
-        },
-        { name: 'checkr' },
-      );
-
-      expect(extractLoggerContext(req)).toEqual({
-        integrationName: 'checkr',
-        installId: 'install-1',
-        locationId: 'loc-1',
-        companyId: 'company-1',
-        recordId: 'invite-1',
-        recordType: 'invites',
-        event: 'invite_created',
-        category: 'Visitor',
-      });
-    });
-
-    it('omits event/category for route requests (no `event` on meta)', () => {
-      const req = buildEnvoyRequest(
-        {
-          meta: {
-            install_id: 'install-1',
-            location: { id: 'loc-1' },
-            company: { id: 'company-1' },
-            route: 'validate',
-          },
-          payload: {},
-        },
-        { name: 'checkr' },
-      );
-
-      const ctx = extractLoggerContext(req);
-      expect(ctx.event).toBeUndefined();
-      expect(ctx.category).toBeUndefined();
-      expect(ctx.installId).toBe('install-1');
-    });
-
-    it('maps unrecognized events to category "Unrecognized"', () => {
-      const req = buildEnvoyRequest({
-        meta: { install_id: 'i', location: { id: 'l' }, company: { id: 'c' }, event: 'mystery_event' },
-        payload: {},
-      });
-
-      expect(extractLoggerContext(req)).toMatchObject({
-        event: 'mystery_event',
-        category: 'Unrecognized',
-      });
-    });
-
-    it('maps workplace / desks / communication events to their categories', () => {
-      const makeReq = (event: string) => buildEnvoyRequest({ meta: { event }, payload: {} });
-
-      expect(extractLoggerContext(makeReq('employee_entry_sign_in')).category).toBe('Workplace');
-      expect(extractLoggerContext(makeReq('desk_sign_in')).category).toBe('Desks');
-      expect(extractLoggerContext(makeReq('takeover_started')).category).toBe('Communication');
-    });
-
-    it('returns just integrationName when req.envoy is missing', () => {
-      const req = buildEnvoyRequest(undefined, { name: 'checkr' });
-
-      expect(extractLoggerContext(req)).toEqual({ integrationName: 'checkr' });
-    });
-
-    it('degrades gracefully when meta/payload fields are missing', () => {
-      const req = buildEnvoyRequest({ meta: {}, payload: undefined }, {});
-
-      // Every field present in the result is `undefined` — no throw, no missing keys.
-      expect(extractLoggerContext(req)).toEqual({
-        integrationName: undefined,
-        installId: undefined,
-        locationId: undefined,
-        companyId: undefined,
-        recordId: undefined,
-        recordType: undefined,
-      });
     });
   });
 
@@ -434,6 +217,295 @@ describe('structuredErrorMiddleware', () => {
 
       expect(next).toHaveBeenCalledWith(err);
       expect(res.end).not.toHaveBeenCalled();
+    });
+  });
+});
+
+describe('envoyMiddleware loggerFactory', () => {
+  /* eslint-disable no-console */
+  const originalConsoleError = console.error;
+  let consoleErrorSpy: jest.Mock;
+
+  beforeEach(() => {
+    consoleErrorSpy = jest.fn();
+    console.error = consoleErrorSpy;
+  });
+
+  afterEach(() => {
+    console.error = originalConsoleError;
+  });
+  /* eslint-enable no-console */
+
+  it('attaches a logger synchronously with integrationName-only context, before body parsing', () => {
+    const logger = buildLogger();
+    const loggerFactory = jest.fn(() => logger);
+    const middleware = envoyMiddleware({
+      secret: 'test-secret',
+      algorithm: 'sha256',
+      encoding: 'base64',
+      header: 'x-envoy-signature',
+      loggerFactory,
+    });
+
+    const req = buildReq({ query: { name: 'checkr' } });
+    middleware(req, buildRes() as unknown as Response, jest.fn() as unknown as NextFunction);
+
+    expect(loggerFactory).toHaveBeenCalledTimes(1);
+    expect(loggerFactory).toHaveBeenCalledWith(req, { integrationName: 'checkr' });
+    expect((req as Request & { logger?: unknown }).logger).toBe(logger);
+  });
+
+  it('leaves req.logger unset (and console.errors) when the factory throws', () => {
+    const middleware = envoyMiddleware({
+      secret: 'test-secret',
+      algorithm: 'sha256',
+      encoding: 'base64',
+      header: 'x-envoy-signature',
+      loggerFactory: () => {
+        throw new Error('factory blew up');
+      },
+    });
+
+    const req = buildReq();
+    middleware(req, buildRes() as unknown as Response, jest.fn() as unknown as NextFunction);
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith('envoyMiddleware: loggerFactory threw', expect.any(Error));
+    expect((req as Request & { logger?: unknown }).logger).toBeUndefined();
+  });
+
+  it('does not call the factory again after req.envoy is initialized', async () => {
+    const loginSpy = jest
+      .spyOn(EnvoyPluginAPI, 'loginAsPlugin')
+      .mockResolvedValue({ access_token: 'test-token', expires_in: 3600 } as never);
+    try {
+      const logger = buildLogger();
+      const loggerFactory = jest.fn(() => logger);
+      const middleware = envoyMiddleware({
+        secret: 'test-secret',
+        algorithm: 'sha256',
+        encoding: 'base64',
+        header: 'x-envoy-signature',
+        loggerFactory,
+      });
+
+      // Same body-parser short-circuit / VERIFIED trick as the integration test below.
+      const req = {
+        method: 'POST',
+        originalUrl: '/some/path',
+        headers: {},
+        query: { name: 'checkr' },
+        _body: true,
+        [VERIFIED]: true,
+        body: {
+          meta: {
+            install_id: 'install-1',
+            location: { id: 'loc-1' },
+            company: { id: 'company-1' },
+            event: 'entry_sign_in',
+          },
+          payload: { id: 'visitor-1', type: 'visitors' },
+        },
+      } as unknown as Request;
+
+      await new Promise<void>((resolve, reject) => {
+        middleware(
+          req,
+          buildRes() as unknown as Response,
+          ((err?: unknown) => (err ? reject(err) : resolve())) as NextFunction,
+        );
+      });
+
+      // Factory should be invoked exactly once — enrichment happens via .child()
+      // downstream, not by re-invoking the factory.
+      expect(loggerFactory).toHaveBeenCalledTimes(1);
+      expect(loggerFactory).toHaveBeenCalledWith(req, { integrationName: 'checkr' });
+    } finally {
+      loginSpy.mockRestore();
+    }
+  });
+});
+
+describe('envoyLoggerContextMiddleware', () => {
+  /* eslint-disable no-console */
+  const originalConsoleError = console.error;
+  let consoleErrorSpy: jest.Mock;
+
+  beforeEach(() => {
+    consoleErrorSpy = jest.fn();
+    console.error = consoleErrorSpy;
+  });
+
+  afterEach(() => {
+    console.error = originalConsoleError;
+  });
+  /* eslint-enable no-console */
+
+  function buildEnvoyReqWithLogger(logger: StructuredLogger | undefined): Request {
+    return {
+      method: 'POST',
+      originalUrl: '/some/path',
+      headers: {},
+      query: { name: 'checkr' },
+      envoy: {
+        meta: {
+          install_id: 'install-1',
+          location: { id: 'loc-1' },
+          company: { id: 'company-1' },
+          event: 'entry_sign_in',
+        },
+        payload: { id: 'visitor-1', type: 'visitors' },
+      },
+      ...(logger ? { logger } : {}),
+    } as unknown as Request;
+  }
+
+  it('replaces req.logger with a child carrying the full Envoy context', () => {
+    const childLogger = buildLogger();
+    const baseLogger = buildLogger();
+    baseLogger.child.mockReturnValue(childLogger);
+
+    const req = buildEnvoyReqWithLogger(baseLogger);
+    const next = jest.fn() as unknown as NextFunction;
+
+    envoyLoggerContextMiddleware()(req, buildRes() as unknown as Response, next);
+
+    expect(baseLogger.child).toHaveBeenCalledWith({
+      integrationName: 'checkr',
+      installId: 'install-1',
+      locationId: 'loc-1',
+      companyId: 'company-1',
+      recordId: 'visitor-1',
+      recordType: 'visitors',
+      event: 'entry_sign_in',
+      category: 'Visitor',
+    });
+    expect((req as Request & { logger?: unknown }).logger).toBe(childLogger);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  it('uses the fallback factory when req.logger is absent', () => {
+    const constructed = buildLogger();
+    const fallback = jest.fn(() => constructed);
+    const req = buildEnvoyReqWithLogger(undefined);
+    const next = jest.fn() as unknown as NextFunction;
+
+    envoyLoggerContextMiddleware({ fallback })(req, buildRes() as unknown as Response, next);
+
+    expect(fallback).toHaveBeenCalledTimes(1);
+    const [fallbackReq, fallbackCtx] = fallback.mock.calls[0] as unknown as [Request, unknown];
+    expect(fallbackReq).toBe(req);
+    expect(fallbackCtx).toEqual({
+      integrationName: 'checkr',
+      installId: 'install-1',
+      locationId: 'loc-1',
+      companyId: 'company-1',
+      recordId: 'visitor-1',
+      recordType: 'visitors',
+      event: 'entry_sign_in',
+      category: 'Visitor',
+    });
+    expect((req as Request & { logger?: unknown }).logger).toBe(constructed);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  it('is a no-op when req.logger is absent and no fallback is provided', () => {
+    const req = buildEnvoyReqWithLogger(undefined);
+    const next = jest.fn() as unknown as NextFunction;
+
+    envoyLoggerContextMiddleware()(req, buildRes() as unknown as Response, next);
+
+    expect((req as Request & { logger?: unknown }).logger).toBeUndefined();
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('extractLoggerContext', () => {
+  function buildEnvoyRequest(envoy: unknown, query: Record<string, unknown> = {}): EnvoyRequest {
+    return { envoy, query } as unknown as EnvoyRequest;
+  }
+
+  it('pulls every standard Envoy field from an event request', () => {
+    const req = buildEnvoyRequest(
+      {
+        meta: {
+          install_id: 'install-1',
+          location: { id: 'loc-1' },
+          company: { id: 'company-1' },
+          event: 'invite_created',
+        },
+        payload: { id: 'invite-1', type: 'invites' },
+      },
+      { name: 'checkr' },
+    );
+
+    expect(extractLoggerContext(req)).toEqual({
+      integrationName: 'checkr',
+      installId: 'install-1',
+      locationId: 'loc-1',
+      companyId: 'company-1',
+      recordId: 'invite-1',
+      recordType: 'invites',
+      event: 'invite_created',
+      category: 'Visitor',
+    });
+  });
+
+  it('omits event/category for route requests (no `event` on meta)', () => {
+    const req = buildEnvoyRequest(
+      {
+        meta: {
+          install_id: 'install-1',
+          location: { id: 'loc-1' },
+          company: { id: 'company-1' },
+          route: 'validate',
+        },
+        payload: {},
+      },
+      { name: 'checkr' },
+    );
+
+    const ctx = extractLoggerContext(req);
+    expect(ctx.event).toBeUndefined();
+    expect(ctx.category).toBeUndefined();
+    expect(ctx.installId).toBe('install-1');
+  });
+
+  it('maps unrecognized events to category "Unrecognized"', () => {
+    const req = buildEnvoyRequest({
+      meta: { install_id: 'i', location: { id: 'l' }, company: { id: 'c' }, event: 'mystery_event' },
+      payload: {},
+    });
+
+    expect(extractLoggerContext(req)).toMatchObject({
+      event: 'mystery_event',
+      category: 'Unrecognized',
+    });
+  });
+
+  it('maps workplace / desks / communication events to their categories', () => {
+    const makeReq = (event: string) => buildEnvoyRequest({ meta: { event }, payload: {} });
+
+    expect(extractLoggerContext(makeReq('employee_entry_sign_in')).category).toBe('Workplace');
+    expect(extractLoggerContext(makeReq('desk_sign_in')).category).toBe('Desks');
+    expect(extractLoggerContext(makeReq('takeover_started')).category).toBe('Communication');
+  });
+
+  it('returns just integrationName when req.envoy is missing', () => {
+    const req = buildEnvoyRequest(undefined, { name: 'checkr' });
+
+    expect(extractLoggerContext(req)).toEqual({ integrationName: 'checkr' });
+  });
+
+  it('degrades gracefully when meta/payload fields are missing', () => {
+    const req = buildEnvoyRequest({ meta: {}, payload: undefined }, {});
+
+    expect(extractLoggerContext(req)).toEqual({
+      integrationName: undefined,
+      installId: undefined,
+      locationId: undefined,
+      companyId: undefined,
+      recordId: undefined,
+      recordType: undefined,
     });
   });
 });
