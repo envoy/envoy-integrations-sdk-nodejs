@@ -41,9 +41,8 @@ export interface RequestWithLogger extends Request {
  */
 export function isRequestWithLogger(req: Request): req is RequestWithLogger {
   const candidate = (req as { logger?: unknown }).logger;
-  return (
-    typeof candidate === 'object' &&
-    candidate !== null &&
-    typeof (candidate as { error?: unknown }).error === 'function'
-  );
+  if (typeof candidate !== 'object' || candidate === null) {
+    return false;
+  }
+  return typeof (candidate as { error?: unknown }).error === 'function';
 }

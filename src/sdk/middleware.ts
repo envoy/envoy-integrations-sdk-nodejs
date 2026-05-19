@@ -13,12 +13,16 @@ import { StructuredLogger, isRequestWithLogger } from './StructuredLogger';
 /**
  * Request-scoped context that `envoyMiddleware` makes available to a
  * `loggerFactory` so the factory can produce a logger pre-tagged with the
- * usual Envoy fields.
+ * standard Envoy fields.
  *
- * Only the fields that can be derived from the raw express `Request` (before
- * body parsing) are populated here — richer context (install id, company id,
- * event name, etc.) lives on `req.envoy.meta` and should be added by a
- * downstream middleware once the SDK has finished initializing.
+ * Mirrors the `EnvoyLoggingContext` that
+ * `@envoy/envoy-integrations-internal-sdk` builds via `extractLoggingContext`,
+ * so a service can swap its bespoke `pluginMiddleware` logger setup for the
+ * SDK's built-in one without losing any Datadog facets it already indexes
+ * on (`companyId`, `installId`, `event`, etc.). Every field is optional —
+ * route requests don't carry `event`/`category`, validation requests have no
+ * `recordId`/`recordType`, and the `?name=` convention only applies to
+ * monolith services.
  *
  * @category Middleware
  */
@@ -27,13 +31,68 @@ export interface EnvoyLoggerContext {
    * Integration name parsed from the `?name=` query param.
    *
    * NOTE: this is a convention used by Envoy monolith integration services
-   * (e.g. `screener-integration-service`, `access-control-integration-service`)
-   * that fan out to plugin-specific routes via a single `?name=<plugin>`
-   * dispatcher. Standalone single-purpose plugins that don't use the
-   * `?name=` query param will receive `undefined` here.
+   * (e.g. `screener-integration-service`, `pacs-integration-service`,
+   * `access-control-integration-service`) that fan out to plugin-specific
+   * routes via a single `?name=<plugin>` dispatcher. Standalone
+   * single-purpose plugins that don't use the `?name=` query param will
+   * receive `undefined` here.
    */
   integrationName?: string;
+  /** `req.envoy.meta.company.id` — the Envoy company that originated the request. */
+  companyId?: string;
+  /** `req.envoy.meta.location.id` — the Envoy location the request is scoped to. */
+  locationId?: string;
+  /** `req.envoy.meta.install_id` — the specific plugin installation that fired the request. */
+  installId?: string;
+  /** `req.envoy.payload.id` — the visitor/invite/entry record id (event requests only). */
+  recordId?: string;
+  /** `req.envoy.payload.type` — the JSON:API type of the payload (event requests only). */
+  recordType?: string;
+  /**
+   * `req.envoy.meta.event` — the Envoy event name (e.g. `entry_sign_in`,
+   * `invite_created`). Only present on event requests; route requests
+   * (validation URLs, options URLs, etc.) will have this `undefined`.
+   */
+  event?: string;
+  /**
+   * Coarse-grained grouping of `event` (e.g. `Visitor`, `Workplace`,
+   * `Desks`, `Communication`). Mirrors the category mapping used by
+   * `extractLoggingContext` in the internal SDK so cross-service Datadog
+   * dashboards keep working.
+   */
+  category?: string;
 }
+
+/**
+ * Mirrors the category mapping in
+ * `@envoy/envoy-integrations-internal-sdk`'s `extractLoggingContext`. Kept
+ * here so the SDK can populate `EnvoyLoggerContext.category` without taking
+ * a dependency on the internal SDK (which itself depends on this SDK).
+ */
+const ENVOY_EVENT_CATEGORIES: Readonly<Record<string, string>> = {
+  entry_sign_in: 'Visitor',
+  entry_sign_out: 'Visitor',
+  entry_screen_requested: 'Visitor',
+  entry_screened: 'Visitor',
+  entry_reviewed: 'Visitor',
+  entry_manually_updated: 'Visitor',
+  invite_created: 'Visitor',
+  invite_updated: 'Visitor',
+  invite_removed: 'Visitor',
+  invite_reviewed: 'Visitor',
+  upcoming_visit: 'Visitor',
+  invite_screen_requested: 'Visitor',
+  identity_verification_requested: 'Visitor',
+  entry_badge_print_requested: 'Visitor',
+  employee_entry_sign_in: 'Workplace',
+  employee_entry_sign_out: 'Workplace',
+  employee_invite_created: 'Workplace',
+  employee_invite_updated: 'Workplace',
+  employee_upcoming_visit: 'Workplace',
+  desk_sign_in: 'Desks',
+  takeover_started: 'Communication',
+  takeover_ended: 'Communication',
+};
 
 /**
  * Options for {@link envoyMiddleware}.
@@ -46,20 +105,23 @@ export interface EnvoyLoggerContext {
  */
 export interface EnvoyMiddlewareOptions extends Partial<EnvoySignatureVerifierOptions> {
   /**
-   * If provided, invoked at the start of every request to build a
-   * {@link StructuredLogger}. The result is attached to `req.logger` so it's
-   * available for the rest of the middleware chain (including
-   * `structuredErrorMiddleware`).
+   * If provided, invoked once per request — after `req.envoy` is initialized
+   * and immediately before `next()` — to build a {@link StructuredLogger}.
+   * The result is attached to `req.logger` so it's available to every
+   * downstream handler and to `structuredErrorMiddleware`.
    *
-   * The factory is called *before* the request body is parsed and *before*
-   * `req.envoy` is set up, so it can only depend on the raw express
-   * `Request` plus the {@link EnvoyLoggerContext} the middleware can derive
-   * from it (currently the `?name=` integration name used by Envoy monolith
-   * integration services). Downstream middleware can replace `req.logger`
-   * with a richer child logger once more context (install id, company id,
-   * etc.) is available on `req.envoy.meta`.
+   * Called with the full {@link EnvoyLoggerContext} extracted from
+   * `req.query` + `req.envoy.meta` + `req.envoy.payload`, so the factory can
+   * produce a child logger pre-tagged with `integrationName`, `companyId`,
+   * `installId`, `event`, etc. without any per-service boilerplate.
+   *
+   * Errors thrown by the factory are caught and surfaced via `console.error`
+   * — they never break the request pipeline. Errors that fire *before*
+   * `req.envoy` finishes initializing (body parsing, plugin login) won't
+   * have `req.logger` set; `structuredErrorMiddleware` falls back to
+   * `console.error` for those, matching today's behavior.
    */
-  loggerFactory?: (req: Request, context: EnvoyLoggerContext) => StructuredLogger;
+  loggerFactory?: (req: EnvoyRequest, context: EnvoyLoggerContext) => StructuredLogger;
 }
 
 /**
@@ -73,6 +135,65 @@ function extractIntegrationName(req: Request): string | undefined {
 }
 
 /**
+ * Builds the full {@link EnvoyLoggerContext} from an Envoy request. Defensive
+ * against missing fields — every property is optional, so a malformed or
+ * partial request degrades to a logger with whatever context was available
+ * rather than throwing.
+ *
+ * Exported so that downstream middleware (e.g. a service's own
+ * `pluginMiddleware`) can rebuild the same context when replacing
+ * `req.logger` with a richer child logger.
+ *
+ * @category Middleware
+ */
+export function extractLoggerContext(req: EnvoyRequest): EnvoyLoggerContext {
+  const context: EnvoyLoggerContext = {
+    integrationName: extractIntegrationName(req),
+  };
+  const envoy = req.envoy as EnvoyPluginSDK | undefined;
+  if (!envoy) {
+    return context;
+  }
+  // `meta` and `payload` are typed against generics on EnvoyPluginSDK; we treat them
+  // as the structural minimum we need here so this stays useful for every request
+  // shape (event, route, validation, etc.). Access is wrapped in try/catch because
+  // EnvoyPluginSDK's getters throw on unverified requests — a bad signature should
+  // not cascade into lost log context.
+  let meta:
+    | Partial<{
+        install_id: string;
+        location: { id?: string };
+        company: { id?: string };
+        event: string;
+      }>
+    | undefined;
+  let payload: Partial<{ id: string; type: string }> | undefined;
+  try {
+    meta = envoy.meta as typeof meta;
+  } catch {
+    // unverified or missing meta — leave undefined
+  }
+  try {
+    payload = envoy.payload as typeof payload;
+  } catch {
+    // unverified or missing payload — leave undefined
+  }
+
+  context.installId = meta?.install_id;
+  context.locationId = meta?.location?.id;
+  context.companyId = meta?.company?.id;
+  context.recordId = payload?.id;
+  context.recordType = payload?.type;
+
+  if (meta && 'event' in meta && typeof meta.event === 'string') {
+    context.event = meta.event;
+    context.category = ENVOY_EVENT_CATEGORIES[meta.event] ?? 'Unrecognized';
+  }
+
+  return context;
+}
+
+/**
  * Sets up an {@link EnvoyPluginSDK} object in the path `req.envoy`.
  * Modifies the `res` object to include Envoy's helpers, per {@link EnvoyResponse}.
  *
@@ -80,9 +201,10 @@ function extractIntegrationName(req: Request): string | undefined {
  * as well as managing the plugin access token lifecycle.
  *
  * If a `loggerFactory` is supplied, attaches the produced
- * {@link StructuredLogger} to `req.logger` so it's available throughout the
- * middleware chain — including any error that fires inside this middleware
- * before `req.envoy` finishes initializing.
+ * {@link StructuredLogger} to `req.logger` once `req.envoy` is initialized,
+ * passing the factory the full {@link EnvoyLoggerContext} (integration name,
+ * company id, install id, event, category, …) so downstream handlers and
+ * `structuredErrorMiddleware` log with the standard Envoy facets baked in.
  *
  * @category Middleware
  */
@@ -97,19 +219,6 @@ export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandle
   let threshold = 0;
 
   return (req: Request, res: Response, next: NextFunction) => {
-    if (loggerFactory) {
-      try {
-        const context: EnvoyLoggerContext = {
-          integrationName: extractIntegrationName(req),
-        };
-        (req as Request & { logger?: StructuredLogger }).logger = loggerFactory(req, context);
-      } catch (factoryErr) {
-        // A failing loggerFactory must not break the request pipeline — surface
-        // the error so it's debuggable, then continue without a request logger.
-        // eslint-disable-next-line no-console
-        console.error('envoyMiddleware: loggerFactory threw', factoryErr);
-      }
-    }
     json(req, res, async (err) => {
       if (err) {
         return next(err);
@@ -124,6 +233,17 @@ export function envoyMiddleware(options?: EnvoyMiddlewareOptions): RequestHandle
         const envoyRequest = req as EnvoyRequest;
         const envoyResponse = res as EnvoyResponse;
         envoyRequest.envoy = new EnvoyPluginSDK(envoyRequest.body, envoyRequest[VERIFIED], accessToken);
+
+        if (loggerFactory) {
+          try {
+            envoyRequest.logger = loggerFactory(envoyRequest, extractLoggerContext(envoyRequest));
+          } catch (factoryErr) {
+            // A failing loggerFactory must not break the request pipeline — surface
+            // the error so it's debuggable, then continue without a request logger.
+            // eslint-disable-next-line no-console
+            console.error('envoyMiddleware: loggerFactory threw', factoryErr);
+          }
+        }
 
         /**
          * Respond with "ongoing" for long jobs.
