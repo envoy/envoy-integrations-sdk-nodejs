@@ -4,6 +4,23 @@ import { rootLogger } from './logger';
 
 const logger = rootLogger.child({ source: 'diplomat-sdk' });
 
+const FALLBACK_WARN_TTL_MS = 5 * 60 * 1000;
+const fallbackWarnLastFiredAt = new Map<string, number>();
+
+function shouldWarnForFallback(installId: string): boolean {
+  const now = Date.now();
+  const lastFiredAt = fallbackWarnLastFiredAt.get(installId);
+  if (lastFiredAt !== undefined && now - lastFiredAt < FALLBACK_WARN_TTL_MS) {
+    return false;
+  }
+  fallbackWarnLastFiredAt.set(installId, now);
+  return true;
+}
+
+export function resetDiplomatFallbackWarnCacheForTesting(): void {
+  fallbackWarnLastFiredAt.clear();
+}
+
 /**
  * Diplomat Latest Response Format (current)
  */
@@ -65,9 +82,7 @@ export function isDiplomatV1Response(response: DiplomatServerResponse): response
 /**
  * Type guard to check if response is Latest format
  */
-export function isDiplomatLatestResponse(
-  response: DiplomatServerResponse,
-): response is DiplomatServerResponseLatest {
+export function isDiplomatLatestResponse(response: DiplomatServerResponse): response is DiplomatServerResponseLatest {
   return 'status' in response && 'headers' in response && 'body' in response;
 }
 
@@ -131,23 +146,25 @@ export async function getDiplomatClientInstall(installId?: string): Promise<Dipl
 
     return response.data;
   } catch (err: unknown) {
-    // Log the error but return null to fall back to direct routing
+    // Falling back to direct routing is the expected path for non-Diplomat
+    // installs, so the per-request log is debug. A single warn per installId
+    // every 5 minutes preserves operator visibility without the volume.
+    const baseMetadata: Record<string, unknown> = {
+      install_id: installId,
+      diplomat_version: diplomatVersion,
+      diplomat_server_url: serverUrl,
+    };
     if (axios.isAxiosError(err)) {
-      logger.warn('Diplomat server check failed - falling back to direct routing', {
-        install_id: installId,
-        diplomat_version: diplomatVersion,
-        diplomat_server_url: serverUrl,
-        status_code: err.response?.status,
-        error_message: err.message,
-        error_code: err.code,
-      });
+      baseMetadata.status_code = err.response?.status;
+      baseMetadata.error_message = err.message;
+      baseMetadata.error_code = err.code;
     } else {
-      logger.warn('Diplomat server check failed - falling back to direct routing', {
-        install_id: installId,
-        diplomat_version: diplomatVersion,
-        diplomat_server_url: serverUrl,
-        error_message: err instanceof Error ? err.message : String(err),
-      });
+      baseMetadata.error_message = err instanceof Error ? err.message : String(err);
+    }
+
+    logger.debug('Diplomat server check failed - falling back to direct routing', baseMetadata);
+    if (shouldWarnForFallback(installId)) {
+      logger.warn('Diplomat server check failed - falling back to direct routing', baseMetadata);
     }
 
     return null;
