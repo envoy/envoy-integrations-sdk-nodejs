@@ -31,7 +31,7 @@ export interface SignInFieldAttributes {
    * Defaults to true server-side, so a field created without it is offered to
    * employees.
    *
-   * Set this and `allow-visitor-respondents` to false for a field only an admin
+   * Set this and `'allow-visitor-respondents'` to false for a field only an admin
    * can answer, such as a badge or card number that is read off the credential.
    */
   'allow-employee-respondents'?: boolean;
