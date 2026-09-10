@@ -35,6 +35,11 @@ export interface SignInFieldAttributes {
    * can answer, such as a badge or card number that is read off the credential.
    */
   'allow-employee-respondents'?: boolean;
+  /**
+   * Set by the server when a workflow policy owns this field. Read-only, so it
+   * is ignored on create and update.
+   */
+  'workflow-definition-field-id'?: string | null;
   'created-at'?: string;
   'updated-at'?: string;
 }
