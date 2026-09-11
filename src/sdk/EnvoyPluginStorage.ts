@@ -46,6 +46,18 @@ export default class EnvoyPluginStorage {
   }
 
   /**
+   * Atomically sets a single {@link EnvoyStorageItem} only if the key is not already set.
+   *
+   * Wrapper for single pipeline setIfAbsent. Resolves to the stored item when this call
+   * won the write, or { value: undefined } when the key already existed.
+   */
+  setIfAbsent<Value = unknown>(key: string, value: Value, options: { ttlSeconds?: number } = {}) {
+    return this.pipeline()
+      .setIfAbsent(key, value, options)
+      .executeSingle<EnvoyStorageItem<Value> | { key: string; value: undefined }>();
+  }
+
+  /**
    * Sets a single unique string {@link EnvoyStorageItem} from storage.
    *
    * Wrapper for single pipeline setUnique.
