@@ -37,6 +37,13 @@ export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePi
             const value = EnvoyPluginStoragePipelineMock.set(command.key, command.value, isGlobal);
             return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, value);
           }
+          case 'set_if_absent': {
+            const written = EnvoyPluginStoragePipelineMock.setIfAbsent(command.key, command.value, isGlobal);
+            if (written === null) {
+              return null; // key already existed → claim lost
+            }
+            return EnvoyPluginStoragePipelineMock.itemFromKeyValue(command.key, written);
+          }
           case 'set_unique':
             try {
               const value = EnvoyPluginStoragePipelineMock.setUnique(
@@ -105,6 +112,21 @@ export default class EnvoyPluginStoragePipelineMock extends EnvoyPluginStoragePi
   static set<Value = unknown>(key: string, value: Value, isGlobal = false) {
     key = EnvoyPluginStoragePipelineMock.normalizeKey(key, isGlobal);
     EnvoyPluginStoragePipelineMock.unset(key);
+    EnvoyPluginStoragePipelineMock.storage[key] = value;
+    return value;
+  }
+
+  //
+  // Writes only when the key is absent. Returns the value on a win, or null when the key
+  // already holds a value (claim lost). The real backend enforces this atomically via a
+  // unique index; the mock is single-threaded so a plain existence check is equivalent.
+  // TTL is not modelled in the mock.
+  //
+  static setIfAbsent<Value = unknown>(key: string, value: Value, isGlobal = false): Value | null {
+    key = EnvoyPluginStoragePipelineMock.normalizeKey(key, isGlobal);
+    if (Object.keys(EnvoyPluginStoragePipelineMock.storage).includes(key)) {
+      return null;
+    }
     EnvoyPluginStoragePipelineMock.storage[key] = value;
     return value;
   }
