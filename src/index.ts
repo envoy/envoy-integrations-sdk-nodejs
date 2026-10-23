@@ -58,6 +58,7 @@ export * from './sdk/filters';
 export * from './sdk/handlers';
 export * from './sdk/loggers';
 export * from './sdk/middleware';
+export * from './sdk/StructuredLogger';
 
 export * from './util/EnvoySignatureVerifier';
 export * from './util/axiosConstructor';
