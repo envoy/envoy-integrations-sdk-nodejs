@@ -5,9 +5,86 @@ import HttpStatus from '../internal/HttpStatus';
 import EnvoySignatureVerifier, { EnvoySignatureVerifierOptions } from '../util/EnvoySignatureVerifier';
 import EnvoyRequest, { VERIFIED, VerifiedRequest } from './EnvoyRequest';
 import EnvoyResponse from './EnvoyResponse';
-import EnvoyPluginJobAttachment, { EnvoyPluginScreenerJobAttachment } from './EnvoyPluginJobAttachment';
+import EnvoyPluginJobAttachment, {
+  EnvoyPluginScreenerJobAttachment,
+  attachmentsForHiddenIgnored,
+} from './EnvoyPluginJobAttachment';
 import EnvoyPluginSDK from './EnvoyPluginSDK';
 import EnvoyPluginAPI from './EnvoyPluginAPI';
+
+/**
+ * Attaches job status helpers to the Express response.
+ *
+ * @internal
+ */
+export function assignEnvoyResponseHelpers(envoyResponse: EnvoyResponse): void {
+  /**
+   * Respond with "ongoing" for long jobs.
+   */
+  envoyResponse.sendOngoing = (message = '', debugInfo: unknown = {}) => {
+    envoyResponse.statusCode = HttpStatus.ONGOING;
+    envoyResponse.setHeader('Content-Type', 'application/json');
+    envoyResponse.end(JSON.stringify({ message, debugInfo }));
+  };
+
+  /**
+   * Respond with "ignored" if no action will be performed.
+   */
+  envoyResponse.sendIgnored = (
+    message = '',
+    debugInfo: unknown = {},
+    ...attachments: Array<EnvoyPluginJobAttachment>
+  ) => {
+    envoyResponse.statusCode = HttpStatus.IGNORED;
+    envoyResponse.setHeader('Content-Type', 'application/json');
+    envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
+  };
+
+  /**
+   * Respond with "ignored" and hide the job from dashboard activity.
+   */
+  envoyResponse.sendHiddenIgnored = (
+    message = '',
+    debugInfo: unknown = {},
+    ...attachments: Array<EnvoyPluginJobAttachment>
+  ) => {
+    envoyResponse.statusCode = HttpStatus.IGNORED;
+    envoyResponse.setHeader('Content-Type', 'application/json');
+    envoyResponse.end(
+      JSON.stringify({
+        message,
+        debugInfo,
+        attachments: attachmentsForHiddenIgnored(message, attachments),
+      }),
+    );
+  };
+
+  /**
+   * Respond with "failed" in case of errors.
+   */
+  envoyResponse.sendFailed = (
+    message = '',
+    debugInfo: unknown = {},
+    ...attachments: Array<EnvoyPluginJobAttachment>
+  ) => {
+    envoyResponse.statusCode = HttpStatus.FAILED;
+    envoyResponse.setHeader('Content-Type', 'application/json');
+    envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
+  };
+
+  /**
+   * Respond with "failed" for screener in case of screener matches.
+   */
+  envoyResponse.sendFailedScreen = (
+    message = '',
+    debugInfo: unknown = {},
+    ...attachments: Array<EnvoyPluginScreenerJobAttachment>
+  ) => {
+    envoyResponse.statusCode = HttpStatus.FAILED;
+    envoyResponse.setHeader('Content-Type', 'application/json');
+    envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
+  };
+}
 
 /**
  * Sets up an {@link EnvoyPluginSDK} object in the path `req.envoy`.
@@ -42,54 +119,7 @@ export function envoyMiddleware(options?: EnvoySignatureVerifierOptions): Reques
         const envoyRequest = req as EnvoyRequest;
         const envoyResponse = res as EnvoyResponse;
         envoyRequest.envoy = new EnvoyPluginSDK(envoyRequest.body, envoyRequest[VERIFIED], accessToken);
-
-        /**
-         * Respond with "ongoing" for long jobs.
-         */
-        envoyResponse.sendOngoing = (message = '', debugInfo: unknown = {}) => {
-          envoyResponse.statusCode = HttpStatus.ONGOING;
-          envoyResponse.setHeader('Content-Type', 'application/json');
-          envoyResponse.end(JSON.stringify({ message, debugInfo }));
-        };
-
-        /**
-         * Respond with "ignored" if no action will be performed.
-         */
-        envoyResponse.sendIgnored = (
-          message = '',
-          debugInfo: unknown = {},
-          ...attachments: Array<EnvoyPluginJobAttachment>
-        ) => {
-          envoyResponse.statusCode = HttpStatus.IGNORED;
-          envoyResponse.setHeader('Content-Type', 'application/json');
-          envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
-        };
-
-        /**
-         * Respond with "failed" in case of errors.
-         */
-        envoyResponse.sendFailed = (
-          message = '',
-          debugInfo: unknown = {},
-          ...attachments: Array<EnvoyPluginJobAttachment>
-        ) => {
-          envoyResponse.statusCode = HttpStatus.FAILED;
-          envoyResponse.setHeader('Content-Type', 'application/json');
-          envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
-        };
-
-        /**
-         * Respond with "failed" for screener in case of screener matches.
-         */
-        envoyResponse.sendFailedScreen = (
-          message = '',
-          debugInfo: unknown = {},
-          ...attachments: Array<EnvoyPluginScreenerJobAttachment>
-        ) => {
-          envoyResponse.statusCode = HttpStatus.FAILED;
-          envoyResponse.setHeader('Content-Type', 'application/json');
-          envoyResponse.end(JSON.stringify({ message, debugInfo, attachments }));
-        };
+        assignEnvoyResponseHelpers(envoyResponse);
         next();
       } catch (error) {
         next(error);

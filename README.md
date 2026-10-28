@@ -211,6 +211,8 @@ res.sendOngoing("We're still working on it.", { hello: 'world' }); // the job is
 // or
 res.sendIgnored("We're not gonna do this one, sorry.", { hello: 'world' }); // doesnt meet the requirements to continue.
 // or
+res.sendHiddenIgnored('No relevant fields changed.'); // ignored, and hidden from dashboard activity.
+// or
 res.sendFailed('We tried, but failed.', { hello: 'world' }); // we cant continue with this job.
 
 /**

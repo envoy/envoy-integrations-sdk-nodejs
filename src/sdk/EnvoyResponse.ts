@@ -19,8 +19,18 @@ export default interface EnvoyResponse<Body = unknown> extends Response {
   sendOngoing: (debugInfo?: unknown) => void;
   /**
    * Marks the job as "ignored". Useful when you explicitly do not want to handle the event.
+   * The job stays visible in dashboard activity. Use {@link sendHiddenIgnored} for mechanical no-ops.
    */
   sendIgnored: (message: string, debugInfo?: unknown, ...attachments: Array<EnvoyPluginJobAttachment>) => void;
+
+  /**
+   * Marks the job as "ignored" and hides it from dashboard activity.
+   *
+   * Garaje drops the row only when the status is ignored and an attachment has type `hidden_job`.
+   * A plain text attachment keeps its label and value, and its type is set to `hidden_job`.
+   * With no attachment, the message is used for both label and value.
+   */
+  sendHiddenIgnored: (message: string, debugInfo?: unknown, ...attachments: Array<EnvoyPluginJobAttachment>) => void;
 
   /**
    * Marks the job as "failed". The message will be communicated to the Envoy Dashboard user.

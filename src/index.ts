@@ -59,6 +59,9 @@ export * from './sdk/handlers';
 export * from './sdk/loggers';
 export * from './sdk/middleware';
 
+export { HIDDEN_JOB_ATTACHMENT_TYPE, hiddenJobAttachment } from './sdk/EnvoyPluginJobAttachment';
+export type { EnvoyPluginHiddenJobAttachment } from './sdk/EnvoyPluginJobAttachment';
+
 export * from './util/EnvoySignatureVerifier';
 export * from './util/axiosConstructor';
 export * from './util/errorHandling';
