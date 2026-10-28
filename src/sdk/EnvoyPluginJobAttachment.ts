@@ -7,6 +7,11 @@ export interface EnvoyPluginTextJobAttachment {
   type?: 'text' | 'password' | string;
   label: string;
   value: string;
+  /**
+   * When true, Garaje omits this attachment from the visitor details screen.
+   * The job status line still renders.
+   */
+  hidden?: boolean;
 }
 
 /**
