@@ -22,9 +22,10 @@ Use to type your `res` object in Envoy event handlers.
 
 - [send](envoyresponse.md#send)
 - [sendFailed](envoyresponse.md#sendfailed)
+- [sendFailedScreen](envoyresponse.md#sendFailedScreen)
+- [sendHiddenIgnored](envoyresponse.md#sendhiddenignored)
 - [sendIgnored](envoyresponse.md#sendignored)
 - [sendOngoing](envoyresponse.md#sendongoing)
-- [sendFailedScreen](envoyresponse.md#sendFailedScreen)
 
 ## Properties
 
@@ -95,6 +96,7 @@ ___
 • **sendIgnored**: (`message`: `string`, `debugInfo?`: `unknown`, ...`attachments`: `EnvoyPluginJobAttachment`[]) => `void`
 
 Marks the job as "ignored". Useful when you explicitly do not want to handle the event.
+The job stays visible in dashboard activity. Use [sendHiddenIgnored](envoyresponse.md#sendhiddenignored) for mechanical no-ops.
 
 #### Type declaration
 
@@ -114,7 +116,39 @@ Marks the job as "ignored". Useful when you explicitly do not want to handle the
 
 #### Defined in
 
-[sdk/EnvoyResponse.ts:22](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyResponse.ts#L22)
+[sdk/EnvoyResponse.ts:24](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyResponse.ts#L24)
+
+___
+
+### sendHiddenIgnored
+
+• **sendHiddenIgnored**: (`message`: `string`, `debugInfo?`: `unknown`, ...`attachments`: `EnvoyPluginJobAttachment`[]) => `void`
+
+Marks the job as "ignored" and hides it from dashboard activity.
+
+Garaje drops the row only when the status is ignored and an attachment has type `hidden_job`.
+A plain text attachment keeps its label and value, and its type is set to `hidden_job`.
+With no attachment, the message is used for both label and value.
+
+#### Type declaration
+
+▸ (`message`, `debugInfo?`, ...`attachments`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+| `debugInfo?` | `unknown` |
+| `...attachments` | `EnvoyPluginJobAttachment`[] |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[sdk/EnvoyResponse.ts:33](https://github.com/envoy/envoy-integrations-sdk-nodejs/blob/410ee70/src/sdk/EnvoyResponse.ts#L33)
 
 ___
 
