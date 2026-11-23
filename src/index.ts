@@ -58,6 +58,7 @@ export * from './sdk/filters';
 export * from './sdk/handlers';
 export * from './sdk/loggers';
 export * from './sdk/middleware';
+export * from './sdk/StructuredLogger';
 
 export { HIDDEN_JOB_ATTACHMENT_TYPE, hiddenJobAttachment } from './sdk/EnvoyPluginJobAttachment';
 export type { EnvoyPluginHiddenJobAttachment } from './sdk/EnvoyPluginJobAttachment';
