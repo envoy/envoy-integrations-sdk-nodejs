@@ -17,7 +17,7 @@ export interface EnvoyStorageSetUniqueNumOptions {
 }
 
 export interface EnvoyBaseStorageCommand {
-  action: 'get' | 'set' | 'set_unique' | 'set_unique_num' | 'unset';
+  action: 'get' | 'set' | 'set_if_absent' | 'set_unique' | 'set_unique_num' | 'unset';
   key: string;
 }
 
@@ -28,6 +28,12 @@ export interface EnvoyGetStorageCommand extends EnvoyBaseStorageCommand {
 export interface EnvoySetStorageCommand extends EnvoyBaseStorageCommand {
   action: 'set';
   value: unknown;
+}
+
+export interface EnvoySetIfAbsentStorageCommand extends EnvoyBaseStorageCommand {
+  action: 'set_if_absent';
+  value: unknown;
+  ttlSeconds?: number;
 }
 
 export interface EnvoySetUniqueStorageCommand extends EnvoyBaseStorageCommand, EnvoyStorageSetUniqueOptions {
@@ -53,6 +59,7 @@ export interface EnvoyListStorageCommand {
 type EnvoyStorageCommand =
   | EnvoyGetStorageCommand
   | EnvoySetStorageCommand
+  | EnvoySetIfAbsentStorageCommand
   | EnvoySetUniqueStorageCommand
   | EnvoySetUniqueNumStorageCommand
   | EnvoyUnsetStorageCommand

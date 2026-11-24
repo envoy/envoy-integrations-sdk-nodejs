@@ -59,6 +59,17 @@ export default class EnvoyPluginStoragePipeline {
   }
 
   /**
+   * Atomically sets a value for a storage item only if the key is not already set.
+   * Resolved server-side against a unique index, so it is race-free across concurrent
+   * invocations and pods. The result is the item when this call wrote it (claim won),
+   * or null when the key already held a value (claim lost). Pass ttlSeconds to give the
+   * write an expiry, so a crashed holder cannot wedge the key.
+   */
+  setIfAbsent(key: string, value: unknown, options: { ttlSeconds?: number } = {}): EnvoyPluginStoragePipeline {
+    return this.addCommand({ action: 'set_if_absent', key, value, ...options });
+  }
+
+  /**
    * Sets a unique value for a storage item,
    * and returns that item.
    */
